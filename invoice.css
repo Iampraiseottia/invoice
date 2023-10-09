@@ -465,7 +465,7 @@ h6{
     width: 755px;
     margin-bottom: 20px;
     font-size: 16px;
-    background-color: rgb(38, 79, 136);
+    background-color: black;
     border: 1px solid rgb(38, 79, 136);
     color: white;
     border-radius: 3px;
@@ -599,4 +599,3 @@ h6{
     font-weight: 100;
     padding-top: 20px;
 }
-
