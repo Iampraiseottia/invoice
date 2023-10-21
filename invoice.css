@@ -9,7 +9,6 @@ body{
     background: white;
 }
 
-
 /* HEADER */
 #ottia{
     background: rgb(244, 244, 244);
@@ -179,7 +178,7 @@ body{
 
 .prinzo{
     border: 1px solid rgb(183, 221, 245);
-    height: 890px;
+    height: auto;
     width: 750px;
     background-color: rgb(226, 243, 254);
     /* position: relative; */
@@ -189,6 +188,7 @@ body{
     border-bottom-left-radius: 10px;
     margin-bottom: 20px;
     border-top: none;
+    padding-bottom: 20px;
 }
 
 .beteck{
@@ -346,6 +346,7 @@ hr{
 }
 
 .add{
+    cursor: pointer;
     margin: 0px 20px;
     width: 710px;
     height: 34px;
@@ -358,6 +359,10 @@ hr{
     font-size: 15px;
     font-weight: 500;
     /* opacity: 0.8; */
+}
+
+.add:hover{
+    background-color: rgb(251, 231, 140);
 }
 
 /* .sub{
@@ -598,4 +603,74 @@ h6{
     font-size: 15px;
     font-weight: 100;
     padding-top: 20px;
+}
+
+.fine-boy{
+    height: 30px;
+    /* width: 300px; */
+    margin-top: 10px;
+    padding: 5px 9px;
+    font-size: 16px;
+    
+}
+
+.des{
+    font-size: 16px;
+    margin-left: 15px;
+    margin-top: 13px;
+    padding: 6px 9px;
+}
+
+.book2,
+.book3{
+    margin-left: -15px;
+    padding: 7px 10px;
+    width: 120px;
+    margin-top: 20px;
+    height: 32px;
+}
+
+.book3{
+    margin-left: -40px;
+}
+
+#invoiceTable{
+    margin: 40px 50px 4px 50px;
+    align-items: center;
+    height: max-content;
+    padding-bottom: 100px;
+}
+
+tr .urgly{
+    text-align: left;
+}
+
+th, td{
+    border: 1px solid black;
+    padding: 8px;
+}
+
+table{
+    border-collapse: collapse;
+    border: 1px solid gray;
+    text-align: center;
+    vertical-align: middle;
+    width: 88%;
+}
+
+
+table th{
+    color: rgb(158, 75, 158);
+    letter-spacing: 2px;
+    background-color: rgb(255, 255, 255);
+}
+
+.table-head{
+    background-color: white;
+    font-weight: bold;
+    font-size: 19px;
+}
+
+tr{
+    font-size: 14px;
 }

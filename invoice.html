@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invoice Task Page | OTTIATECH</title>
     <link rel="stylesheet" href="invoice.css">
+    <link rel="icon" href="img/ottiatech.png">
 </head>
 <body>
     
@@ -116,14 +117,38 @@
 
                 <hr>
 
-                <div class="grumpii">
-                    <p class="eru">Description</p>
-                    <p class="fufu">Amount</p>
-                    <p class="meat">Tax</p>
+                <div class="grumpii" onclick="event.preventDefault">
+                    <div class="descrip">
+                        <p class="eru">Description</p>
+                        <textarea placeholder="Brief Descrisption" id="Descriptipon" class="des" name="describe" cols="30" rows="2"></textarea>
+                    </div>
+                    
+                    <div class="amt">
+                        <p class="fufu">Amount / FCFA</p>
+                        <input placeholder="Input the Cost" id="Amount" type="number" class="book2">
+                    </div>
+
+                    <div class="tx">
+                        <p class="meat">Tax ( % )</p>
+                        <input placeholder="Enter the Tax" id="Tax" type="number" class="book3">
+
+                    </div>
                 </div>
 
-                <button class="add">Add New Item</button>
+                <button onclick="onSubmit(event.preventDefault)" class="add" id="addItem">Add New Item</button>
 
+                <table id="invoiceTable">   
+                    <thead>
+                        <tr>
+                            <th class="table-head">Description</th>
+                            <th class="table-head">Amount</th>
+                            <th class="table-head">Tax</th>
+                            <th class="table-head">Action</th>
+                        </tr>
+                    </thead>
+
+                        <tbody id="output"></tbody>
+                </table>
 
                 <div class="stew">
                     <p class="sub">Subtotal</p>
@@ -254,8 +279,9 @@
 
     </section>
 
+
+    <script src="invoice.js" text/javascript></script>
+
 </body>
 </html>
-
-
 
