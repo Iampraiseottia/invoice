@@ -2,19 +2,14 @@ var selectedRow = null;
 
 
 function onSubmit(){
-
-    if(fieldValidate()){
-         var inputData = readData();
-        if (selectedRow == null) 
-            insertData(inputData);
-        else
-            updateData(inputData);
+    var inputData = readData();
+    if (selectedRow == null) 
+        insertData(inputData);
+    else
+        updateData(inputData);
 
 
-        refreshData();
-    }
-
-    
+    refreshData();
 
     
 }
@@ -73,17 +68,3 @@ function onDelete(td){
     refreshData();
 }
  
-function fieldValidate(){
-    isValid = true;
-    if (document.getElementById('Descriptipon').value == ''){
-        isValid = false;
-        document.getElementById('DescriptionValidError').classList.remove('hide');
-    }
-    else{
-        isValid = true;
-        if (document.getElementById('DescriptionValidError').classList.contains('hide'))
-            document.getElementById('DescriptionValidError').classList.add('hide');
-        
-    }
-    return isValid;
-}
