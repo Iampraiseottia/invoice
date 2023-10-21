@@ -1,14 +1,22 @@
 var selectedRow = null;
 
+
 function onSubmit(){
-    var inputData = readData();
-    if (selectedRow == null) 
-        insertData(inputData);
-    else
-        updateData(inputData);
+
+    if(fieldValidate()){
+         var inputData = readData();
+        if (selectedRow == null) 
+            insertData(inputData);
+        else
+            updateData(inputData);
 
 
-    refreshData();
+        refreshData();
+    }
+
+    
+
+    
 }
 
 function readData(){
@@ -48,7 +56,7 @@ function onEdit(td){
     selectedRow = td.parentElement.parentElement;
     document.getElementById('Descriptipon').value = selectedRow.cells[0].innerHTML;
     document.getElementById('Amount').value = selectedRow.cells[1].innerHTML;   
-    document.getElementById('Tax').value = selectedRow.cells[3].innerHTML;      
+    document.getElementById('Tax').value = selectedRow.cells[2].innerHTML;      
 }
 
 function updateData(inputData){
@@ -59,5 +67,23 @@ function updateData(inputData){
 }
 
 function onDelete(td){
+    event.preventDefault();
     row = td.parentElement.parentElement;
+    document.getElementById('invoiceTable').deleteRow(row.rowIndex);
+    refreshData();
+}
+ 
+function fieldValidate(){
+    isValid = true;
+    if (document.getElementById('Descriptipon').value == ''){
+        isValid = false;
+        document.getElementById('DescriptionValidError').classList.remove('hide');
+    }
+    else{
+        isValid = true;
+        if (document.getElementById('DescriptionValidError').classList.contains('hide'))
+            document.getElementById('DescriptionValidError').classList.add('hide');
+        
+    }
+    return isValid;
 }

@@ -119,7 +119,7 @@
 
                 <div class="grumpii" onclick="event.preventDefault">
                     <div class="descrip">
-                        <p class="eru">Description</p>
+                        <p class="eru">Description</p><label class="valid-error hide" id="DescriptionValidError">This field is required.</label>
                         <textarea placeholder="Brief Descrisption" id="Descriptipon" class="des" name="describe" cols="30" rows="2"></textarea>
                     </div>
                     
@@ -136,6 +136,7 @@
                 </div>
 
                 <button onclick="onSubmit(event.preventDefault)" class="add" id="addItem">Add New Item</button>
+                
 
                 <table id="invoiceTable">   
                     <thead>
