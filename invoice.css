@@ -365,21 +365,71 @@ hr{
     background-color: rgb(251, 231, 140);
 }
 
-/* .sub{
-    text-align: center;
-    margin-top: 30px;
+.sub{
+    /* text-align: center; */
+    /* margin-top: 30px; */
     font-size: 17px;
     font-weight: 600;
-} */
+    letter-spacing: 1.5px;    
+}
+
+.pufpuf{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
 
 .stew{
-    margin-left: 350px;
+    margin-left: 90px;
     display: flex;
     justify-content: space-between;
     margin-top: 30px;
-    font-size: 17px;
+    font-size: 18px;
     font-weight: 600;
+    margin-right: 110px;
+}
+
+.sub1{
+    margin-right: 30px;
+    margin-left: 150px;
+}
+
+.Subtotal-amt-tax{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 20px;
+    margin-right: 40px;
+    font-size: 18px;
+    margin-top: 30px;
+}
+
+.Subtotal-amt-tax-p-div-content{
+    display: flex;
+
+}
+
+.mom{
+    margin-right: 50px;
+}
+
+.dad{
+    margin-right: 140px;
+}
+
+.mac{
+    margin-left: 15px;
+}
+
+.Subtotal-amt-tax-p-div{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.sub2{
     margin-right: 10px;
+    /* margin-left: 50px; */
 }
 
 .beans{
@@ -394,6 +444,7 @@ hr{
 
 .beans span,
 .plantain,
+.plantain1,
 .content3 span{
     color: rgb(38, 79, 136);
     text-decoration: none;
@@ -463,6 +514,15 @@ h6{
     background-color: white;
     cursor: pointer;
     transition: 0.15s;
+}
+
+.plantain{
+    margin-right: 16px;
+    display: flex;
+}
+
+.plantain1{
+    margin-right: 5px;
 }
 
 .action{

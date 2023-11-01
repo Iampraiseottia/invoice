@@ -120,17 +120,18 @@
                 <div class="grumpii" onclick="event.preventDefault">
                     <div class="descrip">
                         <p class="eru">Description</p>
-                        <textarea placeholder="Brief Descrisption" id="Descriptipon" class="des" name="describe" cols="30" rows="2"></textarea>
+                        <textarea  placeholder="Brief Descrisption" id="Descriptipon" class="des" name="describe" cols="30" rows="2"></textarea>
                     </div>
                     
                     <div class="amt">
                         <p class="fufu">Amount / FCFA</p>
-                        <input placeholder="Input the Cost" id="Amount" type="number" class="book2">
+                        <input onchange="Calc(this)" value="" placeholder="Input the Cost" id="Amount" type="number" class="book2">
                     </div>
+
 
                     <div class="tx">
                         <p class="meat">Tax ( % )</p>
-                        <input placeholder="Enter the Tax" id="Tax" type="number" class="book3">
+                        <input onchange="Calc(this)"  value=""  placeholder="Enter the Tax" id="Tax" type="number" class="book3">
 
                     </div>
                 </div>
@@ -151,14 +152,44 @@
                         <tbody id="output"></tbody>
                 </table>
 
+                <div class="Subtotal-amt-tax">
+                    <p class="Subtotal-amt-tax-p">
+                        Subtotal Of All Amount & Tax
+                    </p>
+                    <div class="Subtotal-amt-tax-p-div">
+
+                        <div class="Subtotal-amt-tax-p-div-content mom">
+                            <h4 class="Subtotal-amt-tax-p-div-value1" id="sum">0</h4>
+                            <br>
+                            <p class="mac">FCFA</p>
+                        </div>
+
+                        <div class="Subtotal-amt-tax-p-div-content dad">
+                            <h4 class="Subtotal-amt-tax-p-div-value1" id="boris">0</h4>
+                            <p class="mac">FCFA</p>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="stew">
-                    <p class="sub">Subtotal</p>
-                    <p>0</p>
+                    <p class="sub">Subtotal Of Current Items/Task</p>
+                    <!-- <p class="sub1" id="total1">0</p> -->
+                    
+                    <div class="pufpuf">
+                        <p class="sub2" id="total2">0</p> 
+                        <h5 class="archumbo">FCFA</h5>                   
+                    </div>
+
+
                 </div>
 
                 <div class="beans">
                     <p class="total">TOTAL <span>XAF<h6>Edit</h6></span></p>
-                    <p class="plantain">CFA0</p>
+                    <div class="plantain">
+                        <p class="plantain1" id="total">0</p>
+                        <br>
+                        <span>CFA</span>
+                    </div>
                 </div>
 
                 <div class="content3">
