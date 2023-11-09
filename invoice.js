@@ -23,6 +23,8 @@ function readData(){
     return inputData;
 }
 
+
+
 function insertData(data){
     var table = document.getElementById('invoiceTable').getElementsByTagName('tbody')[0], sum = 0;
     var newRow = table.insertRow(table.length); 
@@ -40,7 +42,6 @@ function insertData(data){
     
                         // cell5 = newRow.insertCell(4);
                         // cell5.innerHTML = `<a onchange="Calc(this)"></a>`;
-
     
                         
 }
@@ -108,7 +109,70 @@ function Calc(all){
     }
     document.getElementById('boris').innerHTML = sumTax;
 
+
     grandSum = sumAmt + sumTax;
     document.getElementById('total').innerHTML = grandSum;
 
 }
+
+
+
+
+var amountEntered = document.getElementById('Amount');
+
+amountEntered.addEventListener('keypress', function(event) {
+  const key = event.key;
+  
+  if (!/[\d\s\b]/.test(key)) {
+    event.preventDefault();
+  }
+});
+
+
+amountEntered.addEventListener('input', function() {
+  // Remove existing commas from the input value
+  let inputValue = this.value.replace(/,/g, '');
+  
+  // Format the input value with commas
+  inputValue = addCommas(inputValue);
+  
+  // Update the input value with the formatted number
+  this.value = inputValue;
+});
+
+// Function to add commas to a number
+function addCommas(number) {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+
+
+
+var TaxEntered = document.getElementById('Tax');
+
+TaxEntered.addEventListener('keypress', function(event) {
+  const key = event.key;
+  
+  if (!/[\d\s\b]/.test(key)) {
+    event.preventDefault();
+  }
+});
+
+
+TaxEntered.addEventListener('input', function() {
+  // Remove existing commas from the input value
+  let inputValue = this.value.replace(/,/g, '');
+  
+  // Format the input value with commas
+  inputValue = addCommas(inputValue);
+  
+  // Update the input value with the formatted number
+  this.value = inputValue;
+});
+
+// Function to add commas to a number
+function addCommas(number) {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+
