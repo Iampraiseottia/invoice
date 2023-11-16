@@ -40,10 +40,6 @@ function insertData(data){
                         <a href="" onClick="onDelete(this)">Delete</a>`;
 
     
-                        // cell5 = newRow.insertCell(4);
-                        // cell5.innerHTML = `<a onchange="Calc(this)"></a>`;
-    
-                        
 }
 
 //Thes is to automatically refresh the browser input field
@@ -90,34 +86,43 @@ function onDelete(td){
 function Calc(all){
     var tax = all.parentElement.parentElement.children[2].children[1].value;
     var amt = all.parentElement.parentElement.children[1].children[1].value;
-    
-    var subtotal = amt * tax;
-    document.getElementById('total2').innerHTML = subtotal;
+
+    const amtValue = parseInt(amt.replace(/,/g, ''));
+    const taxValue = parseInt(tax.replace(/,/g, ''));
+
+
+    var subtotal = amtValue * (taxValue / 100);
+    document.getElementById('total2').innerHTML = subtotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
     var table = document.getElementById('invoiceTable').getElementsByTagName('tbody')[0], sumAmt = 0, sumTax = 0;
+    
+    for(var i = 0; i < table.rows.length; i++){
+      
+        sumAmt = sumAmt + parseInt(table.rows[i].cells[1].innerHTML.replace(/,/g, ''));
+        
+    }
+
+
+    document.getElementById('sum').innerHTML = sumAmt.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
 
     for(var i = 0; i < table.rows.length; i++){
-        sumAmt = sumAmt + parseInt(table.rows[i].cells[1].innerHTML);
+        sumTax = sumTax + parseInt(table.rows[i].cells[2].innerHTML.replace(/,/g, ''));
 
     }
-    document.getElementById('sum').innerHTML = sumAmt;
 
-
-    for(var i = 0; i < table.rows.length; i++){
-        sumTax = sumTax + parseInt(table.rows[i].cells[1].innerHTML);
-
-    }
-    document.getElementById('boris').innerHTML = sumTax;
+    document.getElementById('boris').innerHTML = sumTax.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
 
     grandSum = sumAmt + sumTax;
-    document.getElementById('total').innerHTML = grandSum;
+    document.getElementById('total').innerHTML = grandSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
 }
 
 
 
 
+//COMMA'S
 var amountEntered = document.getElementById('Amount');
 
 amountEntered.addEventListener('keypress', function(event) {
@@ -175,4 +180,8 @@ function addCommas(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+
+
+
+//PRINT PDF
 
