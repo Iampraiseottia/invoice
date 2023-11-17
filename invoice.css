@@ -134,9 +134,6 @@ body{
 
 }
 
-
-
-
 .basic,
 .advance{
     height: 42px;
@@ -182,7 +179,6 @@ body{
     width: 750px;
     background-color: rgb(226, 243, 254);
     /* position: relative; */
-
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
@@ -210,7 +206,6 @@ body{
     justify-content: space-evenly;
     width: 60px;
 }
-
 
 .content2{
     display: flex;
@@ -410,11 +405,11 @@ hr{
 }
 
 .mom{
-    margin-right: 50px;
+    margin-right: 80px;
 }
 
 .dad{
-    margin-right: 140px;
+    margin-right: 70px;
 }
 
 .mac{
@@ -552,7 +547,8 @@ h6{
     margin-top: 1px;
 }
 
-/* TEMPLATE */
+
+/* TEMPLATE & FOOTER */
 #dacute{
     margin-bottom: 140px;
     margin-top: 40px;
@@ -694,6 +690,8 @@ h6{
     margin-left: -40px;
 }
 
+
+/* TABLE */
 #invoiceTable{
     margin: 40px 50px 4px 50px;
     align-items: center;
@@ -735,3 +733,52 @@ tr{
     font-size: 14px;
 }
 
+.beans{
+    margin-left: 180px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    margin-right: 50px;
+}
+
+.stew,
+.Subtotal-amt-tax{
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+
+@media print {
+    .sign-in,
+    .invoice-text,
+    .invoice-title,
+    .grumpii,
+    .add,
+    .content3,
+    .action,
+    .muma,
+    .aldriss,
+    .love,
+    .links_invoice,
+    .links_invoice2,
+    .download{
+        display: none;
+    }
+
+    .pay{
+        margin-top: 130px;
+    }
+
+    #dacute{
+        display: flex;
+    }
+
+    .finito{
+        margin-left: -270px;
+        margin-top: 20px;
+    }
+
+    .cameroon{
+        margin-right: 10px;
+    }
+
+}

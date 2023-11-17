@@ -91,7 +91,7 @@ function Calc(all){
     const taxValue = parseInt(tax.replace(/,/g, ''));
 
 
-    var subtotal = amtValue * (taxValue / 100);
+    var subtotal = amtValue + (taxValue / 100);
     document.getElementById('total2').innerHTML = subtotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
     var table = document.getElementById('invoiceTable').getElementsByTagName('tbody')[0], sumAmt = 0, sumTax = 0;
@@ -185,3 +185,8 @@ function addCommas(number) {
 
 //PRINT PDF
 
+const printButton = document.getElementById('printButtonInPdf');
+
+printButton.addEventListener('click', function(){
+  window.print();
+})

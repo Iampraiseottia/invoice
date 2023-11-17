@@ -6,6 +6,7 @@
     <title>Invoice Task Page | OTTIATECH</title>
     <link rel="stylesheet" href="invoice.css">
     <link rel="icon" href="img/ottiatech.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.3/jspdf.umd.min.js"></script>
 </head>
 <body>
     
@@ -111,7 +112,7 @@
                     
                         <p class="invoice-date">Invoice Date</p>
     
-                        <input type="text" class="actual" value="29/01/2023">
+                        <input type="date" class="actual" value="29/01/2023">
                     </div>
                 </div>
 
@@ -208,7 +209,7 @@
 
             </div>
 
-            <button class="action">
+            <button class="action" id="printButtonInPdf">
                 <p class="form-box4"></p>
                 <p class="sweet">Save Invoice, Print or via Email</p>
             </button>
@@ -219,11 +220,11 @@
     </section>
 
     <section id="dacute">
-        <h2>
+        <h2 class="muma">
             Select a Template
         </h2>
 
-        <h3>
+        <h3 class="aldriss">
             More templates inside!
         </h3>
 
