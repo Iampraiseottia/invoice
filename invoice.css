@@ -174,10 +174,10 @@ body{
 }
 
 .prinzo{
-    border: 1px solid rgb(183, 221, 245);
+    border: 1px solid rgb(183, 221, 245) !important;
     height: auto;
     width: 750px;
-    background-color: rgb(226, 243, 254);
+    background-color: rgb(226, 243, 254) !important;
     /* position: relative; */
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
@@ -746,8 +746,109 @@ tr{
     margin-bottom: 60px;
 }
 
+/* Print Menu */
+#printHead{
+    background: rgb(57, 143, 189);
+    padding: 30px  60px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.printlogoimg{
+    height: 140px;
+    border: 1px solid rgb(57, 143, 189);
+    border-radius: 10px;
+}
+
+.righthead{
+    padding-top: 20px;
+    color: white;
+    text-align: right;
+    letter-spacing: 3px;
+}
+
+#companyName{
+    font-size: 28px;
+}
+
+#billingAddress{
+    font-size: 18px;
+}
+
+#date{
+    font-size: 15px;
+}
+
+.printbill{
+    font-size: 16px;
+}
+
+#detailsPrint{
+    margin: 30px 60px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.detailsPrintName{
+    font-size: 20px;
+}
+
+.printaddress,
+.detailsPrintDate,
+.detailsPrintNumber{
+    font-size: 15px;
+}
+
+.rightdetailsprint{
+    text-align: right;
+    line-height: 0.8;
+}
+
+hr{
+    margin-left: 58px;
+    margin-right: 58px;
+}
+
+#notesPrint{
+    padding-top: 30px;
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.notesPrintMessage{
+    height: 110px;
+    background: rgb(114, 222, 216);
+    padding-left: 58px;
+    padding-right: 90px;
+    padding-top: 30px;
+}
+
+.valuePrint{
+    background: rgb(57, 143, 189);
+    display: flex;
+    height: 90px;
+    padding-top: 50px;
+    width: 307px;
+    padding-left: 200px;
+    font-size: 30px;
+    letter-spacing: 2px;
+}
+
+.printTotal{
+    margin-right: 10px;
+}
+
+.unique{
+    font-size: 26px;
+}
 
 @media print {
+    body {
+        print-color-adjust: exact;
+    }
+
     .sign-in,
     .invoice-text,
     .invoice-title,
@@ -780,5 +881,7 @@ tr{
     .cameroon{
         margin-right: 10px;
     }
+
+    
 
 }

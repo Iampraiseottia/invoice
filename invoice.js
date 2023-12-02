@@ -11,8 +11,8 @@ function onSubmit(){
         updateData(inputData);
 
 
-    refreshData();
-    
+    refreshData()
+
 }
 
 function readData(){
@@ -31,7 +31,7 @@ function insertData(data){
     cell1 = newRow.insertCell(0);
     cell1.innerHTML = data.description;
     cell2 = newRow.insertCell(1);
-    cell2.innerHTML = data.amount;
+    cell2.innerHTML = data.amount;  
     cell3 = newRow.insertCell(2);
     cell3.innerHTML = data.tax;
     
@@ -41,6 +41,9 @@ function insertData(data){
 
     
 }
+    refreshData();
+    
+
 
 //Thes is to automatically refresh the browser input field
 
@@ -88,7 +91,7 @@ function Calc(all){
     var amt = all.parentElement.parentElement.children[1].children[1].value;
 
     const amtValue = parseInt(amt.replace(/,/g, ''));
-    const taxValue = parseInt(tax.replace(/,/g, ''));
+    const taxValue = parseInt(tax.replace(/,/g,'')); 
 
 
     var subtotal = amtValue + (taxValue / 100);
@@ -190,3 +193,66 @@ const printButton = document.getElementById('printButtonInPdf');
 printButton.addEventListener('click', function(){
   window.print();
 })
+
+//Get Company Name, Billing Address, Invoice# & Date
+
+const getCompanyName = document.getElementById('getcompanyName');
+const dispayCompanyName = document.getElementById('dispayuCompanyName');
+const dispayCompanyName2 = document.getElementById('dispayCompanyName');
+const getBillingAddress = document.getElementById('getbillingAddress');
+const dispayBilling = document.getElementById('dispayBillingAddress');
+const dispayBillingAddress2 = document.getElementById('dispayuBillingAddress');
+const inviceNum = document.getElementById('invoice-Number');
+const dateCollect = document.getElementById('invoice-date');
+const dispayDate = document.getElementById('date');
+const displayInvoiceNumber = document.getElementById('displayInvoiceNumber');
+const displayDate2 = document.getElementById('displayDate');
+
+const currentDate = new Date();
+const dateOptions = { dateStyle: 'short' };
+const formattedDate = currentDate.toLocaleDateString(undefined, dateOptions);
+displayDate2.textContent = formattedDate;
+dispayDate.textContent = formattedDate;
+
+
+getCompanyName.addEventListener('input', function() {
+  const value = getCompanyName.value;
+  dispayCompanyName.textContent = value.toUpperCase();
+  dispayCompanyName2.textContent = value.toUpperCase();
+  dispayCompanyName2.style.fontWeight = '900';
+});
+
+getBillingAddress.addEventListener('input', function() {
+  const value = getBillingAddress.value;
+  dispayBilling.textContent = value.toUpperCase();
+  dispayBillingAddress2.textContent = value.toUpperCase();
+});
+
+dateCollect.addEventListener('input', function() {
+  const value = dateCollect.value;
+  dispayDate.textContent = value;
+  displayDate2.textContent = value;
+});
+
+inviceNum.addEventListener('input', function() {
+  const value = inviceNum.value;
+  displayInvoiceNumber.textContent = value;
+});
+
+//Display Tables in Print
+const myTable = document.getElementById('invoiceTable');
+const tableContainer = document.getElementById('dispayInvoiceTabe');
+
+const clonedTable = myTable.cloneNode(true);
+tableContainer.appendChild(clonedTable);
+
+
+//Print Table
+var originalContent = document.getElementById('content'); // Get the original content element
+var container = document.getElementById('container'); // Get the container element
+
+var clonedContent1 = originalContent.cloneNode(true); // Create a deep copy of the original content
+var clonedContent2 = originalContent.cloneNode(true); // Create another deep copy of the original content
+
+container.appendChild(clonedContent1); // Append the first cloned content to the container
+container.appendChild(clonedContent2); // Append the second cloned content to the container
