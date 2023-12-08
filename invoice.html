@@ -28,8 +28,6 @@
         </div>
     </section>
 
-    
-
     <!----------------------INVOICE MAIN---------------------->
     <section id="praise">
         <h1 class="invoice-header">
@@ -65,7 +63,6 @@
             <p class="dot">&#183;</p>
             <p class="text">Delivery Note</p>
         </div>
-
 
         <div class="btn">
             <button class="basic">Basic Form</button>
@@ -131,17 +128,14 @@
                         <input onchange="Calc(this)" value="" placeholder="Input the Cost" id="Amount" type="text" class="book2">
                     </div>
 
-
                     <div class="tx">
                         <p class="meat">Tax ( % )</p>
                         <input onchange="Calc(this)"  value=""  placeholder="Enter the Tax" id="Tax" type="text" class="book3">
-
                     </div>
                 </div>
 
                 <button onclick="onSubmit(event.preventDefault)" class="add" id="addItem">Add New Item</button>
                 
-
                 <table id="invoiceTable">   
                     <thead>
                         <tr>
@@ -175,15 +169,11 @@
                 </div>
                 
                 <div class="stew">
-                    <p class="sub">Subtotal Of Current Items/Task</p>
-                    <!-- <p class="sub1" id="total1">0</p> -->
-                    
+                    <p class="sub">Subtotal Of Current Items/Task</p>                    
                     <div class="pufpuf">
                         <p class="sub2" id="total2">0</p> 
                         <h5 class="archumbo">FCFA</h5>                   
                     </div>
-
-
                 </div>
 
                 <div class="beans">
@@ -216,8 +206,6 @@
                 <p class="sweet">Save Invoice, Print or via Email</p>
             </button>
         </div>
-
-       
 
     </section>
 
@@ -301,8 +289,6 @@
             <p class="finally">Cameroon</p>
             <p class="thanks">&#183;</p>
             <p class="finally">Copyright © 2023</p>
-            <!-- <p class="thanks">©</p>
-            <p class="finally">2023</p> -->
             <p class="thanks">&#183;</p>
             <p class="finally">Invoice Home Inc.</p>
 
@@ -314,92 +300,95 @@
 
     </section>
 
-<!-- Print Menu -->
-
-<section id="printHead">
-    <div class="lefthead">
-        <img src="img/logoprint.png" class="printlogoimg">
-    </div>
-    <div class="righthead">
-        <p id="dispayCompanyName">Company Name</p>
-        <br>
-        <p id="dispayBillingAddress">Billing Address</p>
-        <br>
-        <p id="date">Date</p>
-    </div>
-</section>
-
-<section id="detailsPrint">
-    <div class="leftprintdetails">
-        <h3 class="printbill">
-            BILL TO:
-        </h3>
-        <br>
-        <p class="detailsPrintName" id="dispayuCompanyName">
-            company Name
-        </p>
-        <br>
-        <p class="printaddress" id="dispayuBillingAddress">
-            Address
-        </p>
-    </div>
-    <div class="rightdetailsprint">
-        <h3>
-            Invoice #
-        </h3>
-        <br>
-        <p class="detailsPrintNumber" id="displayInvoiceNumber">
-            00001
-        </p>
-        <br>
-        <h3>
-            Invoice Due Date
-        </h3>
-        <br>
-        <p class="detailsPrintDate" id="displayDate">09/11/2023</p>
         
-    </div>
-</section>
+    <!-- Print Menu -->
 
-<hr>
+    <section id="printHead">
+        <div class="lefthead">
+            <img src="img/logoprint.png" class="printlogoimg">
+        </div>
+        <div class="righthead">
+            <p id="dispayCompanyName">Company Name</p>
+            <br>
+            <p id="dispayBillingAddress">Billing Address</p>
+            <br>
+            <p id="date">Date</p>
+        </div>
+    </section>
 
-<table id="tableInvoice" style="margin-left: 60px;
-margin-top: 40px;
-margin-bottom: 20px;">   
-    <thead>
-        <tr>
-            <th class="table-head">Description</th>
-            <th class="table-head">Amount</th>
-            <th class="table-head">Tax</th>
-        </tr>
-    </thead>
+    <section id="detailsPrint">
+        <div class="leftprintdetails">
+            <h3 class="printbill">
+                BILL TO:
+            </h3>
+            <br>
+            <p class="detailsPrintName" id="dispayuCompanyName">
+                company Name
+            </p>
+            <br>
+            <p class="printaddress" id="dispayuBillingAddress">
+                Address
+            </p>
+        </div>
+        <div class="rightdetailsprint">
+            <h3>
+                Invoice #
+            </h3>
+            <br>
+            <p class="detailsPrintNumber" id="displayInvoiceNumber">
+                00001
+            </p>
+            <br>
+            <h3>
+                Invoice Due Date
+            </h3>
+            <br>
+            <p class="detailsPrintDate" id="displayDate">09/11/2023</p>
+            
+        </div>
+    </section>
 
-        <tbody id="result"></tbody>
-</table>
+    <hr>
 
-<div id="werey"></div>
-<br>
-<hr>
+    <table id="tableInvoice" style="margin-left: 60px;
+    margin-top: 40px;
+    margin-bottom: 20px;">   
+        <thead>
+            <tr>
+                <th class="table-head" style="background-color: rgb(208, 248, 246);">Description</th>
+                <th class="table-head" style="background-color: rgb(208, 248, 246);">Amount</th>
+                <th class="table-head" style="background-color: rgb(208, 248, 246);">Tax</th>
+            </tr>
+        </thead>
 
-<section id="notesPrint">
-    <div class="notesPrintMessage">
-        <h3>
-            NOTES:
-        </h3>
-        <br>
-        <p class="notesPrintText">
-            The Total Sum Of Everything As Listed Above is <span class="unique">&#8594</span>
-        </p>
+            <tbody id="result"></tbody>
+    </table>
 
-    </div>
+    <div id="werey"></div>
     <br>
-    <h3 class="valuePrint">
-        <p class="printTotal" >
-            0000
-        </p>
-        <span>FCFA</span>
-    </h3>
-</section>
+    <hr>
+
+    <section id="notesPrint">
+        <div class="notesPrintMessage">
+            <h3>
+                NOTES:
+            </h3>
+            <br>
+            <p class="notesPrintText">
+                The Total Sum Of Everything As Listed Above is <span class="unique">&#8594</span>
+            </p>
+
+        </div>
+        <br>
+        <h3 class="valuePrint">
+            <p class="printTotal" >
+                0000
+            </p>
+            <span>FCFA</span>
+        </h3>
+    </section>
+
+
 
 
     <script src="invoice.js" text/javascript></script>

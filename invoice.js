@@ -38,6 +38,9 @@ function insertData(data){
     cell4.innerHTML = `<a href="" onClick="onEdit(this)">Edit</a>
                         <a href="" onClick="onDelete(this)">Delete</a>`;
 
+
+
+  //Print Table
   let objectTable = {
     'description': data.description,
     'amount': data.amount,
@@ -136,6 +139,9 @@ function Calc(all){
     grandSum = sumAmt + sumTax;
     document.getElementById('total').innerHTML = grandSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
+    var printTotalElement = document.querySelector('.printTotal');
+    printTotalElement.innerHTML = grandSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    
 }
 
 
@@ -255,4 +261,3 @@ inviceNum.addEventListener('input', function() {
   displayInvoiceNumber.textContent = value;
 });
 
-//Print Table
