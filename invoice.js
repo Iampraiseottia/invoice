@@ -24,7 +24,6 @@ function readData(){
 }
 
 
-
 function insertData(data){
     var table = document.getElementById('invoiceTable').getElementsByTagName('tbody')[0], sum = 0;
     var newRow = table.insertRow(table.length); 
@@ -39,10 +38,27 @@ function insertData(data){
     cell4.innerHTML = `<a href="" onClick="onEdit(this)">Edit</a>
                         <a href="" onClick="onDelete(this)">Delete</a>`;
 
-    
+  let objectTable = {
+    'description': data.description,
+    'amount': data.amount,
+    'tax': data.tax
+  }
+  
+  let tableBody = document.getElementById('result');
+
+  var row = document.createElement('tr');
+  
+  Object.values(objectTable).forEach(function(value) {
+    var cell = document.createElement('td');
+    cell.textContent = value;
+    row.appendChild(cell);
+  });
+  
+  tableBody.appendChild(row);
+
+
 }
     refreshData();
-    
 
 
 //Thes is to automatically refresh the browser input field
@@ -239,20 +255,4 @@ inviceNum.addEventListener('input', function() {
   displayInvoiceNumber.textContent = value;
 });
 
-//Display Tables in Print
-const myTable = document.getElementById('invoiceTable');
-const tableContainer = document.getElementById('dispayInvoiceTabe');
-
-const clonedTable = myTable.cloneNode(true);
-tableContainer.appendChild(clonedTable);
-
-
 //Print Table
-var originalContent = document.getElementById('content'); // Get the original content element
-var container = document.getElementById('container'); // Get the container element
-
-var clonedContent1 = originalContent.cloneNode(true); // Create a deep copy of the original content
-var clonedContent2 = originalContent.cloneNode(true); // Create another deep copy of the original content
-
-container.appendChild(clonedContent1); // Append the first cloned content to the container
-container.appendChild(clonedContent2); // Append the second cloned content to the container
