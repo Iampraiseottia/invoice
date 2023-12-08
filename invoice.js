@@ -200,21 +200,12 @@ TaxEntered.addEventListener('input', function() {
   this.value = inputValue;
 });
 
+
 // Function to add commas to a number
 function addCommas(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-
-
-
-//PRINT PDF
-
-const printButton = document.getElementById('printButtonInPdf');
-
-printButton.addEventListener('click', function(){
-  window.print();
-})
 
 //Get Company Name, Billing Address, Invoice# & Date
 
@@ -261,3 +252,19 @@ inviceNum.addEventListener('input', function() {
   displayInvoiceNumber.textContent = value;
 });
 
+
+//PRINT PDF
+
+document.getElementById('printButtonInPdf').addEventListener('click', function() {
+
+  document.getElementById('mainInvoiceTable').style.display = 'block';
+
+  printJS({
+    printable: 'mainInvoiceTable',
+    type: 'html',
+    targetStyles: ['*']
+  });
+
+  document.getElementById('mainInvoiceTable').style.display = 'none';
+
+});
