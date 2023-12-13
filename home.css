@@ -1,0 +1,48 @@
+#header{
+    background-color: #37517E;
+    color: white;
+    padding: 30px 50px;
+}
+
+.home-img{
+    height: 37px;
+    width: 37px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+.header-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav ul{
+    width: 700px;
+    display: flex;
+    justify-content: space-between;
+}
+
+li{
+    list-style: none;
+    font-size: 19px;
+    margin-top: 7px;
+}
+
+
+.signIn{
+    height: 44px;
+    width: 120px;
+    color: white;
+    background-color: #37517E;
+    border: 2px solid #47B2E4;
+    border-radius: 17px;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 7px 12px;
+}
+
+
+
+
