@@ -268,3 +268,5 @@ document.getElementById('printButtonInPdf').addEventListener('click', function()
   document.getElementById('mainInvoiceTable').style.display = 'none';
 
 }); 
+
+

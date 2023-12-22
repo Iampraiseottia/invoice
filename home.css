@@ -43,6 +43,56 @@ li{
     padding: 7px 12px;
 }
 
+nav ul li a:hover{
+    cursor: pointer;
+    color: lightgray;
+}
 
+.current a{
+    color: lightseagreen;
+    font-weight: bold;
+}
+
+.current a:hover{
+    color: lightseagreen;
+    opacity: 0.8;
+}
+
+.signIn:hover{
+    background-color: lightseagreen;
+    color: white;
+    cursor: pointer;
+}
+
+nav ul li a{
+    list-style: none;
+    text-decoration: none;
+    color: white;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    padding: 12px 16px;
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a{
+    color: #37517E;
+    text-decoration: none;
+    font-weight: 600;
+}
 
 
