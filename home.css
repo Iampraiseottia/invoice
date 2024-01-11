@@ -250,3 +250,84 @@ span{
 .why-us{
     font-size: 18px;
 }
+
+.section {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+.section.show {
+    opacity: 1;
+    transform: none;
+}
+
+/* CALL TO ACTION */
+#call-to-action{
+    background: url('./img/call.jpg');
+    height: 400px;
+    margin-top: 150px;
+    margin-bottom: 80px;
+    background-position: left;
+    background-color: #3f6ab3;
+    background-blend-mode: multiply;
+}
+
+#call-to-action h3{
+    text-align: center;
+    color: white;
+    padding-top: 60px;
+    font-size: 40px;
+    font-weight: 700;
+}
+
+.call p{
+    color: white;
+    padding-top: 50px;
+    font-size: 24px;
+}
+
+.take{
+    margin-top: 50px;
+    height: 55px;
+    width: 200px;
+    border: 2px solid white;
+    padding: 10px 22px;
+    border-radius: 27px;
+    font-size: 17px;
+    font-weight: 600;
+    background: transparent;
+}
+
+.take a{
+    text-decoration: none;
+    color: white;
+}
+
+
+/* SERVICES */
+#services{
+    background-color: rgb(236, 236, 236);
+    margin: 200px 0px 50px 0px;
+    padding: 70px;
+}
+
+.service-title{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 0px 230px 0px 230px;
+}
+
+.service-title h3{
+    height: 40px;
+    width: 40px;
+    background: snow;
+    color: blue;
+    text-align: center;
+    padding-top: 3px;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+

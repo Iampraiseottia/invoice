@@ -26,3 +26,25 @@ clientImage.addEventListener("mouseover", function() {
 clientImage.addEventListener("mouseout", function() {
     clientImage.style.filter = "brightness(50%)";
 });
+
+//About Section Appear
+document.addEventListener('DOMContentLoaded', function() {
+    var aboutSection = document.querySelector('#About');
+    
+    var options = {
+      threshold: 0.5 
+    };
+    
+    var observer = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          observer.unobserve(entry.target);
+        }
+        
+      });
+    }, options);
+    
+    observer.observe(aboutSection);
+});
