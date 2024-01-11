@@ -14,3 +14,15 @@ dropdown.addEventListener('mouseout', function () {
 //Animate Image
 var image = document.getElementById("animate-image");
 image.classList.add("animate");
+
+
+//Client Images
+var clientImage = document.getElementById("client-image");
+
+clientImage.addEventListener("mouseover", function() {
+    clientImage.style.filter = "brightness(100%)";
+});
+
+clientImage.addEventListener("mouseout", function() {
+    clientImage.style.filter = "brightness(50%)";
+});
