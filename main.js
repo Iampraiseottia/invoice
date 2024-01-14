@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var aboutSection = document.querySelector('#About');
     
     var options = {
-      threshold: 0.5 
+      threshold: 0.35 
     };
     
     var observer = new IntersectionObserver(function(entries, observer) {
@@ -47,4 +47,26 @@ document.addEventListener('DOMContentLoaded', function() {
     }, options);
     
     observer.observe(aboutSection);
+});
+
+//Service Section Appear
+document.addEventListener('DOMContentLoaded', function() {
+  var serviceSection = document.querySelector('#services');
+  
+  var serviceOptions = {
+    threshold: 0.19 
+  };
+  
+  var serviceObserver = new IntersectionObserver(function(serviceEntries, observer) {
+    serviceEntries.forEach(function(serviceEntry) {
+      
+      if (serviceEntry.isIntersecting) {
+        serviceEntry.target.classList.add('serviceShow');
+        observer.unobserve(serviceEntry.target);
+      }
+      
+    });
+  }, serviceOptions);
+  
+  serviceObserver.observe(serviceSection);
 });
