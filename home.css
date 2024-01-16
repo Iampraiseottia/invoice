@@ -503,3 +503,30 @@ span{
     opacity: 1;
     transform: none;
 }
+
+
+/*TESTIMONY*/
+#testimony{
+    background-color: rgb(230, 230, 230);
+    margin-top: 55px;
+}
+
+#testimony-main{
+    margin-bottom: 250px;
+}
+
+.heart{
+    padding-top: 90px;
+    padding-bottom: 90px;
+}
+
+.love{
+    display: flex;
+    flex-direction: column;
+}
+
+.rating input{
+    display: none;
+
+}
+
