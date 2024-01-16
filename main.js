@@ -27,6 +27,7 @@ clientImage.addEventListener("mouseout", function() {
     clientImage.style.filter = "brightness(50%)";
 });
 
+
 //About Section Appear
 document.addEventListener('DOMContentLoaded', function() {
     var aboutSection = document.querySelector('#About');
@@ -49,6 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
     observer.observe(aboutSection);
 });
 
+
 //Service Section Appear
 document.addEventListener('DOMContentLoaded', function() {
   var serviceSection = document.querySelector('#services');
@@ -70,3 +72,27 @@ document.addEventListener('DOMContentLoaded', function() {
   
   serviceObserver.observe(serviceSection);
 });
+
+
+//Team Section Appear
+document.addEventListener('DOMContentLoaded', function() {
+  var teamSection = document.querySelector('#team');
+  
+  var teamOptions = {
+    threshold: 0.19 
+  };
+  
+  var teamObserver = new IntersectionObserver(function(teamEntries, observer) {
+    teamEntries.forEach(function(teamEntry) {
+      
+      if (teamEntry.isIntersecting) {
+        teamEntry.target.classList.add('teamShow');
+        observer.unobserve(teamEntry.target);
+      }
+      
+    });
+  }, teamOptions);
+  
+  teamObserver.observe(teamSection);
+});
+

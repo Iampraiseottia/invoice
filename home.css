@@ -473,6 +473,13 @@ span{
     width: 30px;
     border: 1px solid lightgrey;
     border-radius: 50%;
+    opacity: 0.9;
+}
+
+.social-media-img-pic:hover{
+    height: 31px;
+    width: 31px;
+    opacity: 1;
 }
 
 .team-para{
@@ -486,3 +493,13 @@ span{
     justify-content: space-between;
 }
 
+.teamSection{
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+.teamSection.teamShow {
+    opacity: 1;
+    transform: none;
+}
