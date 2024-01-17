@@ -71,6 +71,11 @@ nav ul li a:hover{
     border: 1px solid #5491fb;
 }
 
+.signIn a{
+    text-decoration: none;
+    color: white;
+}
+
 nav ul li a{
     list-style: none;
     text-decoration: none;
@@ -509,7 +514,7 @@ span{
 #testimony{
     background-color: rgb(230, 230, 230);
     margin-top: 55px;
-    padding-bottom: 40px;
+    padding-bottom: 80px;
     margin-bottom: 100px;
 }
 
@@ -576,4 +581,67 @@ span{
 .testimonySection.testimonyShow {
     opacity: 1;
     transform: none;
+}
+
+
+/* CONTACT */
+#contact{
+    margin: 20px 60px 80px 60px;
+}
+
+.contact-main-details{
+    height: 380px;
+    width: 400px;
+    border: 1px solid lightgrey;
+    box-shadow: 1px 8px 16px rgb(215, 215, 215);
+    padding: 35px 25px;
+    border-top: 4px solid #3f6ab3;
+    border-bottom: 4px solid #3f6ab3;
+}
+
+.contact-main{
+    margin-top: 89px;
+}
+
+.contact-main-details-content{
+    display: flex;
+}
+
+.contact-img{
+    margin-right: 15px;
+    height: 65px;
+    width: 71px;
+    margin-left: -10px;
+    margin-top: 14px;
+}
+
+.glory{
+    height: 75px;
+    width: 75px;
+    margin-left: -10px;
+    margin-right: 8px;
+    margin-top: -7px;
+}
+
+.jessica{
+    height: 77px;
+    width: 80px;
+    margin-left: -10px;
+    margin-right: 11px;
+    margin-top: -6px;
+}
+
+.contact-main-details-content h3{
+    font-size: 25px;
+    font-weight: 650;
+    color: #37517E;
+}
+
+.contact-main-details-content p{
+    color: #3b609f;
+}
+
+.contact-main-details:hover{
+    margin-top: -3px;
+    transition: 0.25s;
 }
