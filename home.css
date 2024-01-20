@@ -590,7 +590,7 @@ span{
 }
 
 .contact-main-details{
-    height: 380px;
+    height: 720px;
     width: 400px;
     border: 1px solid lightgrey;
     box-shadow: 1px 8px 16px rgb(215, 215, 215);
@@ -645,3 +645,12 @@ span{
     margin-top: -3px;
     transition: 0.25s;
 }
+
+#google-map{
+    height: 300px;
+    width: 325px;
+    background-color: gray;
+    margin-top: 30px;
+    margin-left: 10px;
+}
+
