@@ -18,4 +18,4 @@ The home pages also helps users see legit testimonies from those already using t
 
 Moreover, the home pages also gives the users details on how to get to our outstanding team in case bthey encounter any problem or which to give suggestions on what to improve in order to make Ease Invoice better and more user friendly
 
-
+Google map added to help users for location
