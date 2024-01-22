@@ -586,12 +586,13 @@ span{
 
 /* CONTACT */
 #contact{
-    margin: 20px 60px 80px 60px;
+    margin: 20px 25px 80px 25px;
 }
 
-.contact-main-details{
+.contact-main-details,
+.contact-main-input{
     height: 720px;
-    width: 400px;
+    width: 380px;
     border: 1px solid lightgrey;
     box-shadow: 1px 8px 16px rgb(215, 215, 215);
     padding: 35px 25px;
@@ -601,6 +602,7 @@ span{
 
 .contact-main{
     margin-top: 89px;
+    display: flex;
 }
 
 .contact-main-details-content{
@@ -654,3 +656,40 @@ span{
     margin-left: 10px;
 }
 
+.contact-main-input{
+    margin-left: 30px;
+    padding: 40px 0px 40px 10px;
+    width: 550px;
+    padding-left: 30px;
+}
+
+.name-input{
+    display: flex;
+}
+
+.name-input label{
+    font-size: 19px;
+    font-weight: 400;
+    opacity: 0.8;
+    margin-bottom: 15px;
+}
+
+.contact-main-input-field{
+    font-size: 16px;
+    height: 45px;
+    margin-top: 10px;
+    padding: 8px 14px;
+    border: 1px solid lightgray;
+    border-radius: 6px;
+    width: 230px;
+}
+
+.Subject{
+    width: 500px;
+}
+
+input:focus{
+    outline: red;
+    border: 1px solid #307bfd;
+    border-radius: 6px;
+}
