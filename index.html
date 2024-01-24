@@ -527,7 +527,13 @@
                     </div>
                     <div class="name-input">
                         <label>Your City / Town <input type="text" class="contact-main-input-field" placeholder="City / Town"></label>
-                        <label>Your Country <input type="text" class="contact-main-input-field" placeholder="Country"></label>
+                        <label style="margin-right: 20px;">Your Country
+                            <div class="country">
+                                <select id="Country" class="contact-main-input-field">
+                                  <option value="">Select Your Country</option>
+                                </select>
+                            </div>
+                        </label>
                     </div>
                     <div class="name-input">
                         <label>Subject <input type="text" class="contact-main-input-field Subject" placeholder="Subject"></label>
@@ -539,7 +545,7 @@
                     Message
                     "></textarea>
 
-                    <button class="send-btn">Send Message</button>
+                    <button class="send-btn" type="submit">Send Message</button>
                 </div>
         </div>
     </section>
