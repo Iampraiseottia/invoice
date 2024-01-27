@@ -529,9 +529,13 @@
                         <label>Your City / Town <input type="text" class="contact-main-input-field" placeholder="City / Town"></label>
                         <label style="margin-right: 20px;">Your Country
                             <div class="country">
-                                <select id="Country" class="contact-main-input-field">
-                                  <option value="">Select Your Country</option>
+                                <select id="Country" class="contact-main-input-field country-name">
+                                    <option value="">Select Your Country</option>
                                 </select>
+                                <div style="display: none;" id="selectedCountryContainer">
+                                    <img src="" alt="" id="selectedImage" style="height: 20px;">
+                                    <span id="selectedCountry"></span>
+                                </div>
                             </div>
                         </label>
                     </div>

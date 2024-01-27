@@ -601,7 +601,7 @@ marquee{
 
 .contact-main-details,
 .contact-main-input{
-    height: 720px;
+    height: 750px;
     width: 380px;
     border: 1px solid lightgrey;
     box-shadow: 1px 8px 16px rgb(215, 215, 215);
@@ -722,6 +722,10 @@ select:focus{
 .send-btn:hover{
     opacity: 0.8;
     transition: 0.15s;
+}
+
+.country-name{
+    padding-left: 44px;
 }
 
 
