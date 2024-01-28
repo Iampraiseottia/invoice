@@ -130,257 +130,6 @@ const confirmPassword = document.getElementById('Confirm-password');
 const country = document.getElementById('Country');
 
 
-// Defining the Countries
-// const countries = [
-//     'Afghanistan',
-//     'Albania', 
-//     'Algeria', 
-//     'American Samoa', 
-//     'Andorra', 
-//     'Angola', 
-//     'Anguilla',
-//     'Antarctica',
-//     'Antigua and Barbuda', 
-//     'Argentina', 
-//     'Armenia', 
-//     'Aruba', 
-//     'Australia', 
-//     'Austria',
-//     'Azerbaijan',
-//     'Bahamas', 
-//     'Bahrain', 
-//     'Bangladesh', 
-//     'Barbados', 
-//     'Belarus', 
-//     'Belgium',
-//     'Belize',
-//     'Benin', 
-//     'Bermuda', 
-//     'Bhutan', 
-//     'Bolivia', 
-//     'Bosnia and Herzegovina', 
-//     'Botswana',
-//     'Brazil',
-//     'Brunei Darussalam', 
-//     'Bulgaria', 
-//     'Burkina Faso', 
-//     'Burundi', 
-//     'Cambodia', 
-//     'Cameroon',
-//     'Canada',
-//     'Cape Verde', 
-//     'Cayman Islands', 
-//     'Central African Republic', 
-//     'Chad', 
-//     'Chile', 
-//     'China',
-//     'Christmas Island',
-//     'Cocos (Keeling) Islands', 
-//     'Colombia', 
-//     'Comoros', 
-//     'Democratic Republic of the Congo (Kinshasa)', 
-//     'Congo, Republic of (Brazzaville)', 
-//     'Cook Islands',
-//     'Costa Rica',
-//     `Côte D'ivoire (Ivory Coast)`, 
-//     'Croatia', 
-//     'Cuba', 
-//     'Cyprus', 
-//     'Czech Republic', 
-//     'Denmark',
-//     'Djibouti',
-//     'Dominica', 
-//     'Dominican Republic', 
-//     'East Timor (Timor-Leste)', 
-//     'Ecuador', 
-//     'Egypt', 
-//     'El Salvador',
-//     'Equatorial Guinea',
-//     'Eritrea', 
-//     'Estonia', 
-//     'Ethiopia', 
-//     'Falkland Islands', 
-//     'Faroe Islands', 
-//     'Fiji',
-//     'Finland',
-//     'France', 
-//     'Gabon', 
-//     'Gambia',
-//     'Georgia',
-//     'Germany', 
-//     'Ghana', 
-//     'Gibraltar', 
-//     'Greece', 
-//     'Greenland', 
-//     'Grenada',
-//     'Guadeloupe',
-//     'Guam', 
-//     'Guatemala', 
-//     'Guinea', 
-//     'Guinea-Bissau', 
-//     'Guyana', 
-//     'Haiti',
-//     'Holy See',
-//     'Honduras', 
-//     'Hong Kong', 
-//     'Hungary', 
-//     'Iceland', 
-//     'India', 
-//     'Indonesia',
-//     'Iran',
-//     'Iraq', 
-//     'Ireland', 
-//     'Israel', 
-//     'Italy', 
-//     'Ivory Coast', 
-//     'Jamaica',
-//     'Japan',
-//     'Jordan', 
-//     'Kazakhstan', 
-//     'Kenya', 
-//     'Kiribati', 
-//     'North Korea', 
-//     'South Korea',
-//     'Kosovo',
-//     'Kuwait', 
-//     'Kyrgyzstan', 
-//     'Lao', 
-//     'Latvia', 
-//     'Lebanon', 
-//     'Lesotho',
-//     'Liberia',
-//     'Libya', 
-//     'Liechtenstein', 
-//     'Lithuania', 
-//     'Luxembourg', 
-//     'Macau', 
-//     'Madagascar',
-//     'Malawi',
-//     'Malaysia', 
-//     'Maldives', 
-//     'Mali', 
-//     'Malta', 
-//     'Marshall Islands', 
-//     'Martinique',
-//     'Mauritania',
-//     'Mauritius', 
-//     'Mayotte', 
-//     'Mexico', 
-//     'Micronesia', 
-//     'Moldova', 
-//     'Monaco',
-//     'Mongolia',
-//     'Montenegro', 
-//     'Montserrat', 
-//     'Morocco', 
-//     'Mozambique', 
-//     'Myanmar, Burma', 
-//     'Namibia',
-//     'Nauru',
-//     'Nepal', 
-//     'Netherlands    ', 
-//     'New Caledonia', 
-//     'New Zealand', 
-//     'Nicaragua', 
-//     'Niger',
-//     'Nigeria', 
-//     'Niue', 
-//     'North Macedonia', 
-//     'Northern Mariana Islands', 
-//     'Norway', 
-//     'Oman', 
-//     'Pakistan', 
-//     'Palau', 
-//     'Palestine', 
-//     'Panama', 
-//     'Papua New Guinea', 
-//     'Paraguay', 
-//     'Peru', 
-//     'Philippines', 
-//     'Pitcairn Island', 
-//     'Poland', 
-//     'Portugal', 
-//     'Puerto Rico', 
-//     'Qatar', 
-//     'Reunion Island', 
-//     'Romania', 
-//     'Russian Federation', 
-//     'Rwanda', 
-//     'Saint Kitts and Nevis', 
-//     'Saint Lucia', 
-//     'Saint Vincent and the Grenadines', 
-//     'Samoa', 
-//     'San Marino', 
-//     'Sao Tome and Principe', 
-//     'Saudi Arabia', 
-//     'Senegal', 
-//     'Serbia', 
-//     'Seychelles', 
-//     'Sierra Leone', 
-//     'Singapore', 
-//     'Slovakia', 
-//     'Slovenia', 
-//     'Solomon Islands', 
-//     'Somalia', 
-//     'South Africa', 
-//     'South Sudan', 
-//     'Spain', 
-//     'Sri Lanka', 
-//     'Sudan', 
-//     'Suriname', 
-//     'Swaziland (Eswatini)', 
-//     'Sweden', 
-//     'Switzerland', 
-//     'Syria', 
-//     'Taiwan', 
-//     'Tajikistan', 
-//     'Tanzania', 
-//     'Thailand', 
-//     'Tibet', 
-//     'Timor-Leste', 
-//     'Togo', 
-//     'Tokelau',
-//     'Tonga', 
-//     'Trinidad and Tobago', 
-//     'Tunisia', 
-//     'Turkey', 
-//     'Turkmenistan', 
-//     'Turks and Caicos Islands', 
-//     'Tuvalu', 
-//     'Uganda', 
-//     'Ukraine', 
-//     'United Arab Emirates', 
-//     'United Kingdom', 
-//     'Tanzania', 
-//     'United States', 
-//     'Uruguay', 
-//     'Uzbekistan', 
-//     'Vanuatu', 
-//     'Venezuela',
-//     'Vietnam', 
-//     'Wallis and Futuna Islands', 
-//     'Western Sahara', 
-//     'Yemen',
-//     'Zambia', 
-//     'Zimbabwe'
-
-// ];
-
-// // Function to populate the country select element
-// const populateCountryOptions = () => {
-//     countries.forEach(countryName => {
-//       const option = document.createElement('option');
-//       option.value = countryName;
-//       option.textContent = countryName;
-//       country.appendChild(option);
-//     });
-// };
-
-// populateCountryOptions();
-
-
-
-
 const countries = [
   { 
     name: 'Afghanistan',
@@ -388,2300 +137,881 @@ const countries = [
   },
   { 
     name: 'Albania',
-   image: 'albania.png' },
+   image: 'albania.png' 
+  },
   { 
     name: 'Algeria',
      image: 'algeria.jpg'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'American Samoa',
+   image: 'American Samoa.png' 
   },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Andorra',
+   image: 'Andorra.png' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Angola',
+     image: 'Angola.png'
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Anguilla',
+   image: 'Anguilla.png' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Antarctica',
+   image: 'Antarctica.jpg' 
   },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Antigua and Barbuda',
+     image: 'Antigua and Barbuda.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Argentina',
+   image: 'Argentina.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Armenia',
+   image: 'Armenia.png' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Aruba',
+     image: 'Aruba.png'
   },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Australia',
+   image: 'Australia.png' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Austria',
+   image: 'Austria.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Azerbaijan',
+     image: 'Azerbaijan.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Bahamas',
+   image: 'Bahamas.png' 
   },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Bahrain',
+   image: 'Bahrain.png' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Bangladesh',
+     image: 'Bangladesh.png'
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Barbados',
+   image: 'Barbados.png' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Belarus',
+   image: 'Belarus.png' 
   },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Belgium',
+     image: 'Belgium.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Belize',
+   image: 'Belize.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Benin',
+   image: 'Benin.png' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Bermuda',
+     image: 'Bermuda.png'
   },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Bhutan',
+   image: 'Bhutan.png' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Bolivia',
+   image: 'Bolivia.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Bosnia and Herzegovina',
+     image: 'Bosnia and Herzegovina.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Botswana',
+   image: 'Botswana.png' 
   },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Brazil',
+   image: 'Brazil.png' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Brunei Darussalam',
+     image: 'Brunei Darussalam.png'
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Bulgaria',
+   image: 'Bulgaria.png' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Burkina Faso',
+   image: 'Burkina Faso.png' 
   },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Burundi',
+     image: 'Burundi.jpg'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Cambodia',
+   image: 'Cambodia.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Cameroon',
+   image: 'Cameroon.png' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Canada',
+     image: 'Canada.png'
   },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Cape Verde',
+   image: 'Cape Verde.png' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Cayman Islands',
+   image: 'Cayman Islands.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Central African Republic',
+     image: 'Central African Republic.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Chad',
+   image: 'Chad.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Chile',
+   image: 'Chile.png' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'China',
+     image: 'China.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Christmas Island',
+   image: 'Christmas Island.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Cocos (Keeling) Islands',
+   image: 'Cocos (Keeling) Islands.png' },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Colombia',
+     image: 'Colombia.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Comoros',
+   image: 'Comoros.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Democratic Republic of the Congo (Kinshasa)',
+   image: 'Democratic Republic of the Congo (Kinshasa).png' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Congo, Republic of (Brazzaville)',
+     image: 'Congo, Republic of (Brazzaville).png'
   },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Cook Islands',
+   image: 'Cook Islands.png' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Costa Rica',
+   image: 'Costa Rica.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: `Côte D'ivoire (Ivory Coast)`,
+     image: `Côte D'ivoire (Ivory Coast).jpg`
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Croatia',
+   image: 'Croatia.png' 
   },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Cuba',
+   image: 'Cuba.png' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Cyprus',
+     image: 'Cyprus.png'
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Czech Republic',
+   image: 'Czech Republic.png' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Denmark',
+   image: 'Denmark.png' 
   },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Djibouti',
+     image: 'Djibouti.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Dominica',
+   image: 'Dominica.jpg' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Dominican Republic',
+   image: 'Dominican Republic.png' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'East Timor (Timor-Leste)',
+     image: 'East Timor (Timor-Leste).jpg'
   },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Ecuador',
+   image: 'Ecuador.jpg' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Egypt',
+   image: 'Egypt.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'El Salvador',
+     image: 'El Salvador.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Equatorial Guinea',
+   image: 'Equatorial Guinea.jpg' 
   },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Eritrea',
+   image: 'Eritrea.png' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Estonia',
+     image: 'Estonia.png'
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Ethiopia',
+   image: 'Ethiopia.jpg' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Falkland Islands',
+   image: 'Falkland Islands.png' 
   },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Faroe Islands',
+     image: 'Faroe Islands.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Fiji',
+   image: 'Fiji.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Finland',
+   image: 'Finland.png' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'France',
+     image: 'France-flag.png'
   },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Gabon',
+   image: 'Gabon.png' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Gambia',
+   image: 'Gambia.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Georgia',
+     image: 'Georgia.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Germany',
+   image: 'Germany-flag.png' 
   },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Ghana',
+   image: 'Ghana.png' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Gibraltar',
+     image: 'Gibraltar.png'
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Greece',
+   image: 'Greece.png' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Greenland',
+   image: 'Greenland.png' 
   },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Grenada',
+     image: 'Grenada.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Guadeloupe',
+   image: 'Guadeloupe.jpg' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Guam',
+   image: 'Guam.png' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Guinea',
+     image: 'Guinea.png'
   },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Guinea-Bissau',
+   image: 'Guinea-Bissau.png' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Guyana',
+   image: 'Guyana.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Haiti',
+     image: 'Haiti.jpg'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Holy See',
+   image: 'Holy See.jpg' 
   },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Honduras',
+   image: 'Honduras.png' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Hong Kong',
+     image: 'Hong Kong.png'
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Hungary',
+   image: 'Hungary.jpg' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Iceland',
+   image: 'Iceland.png' 
   },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'India',
+     image: 'India.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Indonesia',
+   image: 'Indonesia.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Iran',
+   image: 'Iran.jpg' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Iraq',
+     image: 'Iraq.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Ireland',
+   image: 'Ireland.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Israel',
+   image: 'Israel.jpg' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Italy',
+     image: 'Italy-flag.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Jamaica',
+   image: 'Jamaica.jpg' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Japan',
+   image: 'Japan.png' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Jordan',
+     image: 'Jordan.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Kazakhstan',
+   image: 'Kazakhstan.jpg' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Kenya',
+   image: 'Kenya.png' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Kiribati',
+     image: 'Kiribati.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'North Korea',
+   image: 'North Korea.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'South Korea',
+   image: 'South Korea.jpg' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Kosovo',
+     image: 'Kosovo.jpg'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Kuwait',
+   image: 'Kuwait.jpg' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Kyrgyzstan',
+   image: 'Kyrgyzstan.jpg' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Lao',
+     image: 'Lao.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Latvia',
+   image: 'Latvia.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Lebanon',
+   image: 'Lebanon.png' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Lesotho',
+     image: 'Lesotho.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Liberia',
+   image: 'Liberia.jpg' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Libya',
+   image: 'Libya.png' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Liechtenstein',
+     image: 'Liechtenstein.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Lithuania',
+   image: 'Lithuania.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Luxembourg',
+   image: 'Luxembourg.png' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Macau',
+     image: 'Macau.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Madagascar',
+   image: 'Madagascar.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Malawi',
+   image: 'Malawi.png' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Malaysia',
+     image: 'Malaysia.jpg'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Maldives',
+   image: 'Maldives.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Mali',
+   image: 'Mali.png' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Malta',
+     image: 'Malta.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Marshall Islands',
+   image: 'Marshall Islands.jpg' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Mauritius',
+     image: 'Mauritius.png'
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Mayotte',
+   image: 'Mayotte.jpg' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Mexico',
+   image: 'Mexico.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Micronesia',
+     image: 'Micronesia.png'
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Moldova',
+   image: 'Moldova.png' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Mongolia',
+     image: 'Mongolia.jpg'
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Montenegro',
+   image: 'Montenegro.png' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Montserrat',
+   image: 'Montserrat.png' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Morocco',
+     image: 'Morocco.jpg'
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Mozambique',
+   image: 'Mozambique.jpg' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Myanmar',
+   image: 'Myanmar.png' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Namibia',
+     image: 'Namibia.png'
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Nauru',
+   image: 'Nauru.png' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Netherlands',
+     image: 'Netherlands.jpg'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'New Caledonia',
+   image: 'New Caledonia.jpg' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'New Zealand',
+   image: 'New Zealand.jpg' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Nicaragua',
+     image: 'Nicaragua.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Niger',
+   image: 'Niger.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Nigeria',
+   image: 'Nigeria.png' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Niue',
+     image: 'Niue.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'North Macedonia',
+   image: 'North Macedonia.jpg' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Northern Mariana Islands',
+   image: 'Northern Mariana Islands.png' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Norway',
+     image: 'Norway.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Oman',
+   image: 'Oman.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Pakistan',
+   image: 'Pakistan.jpg' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Palau',
+     image: 'Palau.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Palestine',
+   image: 'Palestine.jpg' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Panama',
+   image: 'Panama.png' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Papua New Guinea',
+     image: 'Papua New Guinea.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Paraguay',
+   image: 'Paraguay.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Peru',
+   image: 'Peru.jpg' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Philippines',
+     image: 'Philippines.jpg'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Pitcairn Island',
+   image: 'Pitcairn Island.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Poland',
+   image: 'Poland.png' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Portugal',
+     image: 'Portugal-flag.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Puerto Rico',
+   image: 'Puerto Rico.jpg' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Qatar',
+   image: 'Qatar.png' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Reunion Island',
+     image: 'Reunion Island.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Romania',
+   image: 'Romania.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Russian Federation',
+   image: 'Russian Federation.png' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Rwanda',
+     image: 'Rwanda.jpg'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Saint Kitts and Nevis',
+   image: 'Saint Kitts and Nevis.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Saint Lucia',
+   image: 'Saint Lucia.jpg' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Saint Vincent and the Grenadines',
+     image: 'Saint Vincent and the Grenadines.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Samoa',
+   image: 'Samoa.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'San Marino',
+   image: 'San Marino.png' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Sao Tome and Principe',
+     image: 'Sao Tome and Principe.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Saudi Arabia',
+   image: 'Saudi Arabia.jpg' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Senegal',
+   image: 'Senegal.jpg' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Serbia',
+     image: 'Serbia.jpg'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Seychelles',
+   image: 'Seychelles.jpg' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Sierra Leone',
+   image: 'Sierra Leone.png' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Singapore',
+     image: 'Singapore.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Slovakia',
+   image: 'Slovakia.jpg' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Slovenia',
+   image: 'Slovenia.png' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Solomon Islands',
+     image: 'Solomon Islands.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Somalia',
+   image: 'Somalia.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'South Africa',
+   image: 'South Africa.png' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'South Sudan',
+   image: 'South Sudan.jpg' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Spain',
+     image: 'Spain.png'
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Sudan',
+   image: 'Sudan.png' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Suriname',
+     image: 'Suriname.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Swaziland (Eswatini)',
+   image: 'Swaziland (Eswatini).png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Sweden',
+   image: 'Sweden.png' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Switzerland',
+     image: 'Switzerland.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Syria',
+   image: 'Syria.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Taiwan',
+   image: 'Taiwan.png' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Tajikistan',
+     image: 'Tajikistan.jpg'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Tanzania',
+   image: 'Tanzania.jpg' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Thailand',
+   image: 'Thailand.png' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Tibet',
+     image: 'Tibet.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Timor-Leste',
+   image: 'Timor-Leste.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Togo',
+   image: 'Togo.png' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Tokelau',
+     image: 'Tokelau.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Tonga',
+   image: 'Tonga.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Trinidad and Tobago',
+   image: 'Trinidad and Tobago.jpg' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Tunisia',
+     image: 'Tunisia.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Turkey',
+   image: 'Turkey.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Turkmenistan',
+   image: 'Turkmenistan.jpg' 
+  },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Turks and Caicos Islands',
+     image: 'Turks and Caicos Islands.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Tuvalu',
+   image: 'Tuvalu.jpg' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Uganda',
+   image: 'Uganda.png' },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'United Arab Emirates',
+     image: 'United Arab Emirates.jpg'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'United Kingdom',
+   image: 'United Kingdom.jpg' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'United States',
+     image: 'United States.jpg'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Uruguay',
+   image: 'Uruguay.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Uzbekistan',
+   image: 'Uzbekistan.jpg' },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Vanuatu',
+     image: 'Vanuatu.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Venezuela',
+   image: 'Venezuela.png' 
   },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Vietnam',
+   image: 'Vietnam.png' 
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
+    name: 'Western Sahara',
+   image: 'Western Sahara.png' 
   },
   { 
-    name: 'Albania',
-   image: 'albania.jpg' },
+    name: 'Yemen',
+   image: 'Yemen.png' },
   { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Zambia',
+     image: 'Zambia.png'
   },
   { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
-  },
-  { 
-    name: 'Afghanistan',
-   image: 'afghanistan.jpg' 
-  },
-  { 
-    name: 'Albania',
-   image: 'albania.jpg' },
-  { 
-    name: 'Algeria',
-     image: 'algeria.jpg'
+    name: 'Zimbabwe',
+   image: 'Zimbabwe.jpg' 
   }
-
+ 
 ];
 
 const selectElement = document.getElementById('Country');
@@ -2710,6 +1040,7 @@ selectElement.addEventListener('change', (event) => {
       selectedImageElement.style.height = '20px';
       selectedImageElement.style.marginTop = '-30px ';
       selectedImageElement.style.marginLeft = '15px ';
+      selectedImageElement.style.width = '30px';
 
       // Update the country name
       selectedCountryElement.textContent = country.name;
