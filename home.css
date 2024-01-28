@@ -732,5 +732,52 @@ select:focus{
 /* NEWSLETTER */
 #newletter{
     margin-top: 40px;
-    background-color: lightgray;
+    background-color: rgb(230, 234, 214);
+    text-align: center;
+    padding: 50px;
+    margin-bottom: 70px;
+}
+
+#newletter h3{
+    font-size: 30px;
+    color: #173f83;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+#newletter p{
+    margin-top: 25px;
+    margin-bottom: 30px;
+}
+
+#news-content input{
+    height: 48px;
+    width: 400px;
+    border: none;
+    border-radius: 25px;
+    padding: 5px 21px;
+    position: relative;
+}
+
+#news-content input:focus{
+    outline: red;
+    border: 2px solid #0d63f6;
+}
+
+#news-content button{
+    position: absolute;
+    height: 50px;
+    width: 150px;
+    font-size: 19px;
+    background-color: #0d63f6;
+    color: white;
+    border: 1px solid white;
+    border-radius: 22px;
+    right: 200px;
+}
+
+#news-content button:hover{
+    cursor: pointer;
+    opacity: 0.9;
+    transition: 0.15s;
 }
