@@ -658,12 +658,19 @@ marquee{
     transition: 0.25s;
 }
 
-#google-map{
+.contact-pic{
     height: 300px;
     width: 325px;
     background-color: gray;
     margin-top: 30px;
     margin-left: 10px;
+    box-shadow: 1px 4px 8px lightgray;
+}
+
+.contact-pic:hover{
+    height: 301px;
+    width: 325px;
+    transition: 0.15s;
 }
 
 .contact-main-input{

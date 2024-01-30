@@ -27,6 +27,7 @@ body{
 .invoice-left-img{
     width: auto;
     height: 30px;
+    margin-left: 15px;
 }
 
 .invoice-right-img{
@@ -34,23 +35,29 @@ body{
     width: auto;
 }
 
-.invoice-right-img1{
+.erica{
+    background-color: gold;
+    padding: 5px 6px;
+    border-radius: 9px;
+}
+
+.invoice-right-img1,
+.invoice-right-img2{
     height: 40px;
     width: auto;
     vertical-align: bottom;
 }
 
-.sign-in{
-    margin-left: 30px;
-    width: 80px;
+.invoice-right-img2{
+    height: 37px;
+    margin-top: -8px;
+}
+
+.user{
     height: 40px;
-    font-size: 16px;
-    background: rgb(255, 190, 70);
-    border: 1px solid rgb(255, 190, 70);
-    border-radius: 4px;
-    vertical-align: bottom;
-    margin-right: 25px;
-    cursor: pointer;
+    border-radius: 50%;
+    margin-left: 30px;
+    margin-right: 10px;
 }
 
 .invoice-right:hover,
