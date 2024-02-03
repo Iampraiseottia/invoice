@@ -29,7 +29,7 @@ body{
 }
 
 .wrapper .borderline{
-    border: 2px solid #c7128e;
+    border: 2px solid #3b609f;
     border-radius: 10px;
     padding: 40px;
 }
@@ -37,8 +37,8 @@ body{
 .wrapper h1{
     text-align: center;
     font-size: 36px;
-    color: rgb(194, 12, 94);
-    font-weight: 400;
+    color: #0b52cd;
+    font-weight: 600;
 }
 
 .wrapper .input_box{
@@ -71,7 +71,7 @@ body{
 
 .input_box input:valid ~ label,
 .input_box input:focus ~label{
-    color: #c7128e;
+    color: #3b79e5;
     font-size: 16px;
     transform: translateY(-25px);
     font-size: 17px;
@@ -104,17 +104,37 @@ body{
 .wrapper .btn{
     width: 100%;
     height: 45px;
-    background: rgb(118, 12, 46);
+    background: #0b52cd;
     border: none;
     outline: none;
     border-radius: 30px;
     cursor: pointer;
-    font-size: 16px;
-    color: #ffffff;
-    font-weight: 600;
-    margin-top: 20px;
+    margin-top: 10px;
+    margin-left: -2px;
 }
 
+.wrapper .btn a{
+    letter-spacing: 2px;
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 17.5px;
+    font-weight: 600;
+}
+
+.wrapper .btn:hover{
+    opacity: 0.9;
+    transition: 0.15s;
+}
+
+.kudi{
+    text-align: center;
+    margin-top: 18px;
+}
+
+.kudi a{
+    color: #0b52cd;
+    font-size: 18px;
+}
 
 textarea{
     width: 335px;

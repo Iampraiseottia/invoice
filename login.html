@@ -14,31 +14,35 @@
     <section class="wrapper">
         <div class="borderline">
         <form action="../view/view.html" onsubmit="return submitbtn()">
-            <h1>Login</h1>
+            <h1>Sign In Here</h1>
             <div class="input_box">
-                <box-icon name="rename" color="#4c0e2e"></box-icon>
+                <box-icon name="full-name" color="#4c0e2e"></box-icon>
                 <input type="text" id="title" minlength="2" maxlength="30" name="title" required>
-                <label>Title</label>
+                <label>Full Name</label>
                 <i></i>
                 <small id="titleerror">error message</small>
             </div>
 
             <div class="input_box">
-                <box-icon type='solid' name='timer' color="#4c0e2e"></box-icon>
-                <input id="duration" type="number" required>
-                <label>Duration(Hours)</label>
+                <box-icon type='solid' name='email' color="#4c0e2e"></box-icon>
+                <input id="duration" type="email" required>
+                <label>Email</label>
                 <i></i>
                 <small>error message</small>        
             </div>
 
             <div class="input_box">
-                <box-icon name='keyboard' type="solid" color="#4c0e2e"></box-icon>
-                <textarea type="text" id="description" placeholder="Description" name="Description" required></textarea>
-                <small id="descerror">error message</small>
+                <box-icon type='solid' name='password' color="#4c0e2e"></box-icon>
+                <input id="duration" type="password" required>
+                <label>Password</label>
+                <i></i>
+                <small>error message</small>        
             </div>
 
-            <button type="submit" class="btn">Confirm</button>
- 
+            <button type="submit" class="btn"><a href="invoice.html">LOGIN</a></button>
+            <p class="kudi">
+                Already have an account? <a href="register.html">Register</a>
+            </p>
 
         </form>
         </div>
