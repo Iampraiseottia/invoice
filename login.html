@@ -6,9 +6,43 @@
     <title>OTTIATECH Invoice | Login</title>
     <link rel="stylesheet" href="login.css">
     <link rel="stylesheet" href="invoice.css">
+    <link rel="stylesheet" href="register.css">
 
 </head>
 <body>
+
+    <section class="wrapper">
+        <div class="borderline">
+        <form action="../view/view.html" onsubmit="return submitbtn()">
+            <h1>Login</h1>
+            <div class="input_box">
+                <box-icon name="rename" color="#4c0e2e"></box-icon>
+                <input type="text" id="title" minlength="2" maxlength="30" name="title" required>
+                <label>Title</label>
+                <i></i>
+                <small id="titleerror">error message</small>
+            </div>
+
+            <div class="input_box">
+                <box-icon type='solid' name='timer' color="#4c0e2e"></box-icon>
+                <input id="duration" type="number" required>
+                <label>Duration(Hours)</label>
+                <i></i>
+                <small>error message</small>        
+            </div>
+
+            <div class="input_box">
+                <box-icon name='keyboard' type="solid" color="#4c0e2e"></box-icon>
+                <textarea type="text" id="description" placeholder="Description" name="Description" required></textarea>
+                <small id="descerror">error message</small>
+            </div>
+
+            <button type="submit" class="btn">Confirm</button>
+ 
+
+        </form>
+        </div>
+    </section>
 
     <script src="invoice.js"></script>
 
