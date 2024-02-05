@@ -136,6 +136,12 @@ body{
     font-size: 18px;
 }
 
+.terms{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+
 textarea{
     width: 335px;
     height: 60px;
