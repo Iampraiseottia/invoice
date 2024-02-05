@@ -9,6 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.3/jspdf.umd.min.js"></script>
     <script src="print.min.js"></script>
     <link rel="stylesheet" href="print.min.css">
+    <link rel="stylesheet" href="home.css">
 </head>
 <body>
     
@@ -69,7 +70,7 @@
 
         <div class="btn">
             <button class="basic">Basic Form</button>
-            <button class="advance">Advanced Form - <span class="advance-span">Due Date, Ship To, Qty</span></button>
+            <button class="advance">Advanced Form - <span class="advance-span" style="color: gray;">Due Date, Ship To, Qty</span></button>
             <br>
         
             <div class="prinzo">
@@ -95,26 +96,46 @@
                                 <textarea id="getbillingAddress" cols="50" rows="5" placeholder="Your customer's billing address"></textarea>
                             </div>
                         </div>
+                        
+                        <div>
+                            <div class="content" style="margin-left: 35px; margin-top: 25px; margin-bottom: 12px;">
+                                <div class="form-box"></div>
+                                <div class="form-box1"></div> 
+                                <div class="form-box1"></div> 
+                                <label class="perkins">Country</label>
+                            </div>
+                            <div class="country" style="margin-bottom: 25px;">
+                                <select id="Country" class="contact-main-input-field country-name bizaro" style="width: 440px;">
+                                    <option value="">Select Your Country</option>
+                                </select>
+                                <div style="display: none;" id="selectedCountryContainer">
+                                    <img src="" alt="" id="selectedImage" style="height: 20px;">
+                                    <span id="selectedCountry"></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
     
                     <div class="date">
     
-                        <div class="gallery">
+                        <div id="gallery" class="gallery" onclick="selectImage()" style="margin-bottom: 25px;">
                             <p>Select Logo</p>
                             <img src="img/all-logos.png" class="all-logos">
                             <p>Logo Gallery</p>
                         </div>
+                        <div id="image-container" style="margin-bottom: 10px;"></div>
+
     
-                        <div class="content2">
-                            <p class="form-box"></p>
-                            <label class="perkins" style="margin-bottom: 10px;">Invoice #</label>
+                        <div class="content2" style="margin-bottom: 12px;">
+                            <p class="form-box" style="margin-top: 25px;"></p>
+                            <label class="perkins" style=" margin-top: 35px;">Invoice #</label>
                         </div>                    
                         
-                        <input type="number" value="100" class="invoice-input" id="invoice-Number">
+                        <input style="margin-bottom: 58px;" type="number" value="100" class="invoice-input" id="invoice-Number">
                     
-                        <p class="invoice-date">Invoice Date</p>
+                        <p class="invoice-date" style="margin-bottom: 20px;">Invoice Date</p>
     
-                        <input type="date" class="actual" value="29/01/2023" id="invoice-date">
+                        <input  type="date" class="actual" value="29/01/2023" id="invoice-date">
                     </div>
                 </div>
 
@@ -193,14 +214,16 @@
                     <label class="perkins"><span>Terms & Conditions</span></label>
                 </div>
 
-                <div class="pay">
+                <div class="pay" id="addSig" >
                     <textarea cols="50" rows="5" placeholder="Payment is due within 15 days"></textarea>
-                    <div class="signature" >
+                    <div id="sig" class="signature" onclick="selectFile()">
                         <p>Add Your</p>
                         <p>Signature</p>
                         <p class="form-box3"></p>
                     </div>
                 </div>
+
+                <div id="image-container2"></div>
 
             </div>
 
