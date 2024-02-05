@@ -38,15 +38,16 @@
             </div>
 
             <div class="input_box">
-                <box-icon type='solid' name='plane-alt'></box-icon>                <input id="duration" type="email" required>
-                <label>Country</label>
-                <i></i>
-                <small>error message</small>        
+                <select name="Country" id="Country" class="Country-reg">
+                    <option value="">Choose Your Country</option>
+                </select>
+                <box-icon style="padding-top: 6px;" type='solid' name='plane-alt'></box-icon>
+                <label style="padding-top: 6px;">Country:</label>
+                <small id="error-message">error message</small>
             </div>
 
             <div class="input_box">
                 <box-icon type='solid' name='timer' color="#4c0e2e"></box-icon>
-                <input id="duration" type="password" required>
                 <label>Password</label>
                 <i></i>
                 <small>error message</small>        
@@ -68,8 +69,6 @@
         </form>
         </div>
     </section>
-    <script type="text/javascript" src="register.js">
-   
-    </script>
+    <script type="text/javascript" src="register.js"></script>
 </body>
 </html>
