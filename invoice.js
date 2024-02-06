@@ -309,6 +309,175 @@ document.getElementById('printButtonInPdf').addEventListener('click', function()
 
 }); 
 
+document.getElementById('printButtonInPdf2').addEventListener('click', function() {
+
+  document.getElementById('mainInvoiceTable').style.display = 'block';
+
+  printJS({
+    printable: 'mainInvoiceTable',
+    type: 'html',
+    targetStyles: ['*']
+  });
+
+  document.getElementById('mainInvoiceTable').style.display = 'none';
+
+}); 
+
+document.getElementById('printButtonInPdf3').addEventListener('click', function() {
+
+  document.getElementById('mainInvoiceTable').style.display = 'block';
+
+  printJS({
+    printable: 'mainInvoiceTable',
+    type: 'html',
+    targetStyles: ['*']
+  });
+
+  document.getElementById('mainInvoiceTable').style.display = 'none';
+
+}); 
+
+document.getElementById('printButtonInPdf4').addEventListener('click', function() {
+
+  document.getElementById('mainInvoiceTable').style.display = 'block';
+
+  printJS({
+    printable: 'mainInvoiceTable',
+    type: 'html',
+    targetStyles: ['*']
+  });
+
+  document.getElementById('mainInvoiceTable').style.display = 'none';
+
+}); 
+
+document.getElementById('printButtonInPdf5').addEventListener('click', function() {
+
+  document.getElementById('mainInvoiceTable').style.display = 'block';
+
+  printJS({
+    printable: 'mainInvoiceTable',
+    type: 'html',
+    targetStyles: ['*']
+  });
+
+  document.getElementById('mainInvoiceTable').style.display = 'none';
+
+}); 
+
+document.getElementById('printButtonInPdf6').addEventListener('click', function() {
+
+  document.getElementById('mainInvoiceTable').style.display = 'block';
+
+  printJS({
+    printable: 'mainInvoiceTable',
+    type: 'html',
+    targetStyles: ['*']
+  });
+
+  document.getElementById('mainInvoiceTable').style.display = 'none';
+
+}); 
+
+document.getElementById('printButtonInPdf7').addEventListener('click', function() {
+
+  document.getElementById('mainInvoiceTable').style.display = 'block';
+
+  printJS({
+    printable: 'mainInvoiceTable',
+    type: 'html',
+    targetStyles: ['*']
+  });
+
+  document.getElementById('mainInvoiceTable').style.display = 'none';
+
+}); 
+
+document.getElementById('printButtonInPdf8').addEventListener('click', function() {
+
+  document.getElementById('mainInvoiceTable').style.display = 'block';
+
+  printJS({
+    printable: 'mainInvoiceTable',
+    type: 'html',
+    targetStyles: ['*']
+  });
+
+  document.getElementById('mainInvoiceTable').style.display = 'none';
+
+}); 
+
+document.getElementById('printButtonInPdf9').addEventListener('click', function() {
+
+  document.getElementById('mainInvoiceTable').style.display = 'block';
+
+  printJS({
+    printable: 'mainInvoiceTable',
+    type: 'html',
+    targetStyles: ['*']
+  });
+
+  document.getElementById('mainInvoiceTable').style.display = 'none';
+
+}); 
+
+document.getElementById('printButtonInPdf10').addEventListener('click', function() {
+
+  document.getElementById('mainInvoiceTable').style.display = 'block';
+
+  printJS({
+    printable: 'mainInvoiceTable',
+    type: 'html',
+    targetStyles: ['*']
+  });
+
+  document.getElementById('mainInvoiceTable').style.display = 'none';
+
+}); 
+
+document.getElementById('printButtonInPdf11').addEventListener('click', function() {
+
+  document.getElementById('mainInvoiceTable').style.display = 'block';
+
+  printJS({
+    printable: 'mainInvoiceTable',
+    type: 'html',
+    targetStyles: ['*']
+  });
+
+  document.getElementById('mainInvoiceTable').style.display = 'none';
+
+}); 
+
+document.getElementById('printButtonInPdf12').addEventListener('click', function() {
+
+  document.getElementById('mainInvoiceTable').style.display = 'block';
+
+  printJS({
+    printable: 'mainInvoiceTable',
+    type: 'html',
+    targetStyles: ['*']
+  });
+
+  document.getElementById('mainInvoiceTable').style.display = 'none';
+
+}); 
+
+document.getElementById('printButtonInPdf13').addEventListener('click', function() {
+
+  document.getElementById('mainInvoiceTable').style.display = 'block';
+
+  printJS({
+    printable: 'mainInvoiceTable',
+    type: 'html',
+    targetStyles: ['*']
+  });
+
+  document.getElementById('mainInvoiceTable').style.display = 'none';
+
+}); 
+
+
 
 //Select Files Signature
 
@@ -398,6 +567,8 @@ function displayFile(file) {
 
   var sig = document.getElementById('sig');
 
+  var arrange = document.getElementById('try');
+
   container.innerHTML = '';
 
   if (file) {
@@ -410,30 +581,48 @@ function displayFile(file) {
               fileContent = document.createElement('img');
 
               fileContent.src = 'img/default.png'; 
+              fileContent.style.height = '136px';
+              fileContent.style.width = '170px';
+              fileContent.style.paddingTop = '50px';
+
 
               sig.style.display = 'none';
-              
-
+              arrange.style.display = 'flex';
+              arrange.style.justifyContent = 'space-between';
+              arrange.style.marginRight = '20px';
           } 
           else if (file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png' || file.type === 'image/webp') {
               fileContent = document.createElement('img');
 
               fileContent.src = event.target.result;
+              fileContent.style.height = '136px';
+              fileContent.style.width = '170px';
+              fileContent.style.marginTop = '50px';
 
               fileContent.classList.add('selected-image');
 
               sig.style.display = 'none';
+              arrange.style.display = 'flex';
+              arrange.style.justifyContent = 'space-between';
+              arrange.style.marginRight = '20px';
+
           } 
           else {
               fileContent = document.createElement('a');
 
               fileContent.href = event.target.result;
+              fileContent.style.height = '136px';
+              fileContent.style.width = '170px';
+              fileContent.style.marginTop = '50px';
 
               fileContent.target = '_blank';
               
               fileContent.innerText = 'View File';
 
               sig.style.display = 'none';
+              arrange.style.display = 'flex';
+              arrange.style.justifyContent = 'space-between';
+              arrange.style.marginRight = '20px';
           }
 
           container.appendChild(fileContent);
