@@ -36,7 +36,7 @@ body{
 }
 
 .erica{
-    background-color: gold;
+    background-color: skyblue;
     padding: 5px 6px;
     border-radius: 9px;
 }
@@ -670,6 +670,19 @@ h6{
 
 .book3{
     margin-left: -40px;
+}
+
+.links_invoice a,
+.links_invoice2 a{
+    text-decoration: none;
+    color: black;
+}
+
+.links_invoice a:hover,
+.links_invoice2 a:hover{
+    cursor: pointer;
+    color: rgb(105, 105, 253);
+    transition: 0.15s;
 }
 
 /* TABLE */
