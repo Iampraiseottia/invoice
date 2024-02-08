@@ -5,19 +5,6 @@
     box-sizing: border-box;
 }
 
-body{
-    display: flex;
-    margin-top: 33px;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: fit-content;
-    background: url(../img/register.png) no-repeat;
-    background-size: cover;
-    background-position: center;
-}
-
-
 .wrapper{
     background: transparent;
     border: 2px solid rgb(156, 35, 122s);

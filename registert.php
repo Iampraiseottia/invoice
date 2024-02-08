@@ -6,14 +6,44 @@
     <title>Register</title>
     <link rel="stylesheet" href="register.css">
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
-    <link>
+    <link rel="icon" href="img/ottiatech.png">
+    <style>
+        body{
+            display: flex;
+            margin-top: 33px;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: fit-content;
+            background: url(img/register.png) no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
 </head>
 <body> 
 
 
     <section class="wrapper">
         <div class="borderline">
-        <form method="POST" action="process-registration.php">
+            <!----php code-->
+            <?php
+            include("config.php");
+            if(isset($_POST['submit'])){
+                $full_name = $_POST['full_name'];
+                $lname = $_POST['lname'];
+                $psuedo = $_POST['psuedo'];
+                $password = $_POST['password'];
+
+
+    mysqli_query($con,"INSERT INTO user(full_name,lname,psuedo,Password) VALUES('$full_name','$lname','$psuedo','$password')") or die("Erro occureded");
+    echo "<div class='message'><p> Registration successfully!</p></div><br>";
+    // echo "<a href='index.php'><button class='btn'>Login Now</button></a>";
+            }
+
+            ?>
+
+        <form method="POST">
             <h1>Sign Up</h1>
             <div class="input_box">
                 <box-icon name="rename" color="#4c0e2e"></box-icon>
@@ -56,7 +86,7 @@
 
             <div class="input_box">
                 <box-icon type='solid' name='timer' color="#4c0e2e"></box-icon>
-                <input id="duration" type="password" required>
+                <input id="duration" type="password" required >
                 <label>Confirm Password</label>
                 <i></i>
                 <small>error message</small>        
@@ -65,7 +95,7 @@
             <div class="terms">
                 <input type="checkbox"><p style="margin-left: 10px;">Agree to <span>Terms</span> and <span>Condition</span></p>
             </div>
-            <button type="submit" class="btn"><a href="invoice.html">REGISTER</a></button>
+            <button  class="btn">REGISTER</button>
  
         </form>
         </div>
