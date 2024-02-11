@@ -1,65 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./stylesheet.css">
-    <title>login </title>
-</head>
-<body>
-    <div class="container">
-        <div class=" box form-box">
-
+       
        <?php
     session_start();
 
     include("config.php");
 
     if(isset($_POST['submit'])){
-        $fname = mysqli_real_escape_string($con, $_POST['fname']);
+        $full_name = mysqli_real_escape_string($con, $_POST['full_name']);
         $password = mysqli_real_escape_string($con, $_POST['password']);
-    
-        $result = mysqli_query($con, "SELECT * FROM user WHERE fname = '$fname' AND passWord = '$password'") or die("Select Error");
+        $email = mysqli_real_escape_string($con, $_POST['email']);
+
+        $result = mysqli_query($con, "SELECT * FROM user WHERE full_name = '$full_name' AND email = '$email' AND password = '$password'") or die("Select Error");
         $row = mysqli_fetch_assoc($result);
             
        if(is_array($row) && !empty($row)){
-          $_SESSION['valid'] = $row['Email'];
-         $_SESSION['username'] = $row['Username'];
+          $_SESSION['valid'] = $row['password'];
+         $_SESSION['full_name'] = $row['full_name'];
+         $_SESSION['email'] = $row['email'];
+
         } else{
-          echo "<div class='message'><p>Wrong Username or Password!</p></div><br>";
-           echo "<a href='index.php'><button class='btn'>Go Back</button></a>";
+          echo "<div class='message'><p><b>Wrong Full Name OR Email Address OR Password!!!</b></p></div><br>";
+           echo "<a href='login.html'><button class='btn'>Try Again!!!</button></a>";
       }
     }
 
     if(isset($_SESSION['valid'])){
-        header("Location: message.php");
+        header("Location: invoice.html");
         exit(); 
    } else{
-   
-?>
 
-            <header>Login</header>
-            <form action="" method="post">
-               <div class="field input">
-                <label for="username"><span>fname</span></label><br>
-                <input type="text" name="fname" id="username" required>
-               </div>
-               <div class="field input">
-                <label for="password"><span>Password</span></label><br>
-                <input type="password" name="password" id="password" required>
-                
-               </div>
-               <div class="field">
-                <input type="submit" class="btn" name="submit" value="login" required>
-               </div> 
-               <div class="links">
-                Don't have account? <a href="./sign_up.php">sign_up Now</a>
-               </div>
-            </form>
-        </div>
-        <?php
              }
         ?>
-    </div>    
-</body>
-</html>
