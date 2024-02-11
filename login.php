@@ -1,4 +1,31 @@
-       
+<style>
+        *{
+            background: lightblue;
+            text-align: center;
+        }
+
+        .message{
+            margin-top: 200px;
+            font-size: 35px;
+            color: white;
+        }
+
+        .full{
+            height: 50px;
+            width: 150px;
+            background: white;
+            color: blue;
+            border: 1px solid blue;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        span{
+            color: blue;
+        }
+      </style>
        <?php
     session_start();
 
@@ -17,16 +44,14 @@
          $_SESSION['full_name'] = $row['full_name'];
          $_SESSION['email'] = $row['email'];
 
+         echo "<div class='message'><p><b>Welcome!!!. <span>Sucessful Login</span></b></p></div><br>";
+         echo "<a href='invoice.html'><button class='btn full'>Proceed...</button></a>";
+
+
         } else{
           echo "<div class='message'><p><b>Wrong Full Name OR Email Address OR Password!!!</b></p></div><br>";
-           echo "<a href='login.html'><button class='btn'>Try Again!!!</button></a>";
+           echo "<a href='login.html'><button class='btn full'>Try Again!!!</button></a>";
       }
     }
 
-    if(isset($_SESSION['valid'])){
-        header("Location: invoice.html");
-        exit(); 
-   } else{
-
-             }
         ?>
