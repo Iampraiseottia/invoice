@@ -648,7 +648,6 @@ const confirmPassword = document.getElementById('Confirm-password');
 
 const country = document.getElementById('Country');
 
-
 const countries = [
   { 
     name: 'Afghanistan',
