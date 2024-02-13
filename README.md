@@ -19,3 +19,9 @@ The home pages also helps users see legit testimonies from those already using t
 Moreover, the home pages also gives the users details on how to get to our outstanding team in case bthey encounter any problem or which to give suggestions on what to improve in order to make Ease Invoice better and more user friendly
 
 Google map added to help users for location
+
+Registration form is linked to the mysql database in the backend
+
+Login form is compared with the registration details found in the backend(mysql database) and access is granted if the details match or else an error message is displayed
+
+Posibility of viewing your deatils in the invoice page and editing and update it.
