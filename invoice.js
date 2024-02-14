@@ -1578,3 +1578,25 @@ selectElement.addEventListener('change', (event) => {
       selectedCountryContainer.style.display = 'none';
   }
 });
+
+
+// POP UP 
+  document.getElementById("user-image-link").addEventListener("click", function(event) {
+      event.preventDefault();
+      
+      // Send an AJAX request to fetch user details from the backend using PHP
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "invoice.php", true);
+      xhr.onreadystatechange = function() {
+          if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+              var userDetails = xhr.responseText;
+              document.getElementById("popup-content").innerHTML = userDetails;
+              document.getElementById("popup-container").style.display = "block";
+          }
+      };
+      xhr.send();
+  });
+
+  document.getElementById("popup-container").addEventListener("click", function() {
+      document.getElementById("popup-container").style.display = "none";
+  });
