@@ -1581,22 +1581,13 @@ selectElement.addEventListener('change', (event) => {
 
 
 // POP UP 
-  document.getElementById("user-image-link").addEventListener("click", function(event) {
-      event.preventDefault();
-      
-      // Send an AJAX request to fetch user details from the backend using PHP
-      var xhr = new XMLHttpRequest();
-      xhr.open("GET", "invoice.php", true);
-      xhr.onreadystatechange = function() {
-          if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-              var userDetails = xhr.responseText;
-              document.getElementById("popup-content").innerHTML = userDetails;
-              document.getElementById("popup-container").style.display = "block";
-          }
-      };
-      xhr.send();
-  });
+ 
+var popUpUserName = document.getElementById('username');
+var popUpEmail = document.getElementById('email');
+var popUpCountry = document.getElementById('Country');
+var popUpNumber = document.getElementById('phone_number');
+var popUpPassword = document.getElementById('password');
+var popUpBtn = document.getElementById('popUpBtn');
+// var popUpEdit = document.getElementById('');
+// var popUpUpdate = document.getElementById('');
 
-  document.getElementById("popup-container").addEventListener("click", function() {
-      document.getElementById("popup-container").style.display = "none";
-  });
