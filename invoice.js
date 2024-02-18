@@ -1578,16 +1578,3 @@ selectElement.addEventListener('change', (event) => {
       selectedCountryContainer.style.display = 'none';
   }
 });
-
-
-// POP UP 
- 
-var popUpUserName = document.getElementById('username');
-var popUpEmail = document.getElementById('email');
-var popUpCountry = document.getElementById('Country');
-var popUpNumber = document.getElementById('phone_number');
-var popUpPassword = document.getElementById('password');
-var popUpBtn = document.getElementById('popUpBtn');
-// var popUpEdit = document.getElementById('');
-// var popUpUpdate = document.getElementById('');
-

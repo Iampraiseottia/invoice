@@ -1,0 +1,54 @@
+#popup{
+    margin-top: 70px;
+    text-align: center;
+    border: 1px solid rgb(243, 243, 243);
+    width: 500px;
+    height: 490px;
+    margin-left: 280px;
+    background: rgb(243, 243, 243);
+    box-shadow: 1px 4px 8px lightgrey;
+    line-height: 1.4;
+}
+
+#popup h1{
+    color: blue;
+    letter-spacing: 2px;
+}
+
+#popup label{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    color: rgb(121, 121, 121);
+    font-size: 18px;
+}
+
+#popup label p{
+    color: #3f6ab3;
+}
+
+#popup .edit-btn{
+    height: 45px;
+    width: 120px;
+    font-size: 18px;
+    margin-top: 11px;
+    cursor: pointer;
+    border: 2px solid #5491fb;
+    border-radius: 11px;
+}
+
+#popup .edit-btn:hover{
+    border: 2px solid white;
+    background-color: #4687f8;
+    transition: 0.15s;
+}
+
+#popup .edit-btn a{
+    text-decoration: none;
+    color: #095ef1;
+}
+
+#popup .edit-btn a:hover{
+    color: white;
+    transition: 0.15s;
+}
