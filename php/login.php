@@ -45,12 +45,12 @@
          $_SESSION['email'] = $row['email'];
 
          echo "<div class='message'><p><b>Welcome!!!. <span>Sucessful Login</span></b></p></div><br>";
-         echo "<a href='invoice.html'><button class='btn full'>Proceed...</button></a>";
+         echo "<a href='../html/invoice.html'><button class='btn full'>Proceed...</button></a>";
 
 
         } else{
           echo "<div class='message'><p><b>Wrong Full Name OR Email Address OR Password!!!</b></p></div><br>";
-           echo "<a href='login.html'><button class='btn full'>Try Again!!!</button></a>";
+           echo "<a href='../html/login.html'><button class='btn full'>Try Again!!!</button></a>";
       }
     }
 
