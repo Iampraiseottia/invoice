@@ -9,6 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.3/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="../css/print.min.css">
     <link rel="stylesheet" href="../css/home.css">
+    <link rel="stylesheet" href="../css/popup.css">
 </head>
 <body>
     
@@ -26,16 +27,15 @@
             <img src="../img/portugal.png" class="invoice-right-img">
             <img src="../img/CM.png" class="invoice-right-img2">
 
-            <button onclick="openPopup()" id="popUpBtn" style="border: none; padding-right: 10px; margin-left: 11px; background: rgb(245, 245, 245); ">
-                <a href="../html/popup.html" id="user-image-link">
+            <button  type="submit" id="popUpBtn" style="border: none; padding-right: 10px; margin-left: 11px; background: rgb(245, 245, 245); ">
+                <a onclick="openPopup()" id="user-image-link">
                     <img src="../img/user.jpg" class="user">
                 </a>
             </button>
 
-            
-
         </div>
     </section>
+
 
     <!----------------------INVOICE MAIN---------------------->
     <section id="praise">
@@ -447,6 +447,28 @@
                 <span>FCFA</span>
             </h3>
         </section>
+    </section>
+
+
+
+    <!-------------- POP UP SECTION  --------------------->
+
+    <section class="popup" style="display: none;">
+        <div class="popuptext" id="myPopup">
+            
+            <h1>
+                Organization Details 
+            </h1>   
+    
+            <label>Full Name: <p id="popup-name">Ottiatech</p></label>        
+            <label>Phone Number: <p id="popup-number">+237 679 817 021</p></label>
+            <label>Country: <p id="popup-country">Canada</p></label>
+            <label>Password: <p id="popup-password">091104$Beteck</p></label>   
+    
+            <button class="edit-btn"><a href="../html/edit.html">Edit</a></button>
+        
+        
+        </div>
     </section>
 
 
