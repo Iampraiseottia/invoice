@@ -10,9 +10,11 @@ dropdown.addEventListener("mouseout", function () {
   dropdownContent.style.display = "none";
 });
 
+
 //Animate Image
 var image = document.getElementById("animate-image");
 image.classList.add("animate");
+
 
 //Client Images
 var clientImage = document.getElementById("client-image");
@@ -24,6 +26,7 @@ clientImage.addEventListener("mouseover", function () {
 clientImage.addEventListener("mouseout", function () {
   clientImage.style.filter = "brightness(50%)";
 });
+
 
 //About Section Appear
 document.addEventListener("DOMContentLoaded", function () {
@@ -44,6 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   observer.observe(aboutSection);
 });
+
 
 //Service Section Appear
 document.addEventListener("DOMContentLoaded", function () {
@@ -69,6 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
   serviceObserver.observe(serviceSection);
 });
 
+
 //Team Section Appear
 document.addEventListener("DOMContentLoaded", function () {
   var teamSection = document.querySelector("#team");
@@ -88,6 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   teamObserver.observe(teamSection);
 });
+
 
 //Testimony Section Appear
 document.addEventListener("DOMContentLoaded", function () {
@@ -112,6 +118,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   testimonyObserver.observe(testimonySection);
 });
+
 
 //SELECT COUNTRY
 const name = document.getElementById("name");
@@ -1023,6 +1030,7 @@ countries.forEach((country) => {
   option.textContent = country.name;
   selectElement.appendChild(option);
 });
+
 
 // Event listener for the select element
 selectElement.addEventListener("change", (event) => {

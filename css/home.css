@@ -270,7 +270,7 @@ span {
 
 /* CALL TO ACTION */
 #call-to-action {
-  background: url("./img/call.jpg");
+  background: url("../img/call.jpg");
   height: 400px;
   margin-top: 150px;
   margin-bottom: 80px;
@@ -296,7 +296,7 @@ span {
 .take {
   margin-top: 50px;
   height: 55px;
-  width: 200px;
+  width: 250px;
   border: 2px solid white;
   border-radius: 27px;
   font-size: 17px;
@@ -321,7 +321,7 @@ span {
 }
 
 .take a:hover {
-  color: blue;
+  color: rgb(0, 0, 255);
   font-weight: 500;
   transition: 0.15s;
 }
@@ -649,7 +649,8 @@ marquee {
   color: #3b609f;
 }
 
-.contact-main-details:hover {
+.contact-main-details:hover,
+.contact-main-input:hover {
   margin-top: -3px;
   transition: 0.25s;
 }
@@ -671,9 +672,8 @@ marquee {
 
 .contact-main-input {
   margin-left: 30px;
-  padding: 40px 0px 40px 10px;
-  width: 550px;
-  padding-left: 30px;
+  padding: 40px 0px 40px 30px;
+  width: 720px;
 }
 
 .name-input {
@@ -694,11 +694,11 @@ marquee {
   padding: 8px 14px;
   border: 1px solid lightgray;
   border-radius: 6px;
-  width: 230px;
+  width: 280px;
 }
 
 .Subject {
-  width: 500px;
+  width: 590px;
 }
 
 input:focus,
@@ -719,7 +719,7 @@ select:focus {
   color: white;
   margin-top: 9px;
   font-size: 18px;
-  margin-left: 123px;
+  margin-left: 193px;
 }
 
 .send-btn:hover {

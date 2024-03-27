@@ -43,6 +43,8 @@ function insertData(data) {
   cell4.innerHTML = `<a href="" onClick="onEdit(this)">Edit</a>
                         <a href="" onClick="onDelete(this)">Delete</a>`;
 
+
+
   //Print Table
   let objectTable = {
     description: data.description,
@@ -66,6 +68,8 @@ function insertData(data) {
 }
 refreshData();
 
+
+
 //Thes is to automatically refresh the browser input field
 
 function refreshData() {
@@ -77,6 +81,8 @@ function refreshData() {
 
   var selectedRow = null;
 }
+
+
 
 //edit each content
 
@@ -93,6 +99,8 @@ function onEdit(td) {
   document.getElementById("Tax").value = selectedRow.cells[2].innerHTML;
 }
 
+
+
 //update data in cell
 
 function updateData(inputData) {
@@ -103,6 +111,8 @@ function updateData(inputData) {
   selectedRow.cells[2].innerHTML = inputData.tax;
 }
 
+
+
 //delete cell
 
 function onDelete(td) {
@@ -111,6 +121,8 @@ function onDelete(td) {
   document.getElementById("invoiceTable").deleteRow(row.rowIndex);
   refreshData();
 }
+
+
 
 //CALCULATION
 
@@ -161,6 +173,8 @@ function Calc(all) {
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+
+
 //COMMA'S
 var amountEntered = document.getElementById("Amount");
 
@@ -182,6 +196,8 @@ amountEntered.addEventListener("input", function () {
   // Update the input value with the formatted number
   this.value = inputValue;
 });
+
+
 
 // Function to add commas to a number
 function addCommas(number) {
@@ -209,10 +225,12 @@ TaxEntered.addEventListener("input", function () {
   this.value = inputValue;
 });
 
+
 // Function to add commas to a number
 function addCommas(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+
 
 //Get Company Name, Billing Address, Invoice# & Date
 
@@ -278,6 +296,8 @@ inviceNum.addEventListener("input", function () {
   const value = inviceNum.value;
   displayInvoiceNumber.textContent = value;
 });
+
+
 
 //PRINT PDF
 
@@ -610,6 +630,8 @@ function displayFile(file) {
     reader.readAsDataURL(file);
   }
 }
+
+
 
 //Country
 
@@ -1521,6 +1543,7 @@ const selectedCountryContainer = document.getElementById(
   "selectedCountryContainer"
 );
 
+
 // Populate the select element with options
 countries.forEach((country) => {
   const option = document.createElement("option");
@@ -1528,6 +1551,7 @@ countries.forEach((country) => {
   option.textContent = country.name;
   selectElement.appendChild(option);
 });
+
 
 // Event listener for the select element
 selectElement.addEventListener("change", (event) => {

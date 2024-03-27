@@ -242,6 +242,7 @@ countries.forEach((country) => {
   selectElement.appendChild(option);
 });
 
+
 // Event listener for the select element
 selectElement.addEventListener("change", (event) => {
   const selectedCountry = event.target.value;
