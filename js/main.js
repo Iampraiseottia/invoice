@@ -1,9 +1,11 @@
+
 //Drop down
 var dropdown = document.querySelector(".dropdown");
 var dropdownContent = document.querySelector(".dropdown-content");
 
 dropdown.addEventListener("mouseover", function () {
   dropdownContent.style.display = "block";
+  
 });
 
 dropdown.addEventListener("mouseout", function () {
@@ -1017,8 +1019,11 @@ const countries = [
 ];
 
 const selectElement = document.getElementById("Country");
+
 const selectedImageElement = document.getElementById("selectedImage");
+
 const selectedCountryElement = document.getElementById("selectedCountry");
+
 const selectedCountryContainer = document.getElementById(
   "selectedCountryContainer"
 );
@@ -1026,9 +1031,13 @@ const selectedCountryContainer = document.getElementById(
 // Populate the select element with options
 countries.forEach((country) => {
   const option = document.createElement("option");
+
   option.value = country.name;
+
   option.textContent = country.name;
+
   selectElement.appendChild(option);
+
 });
 
 
@@ -1042,6 +1051,7 @@ selectElement.addEventListener("change", (event) => {
   if (country) {
     // Update the image source and height
     selectedImageElement.src = "img/" + country.image;
+
     selectedImageElement.style.height = "20px";
     selectedImageElement.style.marginTop = "-30px ";
     selectedImageElement.style.marginLeft = "15px ";

@@ -1,3 +1,5 @@
+
+
 const countries = [
   "Afghanistan",
   "Albania",
@@ -237,14 +239,20 @@ const selectElement = document.getElementById("Country");
 // Populate the select element with options
 countries.forEach((country) => {
   const option = document.createElement("option");
+
   option.value = country;
+
   option.textContent = country;
+
   selectElement.appendChild(option);
+
 });
 
 
 // Event listener for the select element
 selectElement.addEventListener("change", (event) => {
   const selectedCountry = event.target.value;
+
   console.log("Selected Country:", selectedCountry);
+
 });

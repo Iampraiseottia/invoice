@@ -318,6 +318,7 @@ span {
 .take:hover {
   background-color: white;
   cursor: pointer;
+  border: 4px solid #173f83;
 }
 
 .take a:hover {
