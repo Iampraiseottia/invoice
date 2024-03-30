@@ -30,7 +30,7 @@
       <!----php code-->
       <?php
             include("config.php");
-            if(isset($_POST['submit'])){
+            if(isset($_POST['submit'])) {
                 $full_name = $_POST['full_name'];
                 $email = $_POST['email'];
                 $phone_number = $_POST['phone_number'];
@@ -40,7 +40,7 @@
 
     mysqli_query($con,"INSERT INTO user(full_name,email,phone_number,Country,Password,confirm_password) VALUES('$full_name','$email','$phone_number','$Country','$password','$confirm_password')") or die("Erro occureded");
     echo "<div class='message'><p> Registration successfully!. Welcome to <span>EASE INVOICE</span></p></div><br>";
-    echo "<a href='invoice.html'><button class='btn full'>Continue...</button></a>";
+    echo "<a href='../html/invoice.html'><button class='btn full'>Continue...</button></a>";
             }
  else{
    
