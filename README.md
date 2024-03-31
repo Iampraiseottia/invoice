@@ -8,7 +8,7 @@ They can give the Tax each product will be charged
 
 They can see the tatal amount all the products will cost
 
-They can see the tatal tax that will be charged for all the products 
+They can see the tatal tax that will be charged for all the products
 
 Home page which directs you on how to get started and all the fantabulous services which Ease Invoice offers and provides
 
@@ -20,7 +20,7 @@ Moreover, the home pages also gives the users details on how to get to our outst
 
 Google map of the company added
 
-Zoming in and out of the google map 
+Zoming in and out of the google map
 
 Enlarge the map
 
