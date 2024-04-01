@@ -12,34 +12,22 @@ function closePopup(){
 
 }
 
-// // Retrieve input field values
-// var fullName = document.getElementById("title").value;
+// Retrive data
+const fullNameTake = document.getElementById("full-name-get").textContent;
+const emailTake = document.getElementById("email-get").textContent;
+const countryTake = document.getElementById("country-get").textContent;
+const passwordTake = document.getElementById("pass-get").textContent;
+const numberTake = document.getElementById("num-get").textContent;
 
-// var emailAddress = document.getElementById("email").value;
+// Display values in the input fields
+document.getElementById("name-dis").value = fullNameTake;
+document.getElementById("email-dis").value = emailTake;
+document.getElementById("num-dis").value = numberTake;
+document.getElementById("country-dis").value = countryTake;
+document.getElementById("password-dis").value = passwordTake;
 
-// var phoneNumber = document.getElementById("phone_number").value;
+const editData = document.getElementById('editMain');
 
-// var country = document.getElementById("Country").value;
+function edit(){
 
-// var password = document.getElementById("password").value;
-
-// // Display values in the pop-up <p> tags
-// var popFullName = document.querySelector(".pop-val:nth-of-type(1)");
-
-// var popEmailAddress = document.querySelector(".pop-val:nth-of-type(2)");
-
-// var popPhoneNumber = document.querySelector(".pop-val:nth-of-type(3)");
-
-// var popCountry = document.querySelector(".pop-val:nth-of-type(4)");
-
-// var popPassword = document.querySelector(".pop-val:nth-of-type(5)");
-
-// popFullName.textContent = fullName;
-
-// popEmailAddress.textContent = emailAddress;
-
-// popPhoneNumber.textContent = phoneNumber;
-
-// popCountry.textContent = country;
-
-// popPassword.textContent = password;
+}

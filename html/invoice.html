@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../css/print.min.css">
     <link rel="stylesheet" href="../css/home.css">
     <link rel="stylesheet" href="../css/popup.css">
+    <link rel="stylesheet" href="../css/edit.css">
 </head>
 <body>
     
@@ -445,27 +446,27 @@
         <img class="pop-img" src="../img/popup confirm.PNG">
         <h2>Organisation Details</h2>
         <div class="pop">
-            <label>Full Name:  <p class="pop-val">OTTIATECH</p></label>
-            <label>Email Address:  <p class="pop-val">ottiapraise50@gmail.com</p></label>
-            <label>Phone Number:  <p class="pop-val">679 81 70 21</p></label>
-            <label>Country:  <p class="pop-val">Canada</p></label>
-            <label>Password:  <p class="pop-val">091104$Beteck</p></label>
+            <label>Full Name:  <p class="pop-val" id="full-name-get">OTTIATECH</p></label>
+            <label>Email Address:  <p class="pop-val" id="email-get">ottiapraise50@gmail.com</p></label>
+            <label>Phone Number:  <p class="pop-val" id="num-get">679 81 70 21</p></label>
+            <label>Country:  <p class="pop-val" id="country-get">Canada</p></label>
+            <label>Password:  <p class="pop-val" id="pass-get">091104$Beteck</p></label>
         </div>
         <div class="up-btn">
             <button class="close" onclick="closePopup()">Okay!!!</button>
-            <button class="edit-pop"><a href="../html/edit.html">Edit</a></button>
+            <button class="edit-pop" onclick="edit()">Edit</button>
         </div>
     </section>
 
     <!---------------- Edit details --------------------->
-    <section>
+    <section id="editMain">
         <h2>Edit Details</h2>
         <div class="fields-det">
-            <label>Full Name:  <p class="pop-val">OTTIATECH</p></label>
-            <label>Email Address:  <p class="pop-val">ottiapraise50@gmail.com</p></label>
-            <label>Phone Number:  <p class="pop-val">679 81 70 21</p></label>
-            <label>Country:  <p class="pop-val">Canada</p></label>
-            <label>Password:  <p class="pop-val">091104$Beteck</p></label>
+            <label>Full Name:  <input type="text" id="name-dis"></label>
+            <label>Email Address:  <input type="email" id="email-dis"></label>
+            <label>Phone Number:  <input type="text" id="num-dis"></label>
+            <label>Country:  <input type="text" id="country-dis"></label>
+            <label>Password:  <input type="text" id="password-dis"></label>
         </div>
         <button class="update">Update</button>
     </section>
