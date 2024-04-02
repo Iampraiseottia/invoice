@@ -1,0 +1,74 @@
+#editMain{
+    height: auto;
+    width: 600px;
+    background: lightblue;
+    padding: 50px;
+    text-align: center;
+    margin-left: 190px;
+    line-height: 2.2;
+    position: absolute;
+    top: 0;
+    right: 50%;
+    transform: translate(50%, 7%) scale(1);
+    /* visibility: hidden; */
+    transition: tranform 0.45s, top 0.45s;
+    box-shadow: 1px 4px 22px gray;
+    display: none;
+}
+
+/* .edit-Details{ */
+    /* visibility: visible; */
+    /* transform: translate(124%, 7%) scale(1); */
+/* } */
+
+#editMain h2{
+    color: chocolate;
+    font-size: 30px;
+    letter-spacing: 3px;
+    font-weight: bold;
+}
+
+.fields-det label{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 18px;
+    margin-left: 29px;
+}
+
+.fields-det label input{
+    height: 30px;
+    width: 300px;
+    margin-bottom: 15px;
+    padding: 9px 20px;
+    margin-right: 21px;
+    border: 1px solid gray;
+    border-radius: 4px;
+    color: rgb(54, 54, 54);
+    font-size: 14px;
+}
+
+.fields-det label input:focus{
+    outline: red;
+    border-color: chocolate;
+}
+
+.update{
+    font-size: 20px;
+    height: 57px;
+    width: 550px;
+    margin-top: 11px;
+    padding: 12px 21px;
+    cursor: pointer;
+    background: chocolate;
+    color: white;
+    font-weight: bolder;
+    letter-spacing: 3px;
+    border: 1px solid chocolate;
+    transition: 0.15s;
+}
+
+.update:hover{
+    opacity: 0.8;
+
+}

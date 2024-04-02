@@ -12,6 +12,17 @@ function closePopup(){
 
 }
 
+
+const editData = document.getElementById('editMain');
+
+function editDetails(){
+
+    editData.style.display = 'block';
+
+}
+
+
+
 // Retrive data
 const fullNameTake = document.getElementById("full-name-get").textContent;
 const emailTake = document.getElementById("email-get").textContent;
@@ -26,8 +37,3 @@ document.getElementById("num-dis").value = numberTake;
 document.getElementById("country-dis").value = countryTake;
 document.getElementById("password-dis").value = passwordTake;
 
-const editData = document.getElementById('editMain');
-
-function edit(){
-
-}
