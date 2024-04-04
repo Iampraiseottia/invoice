@@ -1,4 +1,4 @@
-h/* GENERAL */
+/* GENERAL */
 * {
   margin: 0px;
   padding: 0px;
@@ -103,6 +103,11 @@ body {
   cursor: pointer;
 }
 
+.invoice-text a,
+.invoice-title a{
+  text-decoration: none;
+}
+
 .invoice-title {
   margin-top: 15px;
   margin-left: 150px;
@@ -116,8 +121,9 @@ body {
 
 .plug {
   font-size: 17.5px;
-  color: rgb(3, 64, 61);
+  color: rgb(38, 79, 136);
   opacity: 0.7;
+  font-weight: 700;
 }
 
 .plug:hover {
@@ -262,7 +268,7 @@ textarea {
 
 .gallery {
   margin-left: 20px;
-  height: 100px;
+  height: 108px;
   width: 170px;
   background: rgb(255, 243, 192);
   text-align: center;
@@ -270,7 +276,7 @@ textarea {
   font-size: 15px;
   line-height: 1.5;
   border: 1px solid rgb(233, 220, 159);
-  margin-top: 75px;
+  margin-top: 68px;
   margin-right: 24px;
   border-radius: 5px;
 }
