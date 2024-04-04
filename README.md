@@ -28,4 +28,8 @@ Registration form is linked to the mysql database in the backend
 
 Login form is compared with the registration details found in the backend(mysql database) and access is granted if the details match or else an error message is displayed
 
-Posibility of viewing your deatils in the invoice page and editing and update it.
+Posibility of viewing your deatils in the invoice page 
+
+Editting is enabled through a popup
+
+Update is made to the original details
