@@ -1,0 +1,236 @@
+/* Hero Section */
+.hero-section {
+  height: 90vh;
+  align-items: center;
+  padding-bottom: 10px;
+  background: url("../img/hero.jpg") no-repeat center center;
+  background-size: cover;
+  width: 100%;
+  background-color: rgb(77, 77, 77);
+  background-blend-mode: multiply;
+  text-align: center;
+  padding-top: 50px;
+  min-height: 50vh;
+  margin-top: -10px;
+}
+
+.hero-section .container {
+  position: relative;
+  z-index: 2; 
+}
+
+button a{
+  text-decoration: none;
+  color: white;
+}
+
+.hero-section h1,
+.hero-section p.lead {
+  color: #e0e0e0 !important; 
+}
+
+
+.hero-section .display-4 .text-success {
+  color: var(--success-color, #198754) !important;
+}
+
+.hero-section .display-4 .text-warning {
+  color: var(--warning-color, #ffc107) !important;
+}
+
+.display-4 {
+  font-size: 3.5rem; 
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+}
+
+.lead {
+  font-size: 1.25rem; 
+  color: var(--muted-color);
+  margin-bottom: 2rem;
+}
+
+.hero-image {
+  position: relative;
+  height: 500px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%; 
+}
+
+.floating-card {
+  position: absolute;
+  background: var(--white);
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  /* Ensure the float animation is applied here for larger screens */
+  animation: float 3s ease-in-out infinite; 
+}
+
+.floating-card.card-1 {
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+  color: var(--success-color);
+}
+
+.floating-card.card-2 {
+  top: 50%;
+  right: 10%;
+  animation-delay: 1s;
+  color: var(--warning-color);
+}
+
+.floating-card.card-3 {
+  bottom: 20%;
+  left: 20%;
+  animation-delay: 2s;
+  color: var(--primary-color);
+}
+
+/* Keyframe for float (bouncing up and down) animation */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* New Keyframe for mobile horizontal animation */
+@keyframes slideHorizontal {
+  0%,
+  100% {
+    transform: translateX(0px);
+  }
+  50% {
+    transform: translateX(20px); /* Moves 20px to the right */
+  }
+}
+
+@keyframes fadeInSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.hero-section .col-lg-6[data-aos="fade-right"] h1 {
+  animation: fadeInSlideUp 1s ease-out forwards;
+}
+
+.hero-section .col-lg-6[data-aos="fade-right"] p.lead {
+  animation: fadeInSlideUp 1s ease-out forwards;
+  animation-delay: 0.3s; 
+}
+
+.hero-section .col-lg-6[data-aos="fade-right"] .d-flex .btn {
+  animation: fadeInSlideUp 1s ease-out forwards;
+  animation-delay: 0.6s; 
+}
+
+
+/* Tablets (landscape) and small desktops */
+@media (max-width: 991.98px) {
+  .hero-section {
+    padding-top: 80px; 
+  }
+  .display-4 {
+    font-size: 2.8rem; 
+  }
+  .lead {
+    font-size: 1.1rem;
+  }
+  .hero-image {
+    height: 400px; 
+    margin-top: 3rem; 
+  }
+  .floating-card {
+    padding: 0.8rem 1.2rem; 
+    font-size: 0.9rem;
+  }
+  .floating-card.card-1 {
+    top: 15%;
+    left: 5%;
+  }
+  .floating-card.card-2 {
+    top: 45%;
+    right: 5%;
+  }
+  .floating-card.card-3 {
+    bottom: 15%;
+    left: 15%;
+  }
+}
+
+/* Mobile devices */
+@media (max-width: 767.98px) {
+  .hero-section {
+    padding-top: 30px !important;
+    text-align: center; 
+  }
+  .display-4 {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+  }
+  .lead {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .d-flex.gap-3.flex-wrap {
+    justify-content: center; 
+  }
+  .hero-image {
+    height: 300px; 
+    margin-top: -300px !important; 
+  }
+  
+  .floating-card {
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
+
+    animation: slideHorizontal 3s ease-in-out infinite !important; 
+  }
+  .floating-card.card-1 {
+    top: 10%;
+    left: 2%;
+  }
+  .floating-card.card-2 {
+    top: 40%;
+    right: 2%;
+  }
+  .floating-card.card-3 {
+    bottom: 10%;
+    left: 10%;
+  }
+
+  .btn-success{
+    padding: 12px 0 !important;
+  }
+}
+
+
+@media (min-width: 1000px) and (max-width: 1159px) {
+   .hero-section {
+    height: 65vh !important;
+  }
+
+  .werey{
+    margin-top: -250px !important;
+  }
+
+}
