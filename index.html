@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="./css/nav.css" />
     <link rel="stylesheet" href="./css/team.css" />
     <link rel="stylesheet" href="./css/service.css" />
+    <link rel="stylesheet" href="./css/testimony.css" />
+    <link rel="stylesheet" href="./css/faq.css" />
 
     <link
       rel="stylesheet"
@@ -20,6 +22,11 @@
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
     />
 
     <link rel="icon" href="/img/logo.png" style="border-radius: 50%" />
@@ -316,210 +323,360 @@
 
     <!-- Testimonials Section -->
     <section id="testimonials" class="py-5">
-      <div class="container">
-        <div class="row">
-          <div class="col-12 text-center mb-5" data-aos="fade-up">
-            <h2 class="display-5 fw-bold mb-3">
-              What Our <span class="text-primary">Clients Say</span>
-            </h2>
-            <p class="lead text-muted">
-              Don't just take our word for it - hear from our satisfied
-              customers
-            </p>
+      <div class="col-12 text-center mb-5" data-aos="fade-up">
+        <h2 class="display-5 fw-bold mb-3">
+          What Our
+          <span style="color: green">Clients Say</span>
+        </h2>
+      </div>
+
+      <!-- Swiper -->
+      <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <div class="testimonial-card">
+              <div class="card-header">
+                <img
+                  src="/img/testimonial-1.png"
+                  alt="Profile"
+                  class="profile-image"
+                />
+                <div class="user-info">
+                  <div class="user-name">Amina Belewa</div>
+                  <div class="user-location">
+                    Yaounde, Cameroon <span class="flag">🇨🇲</span>
+                  </div>
+                </div>
+                <div class="quote-marks">
+                  <div class="quote-mark"></div>
+                  <div class="quote-mark"></div>
+                </div>
+              </div>
+              <div class="testimonial-text">
+                EaseInvoice transformed my business operations completely.
+                Managing invoices used to be chaotic, but now everything is
+                organized and efficient. It's like having a personal assistant
+                for all my billing needs.
+              </div>
+              <div class="rating">
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="swiper-slide">
+            <div class="testimonial-card">
+              <div class="card-header">
+                <img
+                  src="/img/testimonial-2.png"
+                  alt="Profile"
+                  class="profile-image"
+                />
+                <div class="user-info">
+                  <div class="user-name">Carlos Rodriguez</div>
+                  <div class="user-location">
+                    Madrid, Spain <span class="flag">🇪🇸</span>
+                  </div>
+                </div>
+                <div class="quote-marks">
+                  <div class="quote-mark"></div>
+                  <div class="quote-mark"></div>
+                </div>
+              </div>
+              <div class="testimonial-text">
+                As a freelancer, tracking payments was a nightmare. EaseInvoice
+                streamlined everything - from creating professional invoices to
+                monitoring payment status. My cash flow improved dramatically!
+              </div>
+              <div class="rating">
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="swiper-slide">
+            <div class="testimonial-card">
+              <div class="card-header">
+                <img
+                  src="/img/testimonial-3.png"
+                  alt="Profile"
+                  class="profile-image"
+                />
+                <div class="user-info">
+                  <div class="user-name">Priya Sharma</div>
+                  <div class="user-location">
+                    Mumbai, India <span class="flag">🇮🇳</span>
+                  </div>
+                </div>
+                <div class="quote-marks">
+                  <div class="quote-mark"></div>
+                  <div class="quote-mark"></div>
+                </div>
+              </div>
+              <div class="testimonial-text">
+                EaseInvoice saved me countless hours every month. The automated
+                reminders and professional templates make my small business look
+                established. Clients pay faster now!
+              </div>
+              <div class="rating">
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 4 -->
+          <div class="swiper-slide">
+            <div class="testimonial-card">
+              <div class="card-header">
+                <img
+                  src="/img/testimonial-4.png"
+                  alt="Profile"
+                  class="profile-image"
+                />
+                <div class="user-info">
+                  <div class="user-name">Emma Thompson</div>
+                  <div class="user-location">
+                    London, UK <span class="flag">🇬🇧</span>
+                  </div>
+                </div>
+                <div class="quote-marks">
+                  <div class="quote-mark"></div>
+                  <div class="quote-mark"></div>
+                </div>
+              </div>
+              <div class="testimonial-text">
+                Before EaseInvoice, I was drowning in paperwork. Now my
+                invoicing is completely digital and organized. The reporting
+                features help me understand my business better than ever.
+              </div>
+              <div class="rating">
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 5 -->
+          <div class="swiper-slide">
+            <div class="testimonial-card">
+              <div class="card-header">
+                <img
+                  src="/img/testimonial-5.png"
+                  alt="Profile"
+                  class="profile-image"
+                />
+                <div class="user-info">
+                  <div class="user-name">Ahmed Hassan</div>
+                  <div class="user-location">
+                    Dubai, UAE <span class="flag">🇦🇪</span>
+                  </div>
+                </div>
+                <div class="quote-marks">
+                  <div class="quote-mark"></div>
+                  <div class="quote-mark"></div>
+                </div>
+              </div>
+              <div class="testimonial-text">
+                EaseInvoice handles multi-currency invoicing perfectly for my
+                international clients. The platform is intuitive and the
+                customer support is exceptional. Highly recommended!
+              </div>
+              <div class="rating">
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 6 -->
+          <div class="swiper-slide">
+            <div class="testimonial-card">
+              <div class="card-header">
+                <img
+                  src="/img/testimonial-6.png"
+                  alt="Profile"
+                  class="profile-image"
+                />
+                <div class="user-info">
+                  <div class="user-name">Sophie Martin</div>
+                  <div class="user-location">
+                    Paris, France <span class="flag">🇫🇷</span>
+                  </div>
+                </div>
+                <div class="quote-marks">
+                  <div class="quote-mark"></div>
+                  <div class="quote-mark"></div>
+                </div>
+              </div>
+              <div class="testimonial-text">
+                Managing invoices for my consulting firm became effortless with
+                EaseInvoice. The automated workflows and client portal feature
+                impressed my clients and improved my professional image.
+              </div>
+              <div class="rating">
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 7 -->
+          <div class="swiper-slide">
+            <div class="testimonial-card">
+              <div class="card-header">
+                <img
+                  src="/img/testimonial-7.png"
+                  alt="Profile"
+                  class="profile-image"
+                />
+                <div class="user-info">
+                  <div class="user-name">Lars Anderson</div>
+                  <div class="user-location">
+                    Stockholm, Sweden <span class="flag">🇸🇪</span>
+                  </div>
+                </div>
+                <div class="quote-marks">
+                  <div class="quote-mark"></div>
+                  <div class="quote-mark"></div>
+                </div>
+              </div>
+              <div class="testimonial-text">
+                EaseInvoice integrated seamlessly with our existing accounting
+                software. The time-tracking feature and expense management tools
+                are game-changers for project-based work.
+              </div>
+              <div class="rating">
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 8 -->
+          <div class="swiper-slide">
+            <div class="testimonial-card">
+              <div class="card-header">
+                <img
+                  src="/img/testimonial-8.png"
+                  alt="Profile"
+                  class="profile-image"
+                />
+                <div class="user-info">
+                  <div class="user-name">Maria Santos</div>
+                  <div class="user-location">
+                    São Paulo, Brazil <span class="flag">🇧🇷</span>
+                  </div>
+                </div>
+                <div class="quote-marks">
+                  <div class="quote-mark"></div>
+                  <div class="quote-mark"></div>
+                </div>
+              </div>
+              <div class="testimonial-text">
+                EaseInvoice made tax season stress-free! All my financial
+                records are perfectly organized and easily exportable. The
+                platform pays for itself with the time it saves me.
+              </div>
+              <div class="rating">
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="row g-4">
-          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
-            <div class="testimonial-card p-4 bg-light rounded-4 h-100">
-              <div class="mb-3">
-                <i class="bi bi-star-fill text-warning"></i>
-                <i class="bi bi-star-fill text-warning"></i>
-                <i class="bi bi-star-fill text-warning"></i>
-                <i class="bi bi-star-fill text-warning"></i>
-                <i class="bi bi-star-fill text-warning"></i>
-              </div>
-              <p class="mb-4">
-                "Ease Invoice has completely transformed how we handle our
-                billing. The automation features save us hours every week!"
-              </p>
-              <div class="d-flex align-items-center">
-                <div
-                  class="avatar bg-success bg-opacity-10 rounded-circle me-3 p-2"
-                >
-                  <i class="bi bi-person text-success"></i>
-                </div>
-                <div>
-                  <h6 class="mb-0">Alex Rodriguez</h6>
-                  <small class="text-muted">Small Business Owner</small>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
-            <div class="testimonial-card p-4 bg-light rounded-4 h-100">
-              <div class="mb-3">
-                <i class="bi bi-star-fill text-warning"></i>
-                <i class="bi bi-star-fill text-warning"></i>
-                <i class="bi bi-star-fill text-warning"></i>
-                <i class="bi bi-star-fill text-warning"></i>
-                <i class="bi bi-star-fill text-warning"></i>
-              </div>
-              <p class="mb-4">
-                "The reporting features are incredible. We now have clear
-                insights into our cash flow and can make better business
-                decisions."
-              </p>
-              <div class="d-flex align-items-center">
-                <div
-                  class="avatar bg-warning bg-opacity-10 rounded-circle me-3 p-2"
-                >
-                  <i class="bi bi-person text-warning"></i>
-                </div>
-                <div>
-                  <h6 class="mb-0">Maria Thompson</h6>
-                  <small class="text-muted">Freelance Designer</small>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
-            <div class="testimonial-card p-4 bg-light rounded-4 h-100">
-              <div class="mb-3">
-                <i class="bi bi-star-fill text-warning"></i>
-                <i class="bi bi-star-fill text-warning"></i>
-                <i class="bi bi-star-fill text-warning"></i>
-                <i class="bi bi-star-fill text-warning"></i>
-                <i class="bi bi-star-fill text-warning"></i>
-              </div>
-              <p class="mb-4">
-                "Customer support is outstanding. They helped us migrate from
-                our old system seamlessly. Highly recommended!"
-              </p>
-              <div class="d-flex align-items-center">
-                <div
-                  class="avatar bg-primary bg-opacity-10 rounded-circle me-3 p-2"
-                >
-                  <i class="bi bi-person text-primary"></i>
-                </div>
-                <div>
-                  <h6 class="mb-0">David Kim</h6>
-                  <small class="text-muted">Agency Director</small>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div class="swiper-pagination"></div>
       </div>
     </section>
 
     <!-- FAQs Section -->
     <section id="faqs" class="py-5 bg-light">
+      <div class="col-12 text-center mb-5" data-aos="fade-up">
+        <h2 class="display-5 fw-bold mb-3">
+          Frequently Asked <span class="text-success">Questions</span>
+        </h2>
+       
+      </div>
       <div class="container">
-        <div class="row">
-          <div class="col-12 text-center mb-5" data-aos="fade-up">
-            <h2 class="display-5 fw-bold mb-3">
-              Frequently Asked <span class="text-success">Questions</span>
-            </h2>
-            <p class="lead text-muted">
-              Find answers to common questions about Ease Invoice
-            </p>
-          </div>
-        </div>
         <div class="row justify-content-center">
           <div class="col-lg-8">
-            <div class="accordion" id="faqAccordion" data-aos="fade-up">
-              <div class="accordion-item mb-3 border-0 shadow-sm rounded-3">
-                <h2 class="accordion-header">
-                  <button
-                    class="accordion-button rounded-3"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#faq1"
-                  >
-                    How secure is my financial data?
-                  </button>
-                </h2>
-                <div
-                  id="faq1"
-                  class="accordion-collapse collapse show"
-                  data-bs-parent="#faqAccordion"
-                >
-                  <div class="accordion-body">
-                    We use bank-level encryption and security protocols to
-                    protect your data. All information is stored on secure
-                    servers with regular backups and 24/7 monitoring.
-                  </div>
-                </div>
-              </div>
-              <div class="accordion-item mb-3 border-0 shadow-sm rounded-3">
-                <h2 class="accordion-header">
-                  <button
-                    class="accordion-button collapsed rounded-3"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#faq2"
-                  >
-                    Can I customize invoice templates?
-                  </button>
-                </h2>
-                <div
-                  id="faq2"
-                  class="accordion-collapse collapse"
-                  data-bs-parent="#faqAccordion"
-                >
-                  <div class="accordion-body">
-                    Yes! Ease Invoice offers fully customizable templates. You
-                    can add your logo, change colors, modify layouts, and create
-                    professional invoices that match your brand.
-                  </div>
-                </div>
-              </div>
-              <div class="accordion-item mb-3 border-0 shadow-sm rounded-3">
-                <h2 class="accordion-header">
-                  <button
-                    class="accordion-button collapsed rounded-3"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#faq3"
-                  >
-                    Is there a mobile app available?
-                  </button>
-                </h2>
-                <div
-                  id="faq3"
-                  class="accordion-collapse collapse"
-                  data-bs-parent="#faqAccordion"
-                >
-                  <div class="accordion-body">
-                    Our web application is fully responsive and works seamlessly
-                    on all devices. Mobile apps for iOS and Android are coming
-                    soon!
-                  </div>
-                </div>
-              </div>
-              <div class="accordion-item mb-3 border-0 shadow-sm rounded-3">
-                <h2 class="accordion-header">
-                  <button
-                    class="accordion-button collapsed rounded-3"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#faq4"
-                  >
-                    What payment methods do you support?
-                  </button>
-                </h2>
-                <div
-                  id="faq4"
-                  class="accordion-collapse collapse"
-                  data-bs-parent="#faqAccordion"
-                >
-                  <div class="accordion-body">
-                    We support all major payment methods including credit cards,
-                    PayPal, bank transfers, and various digital payment
-                    platforms for seamless transaction processing.
-                  </div>
-                </div>
-              </div>
+            <div class="accordion" data-aos="fade-up">
+              <details class="accordion-item" open>
+                <summary>How secure is my financial data?</summary>
+                <p>
+                  We use bank-level encryption and security protocols to protect
+                  your data. All information is stored on secure servers with
+                  regular backups and 24/7 monitoring.
+                </p>
+              </details>
+
+              <details class="accordion-item">
+                <summary>How does Invoice Management work?</summary>
+                <p>
+                  Our Invoice Management system simplifies billing with
+                  automated calculations, professional templates, and
+                  customizable branding options. Create, send, and track
+                  invoices effortlessly while ensuring accuracy in all financial
+                  transactions. The system integrates seamlessly with your
+                  existing workflow for maximum efficiency.
+                </p>
+              </details>
+
+              <details class="accordion-item">
+                <summary>
+                  What features are included in Transaction Management?
+                </summary>
+                <p>
+                  Transaction Management provides centralized organization of
+                  all business transactions with advanced categorization,
+                  real-time tracking, and comprehensive reporting tools. Monitor
+                  cash flow, analyze spending patterns, and maintain detailed
+                  financial records in one secure, user-friendly platform for
+                  better decision-making.
+                </p>
+              </details>
+
+              <details class="accordion-item">
+                <summary>
+                  How does Client Management enhance my business relationships?
+                </summary>
+                <p>
+                  Client Management maintains comprehensive customer profiles
+                  with detailed transaction histories, communication logs, and
+                  preferences. This enables personalized service delivery,
+                  improved customer satisfaction, and stronger business
+                  relationships through informed interactions and tailored
+                  experiences that build long-term loyalty.
+                </p>
+              </details>
             </div>
           </div>
         </div>
@@ -787,5 +944,21 @@
     <!-- Scripts -->
 
     <script src="./js/main.js"></script>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+      var swiper = new Swiper(".mySwiper", {
+        slidesPerView: 3,
+        spaceBetween: 30,
+        freeMode: true,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+      });
+    </script>
   </body>
 </html>

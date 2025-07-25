@@ -188,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   setTimeout(() => {
     serviceCards.forEach((card, index) => {
-      card.style.animation = `float 3s ease-in-out ${index * 0.5}s infinite`;
+      card.style.animation = `float2 3s ease-in-out ${index * 0.5}s infinite`;
     });
   }, 2000);
 });
@@ -210,7 +210,32 @@ window.addEventListener("scroll", () => {
     const speed = 0.05 + index * 0.01;
     card.style.transform = `translateY(${scrolled * speed}px)`;
   });
-}); 
+});
+
+// Frequency Asked QUestion
+
+document.addEventListener("DOMContentLoaded", function () {
+  const accordionItems = document.querySelectorAll(".accordion-item");
+
+  accordionItems.forEach((item) => {
+    const summary = item.querySelector("summary");
+
+    summary.addEventListener("click", function (e) {
+      const isCurrentlyOpen = item.hasAttribute("open");
+
+      accordionItems.forEach((otherItem) => {
+        if (otherItem !== item) {
+          otherItem.removeAttribute("open");
+        }
+      });
+
+      if (!isCurrentlyOpen) {
+        e.preventDefault();
+        item.setAttribute("open", "");
+      }
+    });
+  });
+});
 
 //SELECT COUNTRY
 

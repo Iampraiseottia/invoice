@@ -184,7 +184,7 @@
   }
 }
 
-@keyframes float {
+@keyframes float2 {
   0%,
   100% {
     transform: translateY(0);
