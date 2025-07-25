@@ -113,19 +113,14 @@ document.addEventListener("click", (e) => {
   }
 });
 
-
-
-
-
-
-// Counter animation for About
+// About
 function animateCounters() {
   const counters = document.querySelectorAll(".counter");
 
   counters.forEach((counter) => {
     const target = parseInt(counter.getAttribute("data-target"));
-    const duration = 2000; 
-    const increment = target / (duration / 16); 
+    const duration = 2000;
+    const increment = target / (duration / 16);
     let current = 0;
 
     const updateCounter = () => {
@@ -145,7 +140,7 @@ function animateCounters() {
   });
 }
 
-// Intersection Observer for animations
+// SErvice
 const observerOptions = {
   threshold: 0.3,
   rootMargin: "0px 0px -50px 0px",
@@ -166,7 +161,56 @@ document.addEventListener("DOMContentLoaded", () => {
   observer.observe(aboutSection);
 });
 
+// Intersection Observer for scroll animations
+const observerOptions2 = {
+  threshold: 0.1,
+  rootMargin: "0px 0px -50px 0px",
+};
 
+const observer2 = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      const delay = entry.target.dataset.delay || 0;
+      setTimeout(() => {
+        entry.target.classList.add("animate");
+      }, delay);
+      observer2.unobserve(entry.target);
+    }
+  });
+}, observerOptions2);
+
+// Observe all service cards
+document.addEventListener("DOMContentLoaded", () => {
+  const serviceCards = document.querySelectorAll(".service-card");
+  serviceCards.forEach((card) => {
+    observer2.observe(card);
+  });
+
+  setTimeout(() => {
+    serviceCards.forEach((card, index) => {
+      card.style.animation = `float 3s ease-in-out ${index * 0.5}s infinite`;
+    });
+  }, 2000);
+});
+
+document.documentElement.style.scrollBehavior = "smooth";
+
+window.addEventListener("scroll", () => {
+  const scrolled = window.pageYOffset;
+  const header = document.querySelector(".services-header");
+  const cards = document.querySelectorAll(".service-card.animate");
+
+  // Subtle parallax for header
+  if (header) {
+    header.style.transform = `translateY(${scrolled * 0.1}px)`;
+  }
+
+  // Staggered parallax for cards
+  cards.forEach((card, index) => {
+    const speed = 0.05 + index * 0.01;
+    card.style.transform = `translateY(${scrolled * speed}px)`;
+  });
+}); 
 
 //SELECT COUNTRY
 

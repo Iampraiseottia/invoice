@@ -1,14 +1,3 @@
-:root {
-  --primary-color: #0d6efd;
-  --success-color: #198754;
-  --warning-color: #ffc107;
-  --light-color: #f8f9fa;
-  --white: #ffffff;
-  --muted-color: #6c757d;
-  --shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-  --shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
-}
-
 /* About Section */
 
 .py-5 {
@@ -109,7 +98,11 @@
   margin-left: -130px;
   background-repeat: no-repeat;
   margin-top: 50px;
-  animation: float 3s ease-in-out infinite;
+  animation: float 3s ease-in-out infinite !important;
+}
+
+.animateAbtImg{
+  animation: slideInFromLeft 0.8s ease 0.8s both;
 }
 
 /* Text Animations */
@@ -385,6 +378,3 @@
   }
 }
 
-.image-container {
-  animation: slideInFromLeft 0.8s ease 0.8s both;
-}
