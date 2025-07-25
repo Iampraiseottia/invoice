@@ -9,7 +9,7 @@
   background-color: rgb(77, 77, 77);
   background-blend-mode: multiply;
   text-align: center;
-  padding-top: 50px;
+  padding-top: 270px !important;
   min-height: 50vh;
   margin-top: -10px;
 }
@@ -70,7 +70,6 @@ button a{
   align-items: center;
   gap: 0.5rem;
   font-weight: 600;
-  /* Ensure the float animation is applied here for larger screens */
   animation: float 3s ease-in-out infinite; 
 }
 
@@ -106,14 +105,13 @@ button a{
   }
 }
 
-/* New Keyframe for mobile horizontal animation */
 @keyframes slideHorizontal {
   0%,
   100% {
     transform: translateX(0px);
   }
   50% {
-    transform: translateX(20px); /* Moves 20px to the right */
+    transform: translateX(20px); 
   }
 }
 
@@ -180,7 +178,7 @@ button a{
 /* Mobile devices */
 @media (max-width: 767.98px) {
   .hero-section {
-    padding-top: 30px !important;
+    padding-top: 150px !important;
     text-align: center; 
   }
   .display-4 {
@@ -230,7 +228,7 @@ button a{
   }
 
   .werey{
-    margin-top: -250px !important;
+    margin-top: -40px !important;
   }
 
 }

@@ -118,15 +118,53 @@ document.addEventListener("click", (e) => {
 
 
 
+// Counter animation for About
+function animateCounters() {
+  const counters = document.querySelectorAll(".counter");
 
+  counters.forEach((counter) => {
+    const target = parseInt(counter.getAttribute("data-target"));
+    const duration = 2000; 
+    const increment = target / (duration / 16); 
+    let current = 0;
 
+    const updateCounter = () => {
+      if (current < target) {
+        current += increment;
+        counter.textContent = Math.floor(current);
+        requestAnimationFrame(updateCounter);
+      } else {
+        counter.textContent = target;
+      }
+    };
 
+    // Start animation with delay
+    setTimeout(() => {
+      updateCounter();
+    }, parseInt(counter.closest(".stat-card").style.animationDelay || "0") * 1000);
+  });
+}
 
+// Intersection Observer for animations
+const observerOptions = {
+  threshold: 0.3,
+  rootMargin: "0px 0px -50px 0px",
+};
 
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      animateCounters();
+      observer.unobserve(entry.target);
+    }
+  });
+}, observerOptions);
 
-
-
-
+// Start observing when DOM is loaded
+document.addEventListener("DOMContentLoaded", () => {
+  const aboutSection = document.getElementById("about");
+  observer.observe(aboutSection);
+});
 
 
 
