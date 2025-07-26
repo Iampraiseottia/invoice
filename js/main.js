@@ -113,34 +113,83 @@ document.addEventListener("click", (e) => {
   }
 });
 
-// About
-function animateCounters() {
-  const counters = document.querySelectorAll(".counter");
+// About Functionalities
 
-  counters.forEach((counter) => {
-    const target = parseInt(counter.getAttribute("data-target"));
-    const duration = 2000;
-    const increment = target / (duration / 16);
-    let current = 0;
+const observerOptionsAbout = {
+  threshold: 0.3, 
+  rootMargin: "0px 0px -50px 0px", 
+};
 
-    const updateCounter = () => {
-      if (current < target) {
-        current += increment;
-        counter.textContent = Math.floor(current);
-        requestAnimationFrame(updateCounter);
-      } else {
-        counter.textContent = target;
+const observerAbout = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("animate");
+
+      // Start counter animation if it's a counter element
+      const counter = entry.target.querySelector(".counter");
+      if (counter) {
+        animateCounter(counter);
       }
-    };
-
-    // Start animation with delay
-    setTimeout(() => {
-      updateCounter();
-    }, parseInt(counter.closest(".stat-card").style.animationDelay || "0") * 1000);
+    }
   });
+}, observerOptionsAbout);
+
+// Observe all elements with scroll animation classes
+document
+  .querySelectorAll(
+    ".scroll-animate, .scroll-animate-left, .scroll-animate-scale"
+  )
+  .forEach((el) => {
+    observerAbout.observe(el);
+  });
+
+// Counter animation function
+function animateCounter(element) {
+  const target = parseInt(element.getAttribute("data-target"));
+  const increment = target / 100; 
+  let current = 0;
+
+  const timer = setInterval(() => {
+    current += increment;
+    element.textContent = Math.floor(current);
+
+    if (current >= target) {
+      element.textContent = target;
+      clearInterval(timer);
+    }
+  }, 20); 
 }
 
-// SErvice
+// Reset animations on scroll back up 
+const resetObserverAbout = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting && entry.boundingClientRect.top > 0) {
+
+        entry.target.classList.remove("animate");
+
+        const counter = entry.target.querySelector(".counter");
+        if (counter) {
+          counter.textContent = "0";
+        }
+      }
+    });
+  },
+  {
+    threshold: 0,
+    rootMargin: "0px 0px 0px 0px",
+  }
+);
+
+document
+  .querySelectorAll(
+    ".scroll-animate, .scroll-animate-left, .scroll-animate-scale"
+  )
+  .forEach((el) => {
+    resetObserverAbout.observe(el);
+  });
+
+// SErvice Functionalities
 const observerOptions = {
   threshold: 0.3,
   rootMargin: "0px 0px -50px 0px",
@@ -149,7 +198,6 @@ const observerOptions = {
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
-      animateCounters();
       observer.unobserve(entry.target);
     }
   });
@@ -415,6 +463,8 @@ document.querySelectorAll(".social-link").forEach((link, index) => {
     }, 100);
   });
 });
+
+// Appear About
 
 //SELECT COUNTRY
 

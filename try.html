@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Section with Scroll Animation</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-color: #007bff;
+        --success-color: #28a745;
+        --warning-color: #ffc107;
+        --muted-color: #6c757d;
+        --light-color: #f8f9fa;
+        --white: #ffffff;
+        --shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        --shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+      }
+
+      /* Demo styles for page height */
+      .demo-section {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        color: #fff;
+      }
+
+      .demo-section:nth-child(1) {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+      .demo-section:nth-child(3) {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      }
+
+      /* About Section */
+      .py-5 {
+        padding: 5rem 0;
+      }
+
+      .bg-light {
+        background-color: var(--light-color) !important;
+      }
+
+      .display-5 {
+        font-size: 3rem;
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
+        color: black !important;
+      }
+
+      .text-success {
+        color: var(--success-color) !important;
+      }
+
+      .mb-4 {
+        margin-bottom: 1.5rem;
+      }
+
+      .lead {
+        font-size: 1.25rem;
+        font-weight: 300;
+      }
+
+      /* Statistics Cards */
+      .stats-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .stat-card {
+        background: var(--white);
+        border-radius: 1rem;
+        box-shadow: var(--shadow);
+        transition: all 0.3s ease-in-out;
+        text-align: center;
+        padding: 2rem 1rem;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .counter {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+
+      .text-primary {
+        color: var(--primary-color) !important;
+      }
+      .text-warning {
+        color: var(--warning-color) !important;
+      }
+      .text-muted {
+        color: var(--muted-color) !important;
+      }
+
+      .image-container {
+        width: 100%;
+        height: 90%;
+        min-height: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border-radius: 1rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background-size: cover;
+        background-position: center;
+        margin-left: -130px;
+        background-repeat: no-repeat;
+        margin-top: 50px;
+        animation: float 3s ease-in-out infinite;
+        color: white;
+        font-size: 1.5rem;
+        text-align: center;
+      }
+
+      /* Scroll Animation Classes */
+      .scroll-animate {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 0.8s ease-out;
+      }
+
+      .scroll-animate.animate {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .scroll-animate-left {
+        opacity: 0;
+        transform: translateX(-60px);
+        transition: all 0.8s ease-out;
+      }
+
+      .scroll-animate-left.animate {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      .scroll-animate-scale {
+        opacity: 0;
+        transform: translateY(30px) scale(0.9);
+        transition: all 0.8s ease-out;
+      }
+
+      .scroll-animate-scale.animate {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+
+      /* Staggered animation delays */
+      .scroll-animate:nth-child(1) {
+        transition-delay: 0.1s;
+      }
+      .scroll-animate:nth-child(2) {
+        transition-delay: 0.2s;
+      }
+      .scroll-animate:nth-child(3) {
+        transition-delay: 0.3s;
+      }
+
+      .stat-card:nth-child(1) {
+        transition-delay: 0.2s;
+      }
+      .stat-card:nth-child(2) {
+        transition-delay: 0.4s;
+      }
+      .stat-card:nth-child(3) {
+        transition-delay: 0.6s;
+      }
+      .stat-card:nth-child(4) {
+        transition-delay: 0.8s;
+      }
+
+      /* Animations */
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+
+      /* Media Queries for Responsiveness */
+      @media (max-width: 1199.98px) {
+        .display-5 {
+          font-size: 2.8rem;
+        }
+        .counter {
+          font-size: 2.2rem;
+        }
+        .image-container {
+          width: 100%;
+          margin-top: 0;
+          min-height: 300px;
+          background-size: cover;
+          background-position: center;
+          margin-left: 0px !important;
+        }
+      }
+
+      @media (max-width: 991.98px) {
+        .py-5 {
+          padding: 4rem 0;
+        }
+        .display-5 {
+          font-size: 2.5rem;
+        }
+        .lead {
+          font-size: 1.1rem;
+        }
+        .stat-card {
+          padding: 1.5rem 0.8rem;
+        }
+        .counter {
+          font-size: 2rem;
+        }
+        .about-mobile-order {
+          display: flex;
+          flex-direction: column;
+        }
+        .about-image-mobile {
+          order: 1;
+        }
+        .about-content-mobile {
+          order: 2;
+        }
+        .image-container {
+          width: 100%;
+          margin-top: 0;
+          margin-bottom: 2rem;
+          min-height: 300px;
+        }
+      }
+
+      @media (max-width: 767.98px) {
+        .py-5 {
+          padding: 3rem 0;
+        }
+        .display-5 {
+          font-size: 2rem;
+          text-align: center;
+        }
+        .lead,
+        .mb-4 {
+          font-size: 0.95rem;
+          text-align: center;
+        }
+        .stats-container {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+          margin-bottom: 2rem;
+        }
+        .stat-card {
+          padding: 1.2rem 0.6rem;
+        }
+        .counter {
+          font-size: 1.8rem;
+        }
+        .image-container {
+          min-height: 250px;
+          margin-bottom: 2rem;
+          background-size: contain;
+          background-position: center;
+          margin-left: 0px !important;
+        }
+      }
+
+      @media (max-width: 575.98px) {
+        .py-5 {
+          padding: 2rem 0;
+        }
+        .display-5 {
+          font-size: 1.8rem;
+        }
+        .lead,
+        .mb-4 {
+          font-size: 0.9rem;
+        }
+        .stats-container {
+          gap: 0.8rem;
+        }
+        .stat-card {
+          padding: 1rem 0.5rem;
+        }
+        .counter {
+          font-size: 1.6rem;
+        }
+        .image-container {
+          min-height: 300px;
+          background-size: contain;
+          margin-left: 0px !important;
+        }
+      }
+
+      @media (max-width: 375px) {
+        .py-5 {
+          padding: 1.5rem 0;
+        }
+        .display-5 {
+          font-size: 1.6rem;
+        }
+        .stats-container {
+          grid-template-columns: 1fr 1fr;
+          gap: 0.5rem;
+        }
+        .stat-card {
+          padding: 0.8rem 0.4rem;
+        }
+        .counter {
+          font-size: 1.4rem;
+        }
+        .image-container {
+          min-height: 200px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Demo section to create scroll space -->
+    <div class="demo-section">
+      <div class="text-center">
+        <h1>Scroll Down to See Animation</h1>
+        <p>↓ About Section Below ↓</p>
+      </div>
+    </div>
+
+    <!-- About Section -->
+    <section id="about" class="py-5 bg-light">
+      <div class="container">
+        <div class="row align-items-center about-mobile-order">
+          <!-- Right Column: Image -->
+          <div class="col-lg-6 about-image-mobile scroll-animate-left">
+            <div class="image-container">
+              <div>Demo Image Placeholder</div>
+            </div>
+          </div>
+
+          <!-- Left Column -->
+          <div class="col-lg-6 mb-4 about-content-mobile">
+            <div class="animated-text">
+              <h2 class="display-5 fw-bold mb-4 scroll-animate">
+                About <span class="text-success">Ease Invoice</span>
+              </h2>
+              <p class="lead mb-4 scroll-animate">
+                We revolutionize the way businesses and individuals handle their
+                financial transactions.
+              </p>
+              <p class="mb-4 scroll-animate">
+                Founded with the mission to simplify invoice management, Ease
+                Invoice provides comprehensive tools for tracking payments,
+                managing purchases, and organizing all financial transactions in
+                one centralized platform.
+              </p>
+            </div>
+
+            <!-- Statistics Grid -->
+            <div class="stats-container">
+              <div class="stat-card scroll-animate-scale">
+                <h3
+                  class="text-success fw-bold mb-2 counter"
+                  data-target="10000"
+                >
+                  0
+                </h3>
+                <p class="mb-0 text-muted">Happy Clients</p>
+              </div>
+              <div class="stat-card scroll-animate-scale">
+                <h3
+                  class="text-warning fw-bold mb-2 counter"
+                  data-target="50000"
+                >
+                  0
+                </h3>
+                <p class="mb-0 text-muted">Invoices Processed</p>
+              </div>
+              <div class="stat-card scroll-animate-scale">
+                <h3 class="text-primary fw-bold mb-2 counter" data-target="99">
+                  0
+                </h3>
+                <p class="mb-0 text-muted">Uptime %</p>
+              </div>
+              <div class="stat-card scroll-animate-scale">
+                <h3 class="text-success fw-bold mb-2 counter" data-target="24">
+                  0
+                </h3>
+                <p class="mb-0 text-muted">Support Hours</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Demo section for more scroll space -->
+    <div class="demo-section">
+      <div class="text-center">
+        <h1>Animation Complete!</h1>
+        <p>Scroll back up to see it again</p>
+      </div>
+    </div>
+
+    <script>
+      // Intersection Observer for scroll animations
+      const observerOptions = {
+        threshold: 0.2, // Trigger when 20% of element is visible
+        rootMargin: "0px 0px -50px 0px", // Trigger 50px before element comes into view
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("animate");
+
+            // Start counter animation if it's a counter element
+            const counter = entry.target.querySelector(".counter");
+            if (counter) {
+              animateCounter(counter);
+            }
+          }
+        });
+      }, observerOptions);
+
+      // Observe all elements with scroll animation classes
+      document
+        .querySelectorAll(
+          ".scroll-animate, .scroll-animate-left, .scroll-animate-scale"
+        )
+        .forEach((el) => {
+          observer.observe(el);
+        });
+
+      // Counter animation function
+      function animateCounter(element) {
+        const target = parseInt(element.getAttribute("data-target"));
+        const increment = target / 100; // Animate over 100 steps
+        let current = 0;
+
+        const timer = setInterval(() => {
+          current += increment;
+          element.textContent = Math.floor(current);
+
+          if (current >= target) {
+            element.textContent = target;
+            clearInterval(timer);
+          }
+        }, 20); // Update every 20ms for smooth animation
+      }
+
+      // Optional: Reset animations when scrolling back up (for demo purposes)
+      const resetObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting && entry.boundingClientRect.top > 0) {
+              // Element has scrolled out of view upwards
+              entry.target.classList.remove("animate");
+
+              // Reset counter if it exists
+              const counter = entry.target.querySelector(".counter");
+              if (counter) {
+                counter.textContent = "0";
+              }
+            }
+          });
+        },
+        {
+          threshold: 0,
+          rootMargin: "0px 0px 0px 0px",
+        }
+      );
+
+      // Observe for reset (optional - comment out if you don't want reset functionality)
+      document
+        .querySelectorAll(
+          ".scroll-animate, .scroll-animate-left, .scroll-animate-scale"
+        )
+        .forEach((el) => {
+          resetObserver.observe(el);
+        });
+    </script>
+  </body>
+</html>

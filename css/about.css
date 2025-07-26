@@ -1,5 +1,3 @@
-/* About Section */
-
 .py-5 {
   padding: 5rem 0;
 }
@@ -44,22 +42,6 @@
   transition: all 0.3s ease-in-out;
   text-align: center;
   padding: 2rem 1rem;
-  animation: fadeInScaleUp 0.8s ease-out forwards;
-  opacity: 0;
-  transform: scale(0.9);
-}
-
-.stat-card:nth-child(1) {
-  animation-delay: 0.2s;
-}
-.stat-card:nth-child(2) {
-  animation-delay: 0.4s;
-}
-.stat-card:nth-child(3) {
-  animation-delay: 0.6s;
-}
-.stat-card:nth-child(4) {
-  animation-delay: 0.8s;
 }
 
 .stat-card:hover {
@@ -92,72 +74,78 @@
   justify-content: center;
   overflow: hidden;
   border-radius: 1rem;
+
   background-image: url("/img/home\ right.png");
   background-size: cover;
   background-position: center;
   margin-left: -130px;
   background-repeat: no-repeat;
   margin-top: 50px;
-  animation: float 3s ease-in-out infinite !important;
+  animation: float 3s ease-in-out infinite;
+  color: white;
+  font-size: 1.5rem;
+  text-align: center;
 }
 
-.animateAbtImg{
-  animation: slideInFromLeft 0.8s ease 0.8s both;
-}
-
-/* Text Animations */
-.animated-text h2 {
-  animation: fadeInSlideUp 0.8s ease-out forwards;
+/* Scroll Animation Classes */
+.scroll-animate {
   opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s ease-out;
 }
 
-.animated-text .lead {
-  animation: fadeInSlideUp 0.8s ease-out forwards;
-  animation-delay: 0.2s;
-  opacity: 0;
+.scroll-animate.animate {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.animated-text p {
-  animation: fadeInSlideUp 0.8s ease-out forwards;
-  animation-delay: 0.4s;
+.scroll-animate-left {
   opacity: 0;
+  transform: translateX(-60px);
+  transition: all 0.8s ease-out;
+}
+
+.scroll-animate-left.animate {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.scroll-animate-scale {
+  opacity: 0;
+  transform: translateY(30px) scale(0.9);
+  transition: all 0.8s ease-out;
+}
+
+.scroll-animate-scale.animate {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Staggered animation delays */
+.scroll-animate:nth-child(1) {
+  transition-delay: 0.1s;
+}
+.scroll-animate:nth-child(2) {
+  transition-delay: 0.2s;
+}
+.scroll-animate:nth-child(3) {
+  transition-delay: 0.3s;
+}
+
+.stat-card:nth-child(1) {
+  transition-delay: 0.2s;
+}
+.stat-card:nth-child(2) {
+  transition-delay: 0.4s;
+}
+.stat-card:nth-child(3) {
+  transition-delay: 0.6s;
+}
+.stat-card:nth-child(4) {
+  transition-delay: 0.8s;
 }
 
 /* Animations */
-@keyframes fadeInSlideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInScaleUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px) scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-@keyframes gradientShift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
 @keyframes float {
   0%,
   100% {
@@ -168,49 +156,7 @@
   }
 }
 
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 0.3;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.6;
-    transform: scale(1.1);
-  }
-}
-
-@keyframes bounce {
-  0%,
-  100% {
-    transform: translate(-50%, -50%) scale(1);
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.1);
-  }
-}
-
-@keyframes floatAround {
-  0% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  25% {
-    transform: translateY(-20px) rotate(90deg);
-  }
-  50% {
-    transform: translateY(0px) rotate(180deg);
-  }
-  75% {
-    transform: translateY(20px) rotate(270deg);
-  }
-  100% {
-    transform: translateY(0px) rotate(360deg);
-  }
-}
-
 /* Media Queries for Responsiveness */
-
-/* Large tablets and small desktops */
 @media (max-width: 1199.98px) {
   .display-5 {
     font-size: 2.8rem;
@@ -218,7 +164,6 @@
   .counter {
     font-size: 2.2rem;
   }
-
   .image-container {
     width: 100%;
     margin-top: 0;
@@ -229,7 +174,6 @@
   }
 }
 
-/* Tablets (landscape) and medium desktops */
 @media (max-width: 991.98px) {
   .py-5 {
     padding: 4rem 0;
@@ -246,20 +190,16 @@
   .counter {
     font-size: 2rem;
   }
-
   .about-mobile-order {
     display: flex;
     flex-direction: column;
   }
-
   .about-image-mobile {
     order: 1;
   }
-
   .about-content-mobile {
     order: 2;
   }
-
   .image-container {
     width: 100%;
     margin-top: 0;
@@ -268,7 +208,6 @@
   }
 }
 
-/* Tablets (portrait) */
 @media (max-width: 767.98px) {
   .py-5 {
     padding: 3rem 0;
@@ -296,14 +235,12 @@
   .image-container {
     min-height: 250px;
     margin-bottom: 2rem;
-    opacity: 1 !important;
     background-size: contain;
     background-position: center;
     margin-left: 0px !important;
   }
 }
 
-/* Small mobile devices */
 @media (max-width: 575.98px) {
   .py-5 {
     padding: 2rem 0;
@@ -326,13 +263,11 @@
   }
   .image-container {
     min-height: 300px;
-    opacity: 1 !important;
     background-size: contain;
     margin-left: 0px !important;
   }
 }
 
-/* Extra small devices */
 @media (max-width: 375px) {
   .py-5 {
     padding: 1.5rem 0;
@@ -354,27 +289,3 @@
     min-height: 200px;
   }
 }
-
-/* Animations  */
-
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
-}
-
-@keyframes slideInFromLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-60px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
