@@ -237,6 +237,185 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+// Contact us
+
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("contactForm");
+  const submitBtn = document.getElementById("submitBtn");
+  const spinner = document.getElementById("spinner");
+  const btnText = document.getElementById("btnText");
+  const successMessage = document.getElementById("successMessage");
+
+  // Form validation
+  function validateField(field) {
+    const value = field.value.trim();
+    const fieldName = field.name;
+    const errorElement = document.getElementById(fieldName + "Error");
+    let isValid = true;
+
+    field.classList.remove("error");
+    errorElement.style.display = "none";
+
+    // Validation rules
+    switch (fieldName) {
+      case "firstName":
+        if (value === "") {
+          showError(field, errorElement, "Please enter your first name");
+          isValid = false;
+        } else if (value.length < 2) {
+          showError(field, errorElement, "Name must be at least 2 characters");
+          isValid = false;
+        }
+        break;
+
+      case "email":
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (value === "") {
+          showError(field, errorElement, "Please enter your email address");
+          isValid = false;
+        } else if (!emailRegex.test(value)) {
+          showError(field, errorElement, "Please enter a valid email address");
+          isValid = false;
+        }
+        break;
+
+      case "subject":
+        if (value === "") {
+          showError(field, errorElement, "Please select a subject");
+          isValid = false;
+        }
+        break;
+
+      case "message":
+        if (value === "") {
+          showError(field, errorElement, "Please enter your message");
+          isValid = false;
+        } else if (value.length < 10) {
+          showError(
+            field,
+            errorElement,
+            "Message must be at least 10 characters"
+          );
+          isValid = false;
+        }
+        break;
+    }
+
+    return isValid;
+  }
+
+  function showError(field, errorElement, message) {
+    field.classList.add("error");
+    errorElement.textContent = message;
+    errorElement.style.display = "block";
+  }
+
+  // Real-time validation
+  const fields = form.querySelectorAll("input, select, textarea");
+  fields.forEach((field) => {
+    field.addEventListener("blur", () => validateField(field));
+    field.addEventListener("input", () => {
+      if (field.classList.contains("error")) {
+        validateField(field);
+      }
+    });
+  });
+
+  // Form submission
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    successMessage.style.display = "none";
+
+    let isFormValid = true;
+    fields.forEach((field) => {
+      if (!validateField(field)) {
+        isFormValid = false;
+      }
+    });
+
+    if (isFormValid) {
+      // Show loading state
+      submitBtn.classList.add("loading");
+      spinner.style.display = "block";
+      btnText.textContent = "Sending...";
+      submitBtn.disabled = true;
+
+      // Simulate API call
+      setTimeout(() => {
+        form.reset();
+
+        successMessage.style.display = "block";
+
+        submitBtn.classList.remove("loading");
+        spinner.style.display = "none";
+        btnText.textContent = "Send Message";
+        submitBtn.disabled = false;
+
+        setTimeout(() => {
+          successMessage.style.display = "none";
+        }, 5000);
+      }, 2000);
+    } else {
+      const firstError = form.querySelector(".error");
+      if (firstError) {
+        firstError.focus();
+        firstError.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }
+  });
+});
+
+// Footer
+const observerOptions3 = {
+  threshold: 0.1,
+  rootMargin: "0px 0px -50px 0px",
+};
+
+const observer3 = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.style.animationPlayState = "running";
+    }
+  });
+}, observerOptions3);
+
+// Observe footer elements
+document.querySelectorAll(".footer-section, .footer-brand").forEach((el) => {
+  observer3.observe(el);
+});
+
+// Newsletter form submission
+document
+  .querySelector(".newsletter-form")
+  .addEventListener("submit", function (e) {
+    e.preventDefault();
+    const input = this.querySelector(".newsletter-input");
+    const btn = this.querySelector(".newsletter-btn");
+
+    if (input.value.includes("@")) {
+      btn.textContent = "Subscribed!";
+      btn.style.background = "linear-gradient(135deg, #28a745, #20c997)";
+      input.value = "";
+
+      setTimeout(() => {
+        btn.textContent = "Subscribe";
+        btn.style.background = "linear-gradient(135deg, #00ff88, #00cc6a)";
+      }, 2000);
+    }
+  });
+
+// Add floating animation to social links
+document.querySelectorAll(".social-link").forEach((link, index) => {
+  link.style.animationDelay = `${index * 0.1}s`;
+  link.addEventListener("mouseenter", function () {
+    this.style.animation = "none";
+    setTimeout(() => {
+      this.style.animation = "";
+    }, 100);
+  });
+});
+
 //SELECT COUNTRY
 
 // const country = document.getElementById("Country");
