@@ -1,5 +1,3 @@
-
-
 const countries = [
   "Afghanistan",
   "Albania",
@@ -245,14 +243,60 @@ countries.forEach((country) => {
   option.textContent = country;
 
   selectElement.appendChild(option);
-
 });
-
 
 // Event listener for the select element
 selectElement.addEventListener("change", (event) => {
   const selectedCountry = event.target.value;
 
   console.log("Selected Country:", selectedCountry);
+});
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.querySelector("form");
+
+  if (form) {
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch("../php/signup.php", {
+          method: "POST",
+          body: formData,
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          alert(result.message);
+          window.location.href = result.redirect;
+        } else {
+          alert(result.error || "Registration failed");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Network error. Please try again.");
+      }
+    });
+  }
 });
