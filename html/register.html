@@ -9,7 +9,7 @@
     <link rel="icon" href="/img/logo.png" style="border-radius: 50%;">
 
     <link rel="stylesheet" href="../css/register.css">
-    <link rel="stylesheet" href="../html/popup.html">
+    <!-- REMOVED: <link rel="stylesheet" href="../html/popup.html"> This was causing MIME type error -->
     <style>
         body{
             display: flex;
@@ -22,13 +22,50 @@
             background-size: cover;
             background-position: center;
         }
+        
+        /* Error styling for inputs */
+        .input_box input.error,
+        .input_box select.error {
+            border: 2px solid #ff0000 !important;
+        }
+        
+        .input_box small {
+            display: none;
+            color: #ff0000;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        
+        .input_box small.show {
+            display: block;
+        }
+        
+        #general-error {
+            background-color: #ffe6e6;
+            color: #cc0000;
+            padding: 10px;
+            border: 1px solid #ff0000;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            display: none;
+        }
+        
+        #general-error.success {
+            background-color: #e6ffe6;
+            color: #008000;
+            border-color: #00aa00;
+        }
     </style>
 </head>
 <body>
     <div class="wrapper">
         <div class="borderline">
             <h1>Sign Up</h1>
-            <form method="post" action="../php/signup.php">
+            <form method="post" action="/php/signup.php">
+                <!-- General error message div -->  
+                <div id="general-error"></div>
+                
                 <div class="input_box">
                     <box-icon name="rename" color="#4c0e2e"></box-icon>
                     <input type="text" id="title" minlength="2" maxlength="30" name="full_name" autocomplete="off" required>
@@ -79,7 +116,7 @@
                 </div>
 
                 <div class="terms">
-                    <input type="checkbox"><p style="margin-left: 10px;">Agree to <span>Terms</span> and <span>Condition</span></p>
+                    <input type="checkbox" id="terms"><p style="margin-left: 10px;">Agree to <span>Terms</span> and <span>Condition</span></p>
                 </div>
 
                <div class="field">
@@ -87,13 +124,13 @@
                </div> 
 
                <div class="kudi" >
-                Aready a memeber? <a href="../html/login.html">Sign In</a>
+                Already a member? <a href="../html/login.html">Sign In</a>
                </div>
             </form>
         </div>
     </div>
 
-    <script src="../js/popup.js" type="text/javascript"></script>
+    <!-- REMOVED: <script src="../js/popup.js" type="text/javascript"></script> -->
     <script src="../js/register.js" type="text/javascript"></script>
 
 </body>

@@ -8,6 +8,17 @@ class Database {
     public $conn;
 
     public function __construct() {
+        // Load .env file
+        if (file_exists(__DIR__ . '/../.env')) {
+            $lines = file(__DIR__ . '/../.env', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+            foreach ($lines as $line) {
+                if (strpos($line, '=') !== false && strpos($line, '#') !== 0) {
+                    list($key, $value) = explode('=', $line, 2);
+                    $_ENV[trim($key)] = trim($value);
+                }
+            }
+        }
+        
         // Parse Neon connection string from environment
         $database_url = $_ENV['DATABASE_URL'] ?? getenv('DATABASE_URL');
         
@@ -36,10 +47,16 @@ class Database {
                    ";port=" . $this->port . 
                    ";dbname=" . $this->db_name;
             
+            // Add SSL mode for Neon
+            if (strpos($this->host, 'neon.tech') !== false) {
+                $dsn .= ";sslmode=require";
+            }
+            
             $this->conn = new PDO($dsn, $this->username, $this->password);
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         } catch(PDOException $exception) {
+            error_log("Connection error: " . $exception->getMessage());
             echo "Connection error: " . $exception->getMessage();
         }
         
