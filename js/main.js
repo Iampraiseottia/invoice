@@ -113,6 +113,11 @@ document.addEventListener("click", (e) => {
   }
 });
 
+
+
+
+
+
 // About Functionalities
 
 const observerOptionsAbout = {
@@ -189,52 +194,47 @@ document
     resetObserverAbout.observe(el);
   });
 
-// SErvice Functionalities
-const observerOptions = {
-  threshold: 0.3,
+
+
+
+
+// SErvice Functionalities testimonials-section
+
+const servicesObserverOptions = {
+  threshold: 0.3, 
   rootMargin: "0px 0px -50px 0px",
 };
 
-const observer = new IntersectionObserver((entries) => {
+const servicesObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
-      observer.unobserve(entry.target);
+      entry.target.classList.add("section-animate");
+      
+      const serviceCards = entry.target.querySelectorAll(".service-card");
+      serviceCards.forEach((card, index) => {
+        setTimeout(() => {
+          card.classList.add("animate");
+        }, index * 100); 
+      });
+    } else {
+      entry.target.classList.remove("section-animate");
+      const serviceCards = entry.target.querySelectorAll(".service-card");
+      serviceCards.forEach((card) => {
+        card.classList.remove("animate");
+      });
     }
   });
-}, observerOptions);
+}, servicesObserverOptions);
 
 // Start observing when DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
-  const aboutSection = document.getElementById("about");
-  observer.observe(aboutSection);
-});
-
-// Intersection Observer for scroll animations
-const observerOptions2 = {
-  threshold: 0.1,
-  rootMargin: "0px 0px -50px 0px",
-};
-
-const observer2 = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      const delay = entry.target.dataset.delay || 0;
-      setTimeout(() => {
-        entry.target.classList.add("animate");
-      }, delay);
-      observer2.unobserve(entry.target);
-    }
-  });
-}, observerOptions2);
-
-// Observe all service cards
-document.addEventListener("DOMContentLoaded", () => {
-  const serviceCards = document.querySelectorAll(".service-card");
-  serviceCards.forEach((card) => {
-    observer2.observe(card);
-  });
+  const servicesSection = document.querySelector(".services-section");
+  if (servicesSection) {
+    servicesObserver.observe(servicesSection);
+  }
 
   setTimeout(() => {
+    const serviceCards = document.querySelectorAll(".service-card");
     serviceCards.forEach((card, index) => {
       card.style.animation = `float2 3s ease-in-out ${index * 0.5}s infinite`;
     });
@@ -248,7 +248,6 @@ window.addEventListener("scroll", () => {
   const header = document.querySelector(".services-header");
   const cards = document.querySelectorAll(".service-card.animate");
 
-  // Subtle parallax for header
   if (header) {
     header.style.transform = `translateY(${scrolled * 0.1}px)`;
   }
@@ -258,9 +257,69 @@ window.addEventListener("scroll", () => {
     const speed = 0.05 + index * 0.01;
     card.style.transform = `translateY(${scrolled * speed}px)`;
   });
+}); 
+
+
+
+
+
+
+// Team
+
+// Intersection Observer for team section elements
+const teamObserverOptions = {
+  threshold: 0.25,
+  rootMargin: "0px 0px -50px 0px",
+};
+
+const teamObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      const delay = entry.target.dataset.delay || 0;
+      setTimeout(() => {
+        entry.target.classList.add("animate");
+      }, delay);
+    } else {
+      entry.target.classList.remove("animate");
+    }
+  });
+}, teamObserverOptions);
+
+// Start observing team section elements when DOM is loaded
+document.addEventListener("DOMContentLoaded", () => {
+  // Observe team section elements individually
+  const teamSubtitle = document.querySelector(".section-subtitle");
+  const teamTitle = document.querySelector(".section-title");
+  const teamCards = document.querySelectorAll(".team-card");
+
+  if (teamSubtitle) {
+    teamSubtitle.dataset.delay = 0;
+    teamObserver.observe(teamSubtitle);
+  }
+  
+  if (teamTitle) {
+    teamTitle.dataset.delay = 300; 
+    teamObserver.observe(teamTitle);
+  }
+  
+  teamCards.forEach((card, index) => {
+    card.dataset.delay = 300 + (index * 200); 
+    teamObserver.observe(card);
+  });
 });
 
-// Frequency Asked QUestion
+
+
+
+
+
+
+
+
+
+
+
+// Frequency Asked QUestion 
 
 document.addEventListener("DOMContentLoaded", function () {
   const accordionItems = document.querySelectorAll(".accordion-item");

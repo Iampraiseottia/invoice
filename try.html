@@ -1,496 +1,585 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>About Section with Scroll Animation</title>
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testimonials with Scroll Animation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.5/swiper-bundle.min.css">
     <style>
-      :root {
-        --primary-color: #007bff;
-        --success-color: #28a745;
-        --warning-color: #ffc107;
-        --muted-color: #6c757d;
-        --light-color: #f8f9fa;
-        --white: #ffffff;
-        --shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-        --shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
-      }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+        }
 
-      /* Demo styles for page height */
-      .demo-section {
-        height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 2rem;
-        color: #fff;
-      }
+        /* Add some content before testimonials to enable scrolling */
+        .demo-content {
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            text-align: center;
+        }
 
-      .demo-section:nth-child(1) {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      }
-      .demo-section:nth-child(3) {
-        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-      }
+        #testimonials {
+            position: relative;
+            height: 100%;
+            background: #fff;
+            font-size: 14px;
+            color: #000;
+            margin: 0;
+            padding: 70px 0 0 0;
+            /* Initial state - moved down */
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
 
-      /* About Section */
-      .py-5 {
-        padding: 5rem 0;
-      }
+        /* Animation class that gets added when in view */
+        #testimonials.scroll-animate {
+            transform: translateY(0);
+            opacity: 1;
+        }
 
-      .bg-light {
-        background-color: var(--light-color) !important;
-      }
+        .swiper {
+            width: 100%;
+            height: 100%;
+        }
 
-      .display-5 {
-        font-size: 3rem;
-        font-weight: 700;
-        line-height: 1.2;
-        margin-bottom: 1.5rem;
-        color: black !important;
-      }
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 300px !important;
+            border: 1px solid green;
+            border-radius: 14px;
+            margin-top: 20px !important;
+            margin-bottom: 60px !important;
+            padding: 20px;
+            transition: transform 0.3s ease;
+        }
 
-      .text-success {
-        color: var(--success-color) !important;
-      }
+        .swiper-slide:hover {
+            transform: scale(1.01) !important;
+        }
 
-      .mb-4 {
-        margin-bottom: 1.5rem;
-      }
+        @media (max-width: 700px) {
+            .swiper-slide {
+                width: 90% !important;
+            }
 
-      .lead {
-        font-size: 1.25rem;
-        font-weight: 300;
-      }
+            .swiper {
+                margin-left: 14px !important;
+                margin-right: 4px;
+            }
+        }
 
-      /* Statistics Cards */
-      .stats-container {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1.5rem;
-        margin-bottom: 2rem;
-      }
+        .swiper-slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-      .stat-card {
-        background: var(--white);
-        border-radius: 1rem;
-        box-shadow: var(--shadow);
-        transition: all 0.3s ease-in-out;
-        text-align: center;
-        padding: 2rem 1rem;
-      }
+        /* Testimonial Card Styles */
+        .testimonial-card {
+            background: transparent;
+            border: none;
+            padding: 0;
+            max-width: 100%;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: none;
+        }
 
-      .stat-card:hover {
-        transform: translateY(-5px);
-        box-shadow: var(--shadow-lg);
-      }
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+            position: relative;
+        }
 
-      .counter {
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-      }
+        .profile-image {
+            width: 44px !important;
+            height: 44px !important;
+            border-radius: 50%;
+            margin-right: 12px;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: #ddd; /* Fallback for missing images */
+        }
 
-      .text-primary {
-        color: var(--primary-color) !important;
-      }
-      .text-warning {
-        color: var(--warning-color) !important;
-      }
-      .text-muted {
-        color: var(--muted-color) !important;
-      }
+        .user-info {
+            flex: 1;
+            text-align: left;
+        }
 
-      .image-container {
-        width: 100%;
-        height: 90%;
-        min-height: 400px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-        border-radius: 1rem;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        background-size: cover;
-        background-position: center;
-        margin-left: -130px;
-        background-repeat: no-repeat;
-        margin-top: 50px;
-        animation: float 3s ease-in-out infinite;
-        color: white;
-        font-size: 1.5rem;
-        text-align: center;
-      }
+        .user-name {
+            color: #000000;
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 2px;
+            font-weight: bold;
+        }
 
-      /* Scroll Animation Classes */
-      .scroll-animate {
-        opacity: 0;
-        transform: translateY(50px);
-        transition: all 0.8s ease-out;
-      }
+        .user-location {
+            color: #666;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
 
-      .scroll-animate.animate {
-        opacity: 1;
-        transform: translateY(0);
-      }
+        .flag {
+            font-size: 16px;
+        }
 
-      .scroll-animate-left {
-        opacity: 0;
-        transform: translateX(-60px);
-        transition: all 0.8s ease-out;
-      }
+        .quote-marks {
+            position: absolute;
+            top: -8px;
+            right: 0;
+            display: flex;
+            gap: 2px;
+        }
 
-      .scroll-animate-left.animate {
-        opacity: 1;
-        transform: translateX(0);
-      }
+        .quote-mark {
+            width: 20px;
+            height: 20px;
+            background-color: #4a9b8e;
+            transform: rotate(45deg);
+            border-radius: 2px;
+        }
 
-      .scroll-animate-scale {
-        opacity: 0;
-        transform: translateY(30px) scale(0.9);
-        transition: all 0.8s ease-out;
-      }
+        .testimonial-text {
+            color: rgb(26, 26, 26);
+            font-size: 15px;
+            line-height: 1.5;
+            margin-bottom: 16px;
+            font-style: italic;
+            text-align: left;
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
 
-      .scroll-animate-scale.animate {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
+        .rating {
+            display: flex;
+            gap: 2px;
+            justify-content: flex-start;
+        }
 
-      /* Staggered animation delays */
-      .scroll-animate:nth-child(1) {
-        transition-delay: 0.1s;
-      }
-      .scroll-animate:nth-child(2) {
-        transition-delay: 0.2s;
-      }
-      .scroll-animate:nth-child(3) {
-        transition-delay: 0.3s;
-      }
+        .star {
+            color: #ffd700;
+            font-size: 22px;
+        }
 
-      .stat-card:nth-child(1) {
-        transition-delay: 0.2s;
-      }
-      .stat-card:nth-child(2) {
-        transition-delay: 0.4s;
-      }
-      .stat-card:nth-child(3) {
-        transition-delay: 0.6s;
-      }
-      .stat-card:nth-child(4) {
-        transition-delay: 0.8s;
-      }
+        /* Responsive adjustments for swiper context */
+        @media (max-width: 480px) {
+            .swiper-slide {
+                padding: 16px;
+            }
 
-      /* Animations */
-      @keyframes float {
-        0%,
-        100% {
-          transform: translateY(0px);
-        }
-        50% {
-          transform: translateY(-20px);
-        }
-      }
+            .profile-image {
+                width: 44px;
+                height: 44px;
+            }
 
-      /* Media Queries for Responsiveness */
-      @media (max-width: 1199.98px) {
-        .display-5 {
-          font-size: 2.8rem;
-        }
-        .counter {
-          font-size: 2.2rem;
-        }
-        .image-container {
-          width: 100%;
-          margin-top: 0;
-          min-height: 300px;
-          background-size: cover;
-          background-position: center;
-          margin-left: 0px !important;
-        }
-      }
+            .user-name {
+                font-size: 15px;
+            }
 
-      @media (max-width: 991.98px) {
-        .py-5 {
-          padding: 4rem 0;
-        }
-        .display-5 {
-          font-size: 2.5rem;
-        }
-        .lead {
-          font-size: 1.1rem;
-        }
-        .stat-card {
-          padding: 1.5rem 0.8rem;
-        }
-        .counter {
-          font-size: 2rem;
-        }
-        .about-mobile-order {
-          display: flex;
-          flex-direction: column;
-        }
-        .about-image-mobile {
-          order: 1;
-        }
-        .about-content-mobile {
-          order: 2;
-        }
-        .image-container {
-          width: 100%;
-          margin-top: 0;
-          margin-bottom: 2rem;
-          min-height: 300px;
-        }
-      }
+            .user-location {
+                font-size: 13px;
+            }
 
-      @media (max-width: 767.98px) {
-        .py-5 {
-          padding: 3rem 0;
-        }
-        .display-5 {
-          font-size: 2rem;
-          text-align: center;
-        }
-        .lead,
-        .mb-4 {
-          font-size: 0.95rem;
-          text-align: center;
-        }
-        .stats-container {
-          grid-template-columns: 1fr;
-          gap: 1rem;
-          margin-bottom: 2rem;
-        }
-        .stat-card {
-          padding: 1.2rem 0.6rem;
-        }
-        .counter {
-          font-size: 1.8rem;
-        }
-        .image-container {
-          min-height: 250px;
-          margin-bottom: 2rem;
-          background-size: contain;
-          background-position: center;
-          margin-left: 0px !important;
-        }
-      }
+            .testimonial-text {
+                font-size: 14px;
+            }
 
-      @media (max-width: 575.98px) {
-        .py-5 {
-          padding: 2rem 0;
+            .quote-mark {
+                width: 18px;
+                height: 18px;
+            }
         }
-        .display-5 {
-          font-size: 1.8rem;
-        }
-        .lead,
-        .mb-4 {
-          font-size: 0.9rem;
-        }
-        .stats-container {
-          gap: 0.8rem;
-        }
-        .stat-card {
-          padding: 1rem 0.5rem;
-        }
-        .counter {
-          font-size: 1.6rem;
-        }
-        .image-container {
-          min-height: 300px;
-          background-size: contain;
-          margin-left: 0px !important;
-        }
-      }
 
-      @media (max-width: 375px) {
-        .py-5 {
-          padding: 1.5rem 0;
+        @media (max-width: 360px) {
+            .swiper-slide {
+                padding: 12px;
+            }
+
+            .testimonial-text {
+                font-size: 13px;
+            }
+
+            .star {
+                font-size: 16px;
+            }
         }
-        .display-5 {
-          font-size: 1.6rem;
+
+        /* Smooth scrolling for the demo */
+        html {
+            scroll-behavior: smooth;
         }
-        .stats-container {
-          grid-template-columns: 1fr 1fr;
-          gap: 0.5rem;
+
+        .scroll-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            z-index: 1000;
         }
-        .stat-card {
-          padding: 0.8rem 0.4rem;
-        }
-        .counter {
-          font-size: 1.4rem;
-        }
-        .image-container {
-          min-height: 200px;
-        }
-      }
     </style>
-  </head>
-  <body>
-    <!-- Demo section to create scroll space -->
-    <div class="demo-section">
-      <div class="text-center">
-        <h1>Scroll Down to See Animation</h1>
-        <p>↓ About Section Below ↓</p>
-      </div>
+</head>
+<body>
+    <!-- Demo scroll indicator -->
+    <div class="scroll-indicator">
+        Scroll down to see the animation
     </div>
 
-    <!-- About Section -->
-    <section id="about" class="py-5 bg-light">
-      <div class="container">
-        <div class="row align-items-center about-mobile-order">
-          <!-- Right Column: Image -->
-          <div class="col-lg-6 about-image-mobile scroll-animate-left">
-            <div class="image-container">
-              <div>Demo Image Placeholder</div>
-            </div>
-          </div>
-
-          <!-- Left Column -->
-          <div class="col-lg-6 mb-4 about-content-mobile">
-            <div class="animated-text">
-              <h2 class="display-5 fw-bold mb-4 scroll-animate">
-                About <span class="text-success">Ease Invoice</span>
-              </h2>
-              <p class="lead mb-4 scroll-animate">
-                We revolutionize the way businesses and individuals handle their
-                financial transactions.
-              </p>
-              <p class="mb-4 scroll-animate">
-                Founded with the mission to simplify invoice management, Ease
-                Invoice provides comprehensive tools for tracking payments,
-                managing purchases, and organizing all financial transactions in
-                one centralized platform.
-              </p>
-            </div>
-
-            <!-- Statistics Grid -->
-            <div class="stats-container">
-              <div class="stat-card scroll-animate-scale">
-                <h3
-                  class="text-success fw-bold mb-2 counter"
-                  data-target="10000"
-                >
-                  0
-                </h3>
-                <p class="mb-0 text-muted">Happy Clients</p>
-              </div>
-              <div class="stat-card scroll-animate-scale">
-                <h3
-                  class="text-warning fw-bold mb-2 counter"
-                  data-target="50000"
-                >
-                  0
-                </h3>
-                <p class="mb-0 text-muted">Invoices Processed</p>
-              </div>
-              <div class="stat-card scroll-animate-scale">
-                <h3 class="text-primary fw-bold mb-2 counter" data-target="99">
-                  0
-                </h3>
-                <p class="mb-0 text-muted">Uptime %</p>
-              </div>
-              <div class="stat-card scroll-animate-scale">
-                <h3 class="text-success fw-bold mb-2 counter" data-target="24">
-                  0
-                </h3>
-                <p class="mb-0 text-muted">Support Hours</p>
-              </div>
-            </div>
-          </div>
+    <!-- Demo content to enable scrolling -->
+    <div class="demo-content">
+        <div>
+            <h1>EaseInvoice Demo</h1>
+            <p>Scroll down to see the testimonials section animate</p>
         </div>
-      </div>
+    </div>
+
+    <section id="testimonials" class="py-5 testimonials-section">
+        <div class="col-12 text-center mb-5" data-aos="fade-up">
+            <h2 class="display-5 fw-bold mb-3">
+                What Our
+                <span style="color: green">Clients Say</span>
+            </h2>
+        </div>
+
+        <!-- Swiper -->
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="testimonial-card">
+                        <div class="card-header">
+                            <div class="profile-image"></div>
+                            <div class="user-info">
+                                <div class="user-name">Amina Belewa</div>
+                                <div class="user-location">
+                                    Yaounde, Cameroon <span class="flag">🇨🇲</span>
+                                </div>
+                            </div>
+                            <div class="quote-marks">
+                                <div class="quote-mark"></div>
+                                <div class="quote-mark"></div>
+                            </div>
+                        </div>
+                        <div class="testimonial-text">
+                            EaseInvoice transformed my business operations completely.
+                            Managing invoices used to be chaotic, but now everything is
+                            organized and efficient. It's like having a personal assistant
+                            for all my billing needs.
+                        </div>
+                        <div class="rating">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="swiper-slide">
+                    <div class="testimonial-card">
+                        <div class="card-header">
+                            <div class="profile-image"></div>
+                            <div class="user-info">
+                                <div class="user-name">Carlos Rodriguez</div>
+                                <div class="user-location">
+                                    Madrid, Spain <span class="flag">🇪🇸</span>
+                                </div>
+                            </div>
+                            <div class="quote-marks">
+                                <div class="quote-mark"></div>
+                                <div class="quote-mark"></div>
+                            </div>
+                        </div>
+                        <div class="testimonial-text">
+                            As a freelancer, tracking payments was a nightmare. EaseInvoice
+                            streamlined everything - from creating professional invoices to
+                            monitoring payment status. My cash flow improved dramatically!
+                        </div>
+                        <div class="rating">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="swiper-slide">
+                    <div class="testimonial-card">
+                        <div class="card-header">
+                            <div class="profile-image"></div>
+                            <div class="user-info">
+                                <div class="user-name">Priya Sharma</div>
+                                <div class="user-location">
+                                    Mumbai, India <span class="flag">🇮🇳</span>
+                                </div>
+                            </div>
+                            <div class="quote-marks">
+                                <div class="quote-mark"></div>
+                                <div class="quote-mark"></div>
+                            </div>
+                        </div>
+                        <div class="testimonial-text">
+                            EaseInvoice saved me countless hours every month. The automated
+                            reminders and professional templates make my small business look
+                            established. Clients pay faster now!
+                        </div>
+                        <div class="rating">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="swiper-slide">
+                    <div class="testimonial-card">
+                        <div class="card-header">
+                            <div class="profile-image"></div>
+                            <div class="user-info">
+                                <div class="user-name">Emma Thompson</div>
+                                <div class="user-location">
+                                    London, UK <span class="flag">🇬🇧</span>
+                                </div>
+                            </div>
+                            <div class="quote-marks">
+                                <div class="quote-mark"></div>
+                                <div class="quote-mark"></div>
+                            </div>
+                        </div>
+                        <div class="testimonial-text">
+                            Before EaseInvoice, I was drowning in paperwork. Now my
+                            invoicing is completely digital and organized. The reporting
+                            features help me understand my business better than ever.
+                        </div>
+                        <div class="rating">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="swiper-slide">
+                    <div class="testimonial-card">
+                        <div class="card-header">
+                            <div class="profile-image"></div>
+                            <div class="user-info">
+                                <div class="user-name">Ahmed Hassan</div>
+                                <div class="user-location">
+                                    Dubai, UAE <span class="flag">🇦🇪</span>
+                                </div>
+                            </div>
+                            <div class="quote-marks">
+                                <div class="quote-mark"></div>
+                                <div class="quote-mark"></div>
+                            </div>
+                        </div>
+                        <div class="testimonial-text">
+                            EaseInvoice handles multi-currency invoicing perfectly for my
+                            international clients. The platform is intuitive and the
+                            customer support is exceptional. Highly recommended!
+                        </div>
+                        <div class="rating">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="swiper-slide">
+                    <div class="testimonial-card">
+                        <div class="card-header">
+                            <div class="profile-image"></div>
+                            <div class="user-info">
+                                <div class="user-name">Sophie Martin</div>
+                                <div class="user-location">
+                                    Paris, France <span class="flag">🇫🇷</span>
+                                </div>
+                            </div>
+                            <div class="quote-marks">
+                                <div class="quote-mark"></div>
+                                <div class="quote-mark"></div>
+                            </div>
+                        </div>
+                        <div class="testimonial-text">
+                            Managing invoices for my consulting firm became effortless with
+                            EaseInvoice. The automated workflows and client portal feature
+                            impressed my clients and improved my professional image.
+                        </div>
+                        <div class="rating">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="swiper-slide">
+                    <div class="testimonial-card">
+                        <div class="card-header">
+                            <div class="profile-image"></div>
+                            <div class="user-info">
+                                <div class="user-name">Lars Anderson</div>
+                                <div class="user-location">
+                                    Stockholm, Sweden <span class="flag">🇸🇪</span>
+                                </div>
+                            </div>
+                            <div class="quote-marks">
+                                <div class="quote-mark"></div>
+                                <div class="quote-mark"></div>
+                            </div>
+                        </div>
+                        <div class="testimonial-text">
+                            EaseInvoice integrated seamlessly with our existing accounting
+                            software. The time-tracking feature and expense management tools
+                            are game-changers for project-based work.
+                        </div>
+                        <div class="rating">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="swiper-slide">
+                    <div class="testimonial-card">
+                        <div class="card-header">
+                            <div class="profile-image"></div>
+                            <div class="user-info">
+                                <div class="user-name">Maria Santos</div>
+                                <div class="user-location">
+                                    São Paulo, Brazil <span class="flag">🇧🇷</span>
+                                </div>
+                            </div>
+                            <div class="quote-marks">
+                                <div class="quote-mark"></div>
+                                <div class="quote-mark"></div>
+                            </div>
+                        </div>
+                        <div class="testimonial-text">
+                            EaseInvoice made tax season stress-free! All my financial
+                            records are perfectly organized and easily exportable. The
+                            platform pays for itself with the time it saves me.
+                        </div>
+                        <div class="rating">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
     </section>
 
-    <!-- Demo section for more scroll space -->
-    <div class="demo-section">
-      <div class="text-center">
-        <h1>Animation Complete!</h1>
-        <p>Scroll back up to see it again</p>
-      </div>
-    </div>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.5/swiper-bundle.min.js"></script>
     <script>
-      // Intersection Observer for scroll animations
-      const observerOptions = {
-        threshold: 0.2, // Trigger when 20% of element is visible
-        rootMargin: "0px 0px -50px 0px", // Trigger 50px before element comes into view
-      };
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("animate");
-
-            // Start counter animation if it's a counter element
-            const counter = entry.target.querySelector(".counter");
-            if (counter) {
-              animateCounter(counter);
-            }
-          }
+        // Initialize Swiper
+        var swiper = new Swiper(".mySwiper", {
+            slidesPerView: 1,
+            spaceBetween: 30,
+            loop: true,
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            autoplay: {
+                delay: 4000,
+                disableOnInteraction: false,
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 1,
+                    spaceBetween: 20,
+                },
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 40,
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 50,
+                },
+            },
         });
-      }, observerOptions);
 
-      // Observe all elements with scroll animation classes
-      document
-        .querySelectorAll(
-          ".scroll-animate, .scroll-animate-left, .scroll-animate-scale"
-        )
-        .forEach((el) => {
-          observer.observe(el);
-        });
-
-      // Counter animation function
-      function animateCounter(element) {
-        const target = parseInt(element.getAttribute("data-target"));
-        const increment = target / 100; // Animate over 100 steps
-        let current = 0;
-
-        const timer = setInterval(() => {
-          current += increment;
-          element.textContent = Math.floor(current);
-
-          if (current >= target) {
-            element.textContent = target;
-            clearInterval(timer);
-          }
-        }, 20); // Update every 20ms for smooth animation
-      }
-
-      // Optional: Reset animations when scrolling back up (for demo purposes)
-      const resetObserver = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (!entry.isIntersecting && entry.boundingClientRect.top > 0) {
-              // Element has scrolled out of view upwards
-              entry.target.classList.remove("animate");
-
-              // Reset counter if it exists
-              const counter = entry.target.querySelector(".counter");
-              if (counter) {
-                counter.textContent = "0";
-              }
+        // Scroll animation functionality
+        function handleScrollAnimation() {
+            const testimonialsSection = document.getElementById('testimonials');
+            const sectionRect = testimonialsSection.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            
+            // Trigger animation when 30% of the section is visible
+            const threshold = windowHeight * 0.7;
+            
+            if (sectionRect.top < threshold && sectionRect.bottom > 0) {
+                testimonialsSection.classList.add('scroll-animate');
             }
-          });
-        },
-        {
-          threshold: 0,
-          rootMargin: "0px 0px 0px 0px",
         }
-      );
 
-      // Observe for reset (optional - comment out if you don't want reset functionality)
-      document
-        .querySelectorAll(
-          ".scroll-animate, .scroll-animate-left, .scroll-animate-scale"
-        )
-        .forEach((el) => {
-          resetObserver.observe(el);
-        });
+        // Add scroll event listener
+        window.addEventListener('scroll', handleScrollAnimation);
+        
+        // Check on page load in case section is already in view
+        document.addEventListener('DOMContentLoaded', handleScrollAnimation);
+
+        // Optional: Add intersection observer for better performance
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('scroll-animate');
+                    }
+                });
+            }, {
+                threshold: 0.3, // Trigger when 30% visible
+                rootMargin: '0px 0px -20% 0px' // Adjust trigger point
+            });
+
+            observer.observe(document.getElementById('testimonials'));
+        }
     </script>
-  </body>
+</body>
 </html>

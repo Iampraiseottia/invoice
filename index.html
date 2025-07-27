@@ -324,7 +324,7 @@
     </section>
 
     <!-- Testimonials Section -->
-    <section id="testimonials" class="py-5">
+    <section id="testimonials" class="py-5 testimonials-section">
       <div class="col-12 text-center mb-5" data-aos="fade-up">
         <h2 class="display-5 fw-bold mb-3">
           What Our
@@ -338,11 +338,7 @@
           <div class="swiper-slide">
             <div class="testimonial-card">
               <div class="card-header">
-                <img
-                  src="/img/testimonial-1.png"
-                  alt="Profile"
-                  class="profile-image"
-                />
+                <div class="profile-image"></div>
                 <div class="user-info">
                   <div class="user-name">Amina Belewa</div>
                   <div class="user-location">
@@ -370,15 +366,10 @@
             </div>
           </div>
 
-          <!-- Slide 2 -->
           <div class="swiper-slide">
             <div class="testimonial-card">
               <div class="card-header">
-                <img
-                  src="/img/testimonial-2.png"
-                  alt="Profile"
-                  class="profile-image"
-                />
+                <div class="profile-image"></div>
                 <div class="user-info">
                   <div class="user-name">Carlos Rodriguez</div>
                   <div class="user-location">
@@ -405,15 +396,10 @@
             </div>
           </div>
 
-          <!-- Slide 3 -->
           <div class="swiper-slide">
             <div class="testimonial-card">
               <div class="card-header">
-                <img
-                  src="/img/testimonial-3.png"
-                  alt="Profile"
-                  class="profile-image"
-                />
+                <div class="profile-image"></div>
                 <div class="user-info">
                   <div class="user-name">Priya Sharma</div>
                   <div class="user-location">
@@ -440,15 +426,10 @@
             </div>
           </div>
 
-          <!-- Slide 4 -->
           <div class="swiper-slide">
             <div class="testimonial-card">
               <div class="card-header">
-                <img
-                  src="/img/testimonial-4.png"
-                  alt="Profile"
-                  class="profile-image"
-                />
+                <div class="profile-image"></div>
                 <div class="user-info">
                   <div class="user-name">Emma Thompson</div>
                   <div class="user-location">
@@ -475,15 +456,10 @@
             </div>
           </div>
 
-          <!-- Slide 5 -->
           <div class="swiper-slide">
             <div class="testimonial-card">
               <div class="card-header">
-                <img
-                  src="/img/testimonial-5.png"
-                  alt="Profile"
-                  class="profile-image"
-                />
+                <div class="profile-image"></div>
                 <div class="user-info">
                   <div class="user-name">Ahmed Hassan</div>
                   <div class="user-location">
@@ -510,15 +486,10 @@
             </div>
           </div>
 
-          <!-- Slide 6 -->
           <div class="swiper-slide">
             <div class="testimonial-card">
               <div class="card-header">
-                <img
-                  src="/img/testimonial-6.png"
-                  alt="Profile"
-                  class="profile-image"
-                />
+                <div class="profile-image"></div>
                 <div class="user-info">
                   <div class="user-name">Sophie Martin</div>
                   <div class="user-location">
@@ -545,15 +516,10 @@
             </div>
           </div>
 
-          <!-- Slide 7 -->
           <div class="swiper-slide">
             <div class="testimonial-card">
               <div class="card-header">
-                <img
-                  src="/img/testimonial-7.png"
-                  alt="Profile"
-                  class="profile-image"
-                />
+                <div class="profile-image"></div>
                 <div class="user-info">
                   <div class="user-name">Lars Anderson</div>
                   <div class="user-location">
@@ -580,15 +546,10 @@
             </div>
           </div>
 
-          <!-- Slide 8 -->
           <div class="swiper-slide">
             <div class="testimonial-card">
               <div class="card-header">
-                <img
-                  src="/img/testimonial-8.png"
-                  alt="Profile"
-                  class="profile-image"
-                />
+                <div class="profile-image"></div>
                 <div class="user-info">
                   <div class="user-name">Maria Santos</div>
                   <div class="user-location">
@@ -921,19 +882,73 @@
     <script src="./js/main.js"></script>
 
     <!-- Swiper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-    <!-- Initialize Swiper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.5/swiper-bundle.min.js"></script>
+    
     <script>
+      // Initialize Swiper
       var swiper = new Swiper(".mySwiper", {
-        slidesPerView: 3,
+        slidesPerView: 1,
         spaceBetween: 30,
-        freeMode: true,
+        loop: true,
         pagination: {
           el: ".swiper-pagination",
           clickable: true,
         },
+        autoplay: {
+          delay: 4000,
+          disableOnInteraction: false,
+        },
+        breakpoints: {
+          640: {
+            slidesPerView: 1,
+            spaceBetween: 20,
+          },
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 40,
+          },
+          1024: {
+            slidesPerView: 3,
+            spaceBetween: 50,
+          },
+        },
       });
+
+      // Scroll animation functionality
+      function handleScrollAnimation() {
+        const testimonialsSection = document.getElementById("testimonials");
+        const sectionRect = testimonialsSection.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+
+        // Trigger animation when 20% of the section is visible
+        const threshold = windowHeight * 0.7;
+
+        if (sectionRect.top < threshold && sectionRect.bottom > 0) {
+          testimonialsSection.classList.add("scroll-animate");
+        }
+      }
+
+      window.addEventListener("scroll", handleScrollAnimation);
+
+      document.addEventListener("DOMContentLoaded", handleScrollAnimation);
+
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("scroll-animate");
+              }
+            });
+          },
+          {
+            threshold: 0.2,
+            rootMargin: "0px 0px -20% 0px",
+          }
+        );
+
+        observer.observe(document.getElementById("testimonials"));
+      }
     </script>
   </body>
 </html>

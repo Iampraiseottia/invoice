@@ -1,10 +1,8 @@
-
 .team-section {
   padding: 80px 0px;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   position: relative;
   overflow: hidden;
-
 }
 
 .section-header {
@@ -20,7 +18,7 @@
   text-transform: uppercase;
   margin-bottom: 15px;
   position: relative;
-  display: inline-block; 
+  display: inline-block;
 }
 
 .section-subtitle::before,
@@ -272,7 +270,7 @@
     font-size: 14px;
   }
 
-  .team-grid{
+  .team-grid {
     margin-left: 30px !important;
   }
 }
@@ -298,7 +296,6 @@
   opacity: 1;
 }
 
-
 @keyframes fadeInSlideUp {
   from {
     opacity: 0;
@@ -310,9 +307,71 @@
   }
 }
 
-
 .section-subtitle,
 .section-title,
 .team-grid {
   animation: fadeInSlideUp 1s ease-out forwards;
+}
+
+/* SCroll  */
+
+.section-subtitle {
+  opacity: 0;
+  transform: translateY(50px) scale(0.8);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: 0.1em;
+}
+
+.section-subtitle.animate {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  animation: slideInBounce 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.section-title {
+  opacity: 0;
+  transform: translateY(60px) rotateX(45deg);
+  transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center bottom;
+}
+
+.section-title.animate {
+  opacity: 1;
+  transform: translateY(0) rotateX(0);
+  animation: titleReveal 1s cubic-bezier(0.4, 0, 0.2, 1) forwards; 
+}
+
+/* Keyframe animations for team text */
+@keyframes slideInBounce {
+  0% {
+    opacity: 0;
+    transform: translateY(50px) scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes titleReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(60px) rotateX(45deg) scale(0.9);
+  }
+  
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotateX(0) scale(1);
+  }
+}
+
+.team-card {
+  opacity: 0;
+  transform: translateY(60px) scale(0.9);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.team-card.animate {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }

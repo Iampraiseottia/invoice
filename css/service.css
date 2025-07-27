@@ -55,7 +55,7 @@
   flex-direction: column;
   justify-content: space-between;
   opacity: 1 !important;
-  transform: translateY(50px) scale(0.95);
+  /* transform: translateY(50px) scale(0.95); */
   transition: all  0.4s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   overflow: hidden;
@@ -262,3 +262,27 @@
   outline-offset: 2px;
 }
 
+
+/* Add this to your existing CSS */
+
+.services-section {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.services-section.section-animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.service-card {
+  opacity: 0;
+  transform: translateY(50px) scale(0.95);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.service-card.animate {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
