@@ -248,3 +248,35 @@ textarea.form-control {
     padding: 40px 30px;
   }
 }
+
+
+/* Scroll */
+#contact {
+  opacity: 1;
+}
+
+.contact-info {
+  transform: translateX(-100px);
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.contact-form {
+  transform: translateX(100px);
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+#contact.scroll-animate .contact-info {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+#contact.scroll-animate .contact-form {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+#contact.scroll-animate .contact-form {
+  transition-delay: 0.1s;
+}

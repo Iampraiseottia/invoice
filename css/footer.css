@@ -428,3 +428,17 @@
   }
 }
 
+
+
+/* Scroll  */
+
+.footer {
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.footer.scroll-animate {
+  transform: translateY(0);
+  opacity: 1;
+}

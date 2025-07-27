@@ -344,6 +344,38 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+// Scroll 
+
+function handleFaqScrollAnimation() {
+    const faqSection = document.getElementById('faqs');
+    const sectionRect = faqSection.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    
+    const threshold = windowHeight * 0.7;
+    
+    if (sectionRect.top < threshold && sectionRect.bottom > 0) {
+        faqSection.classList.add('scroll-animate');
+    }
+}
+
+window.addEventListener('scroll', handleFaqScrollAnimation);
+document.addEventListener('DOMContentLoaded', handleFaqScrollAnimation);
+
+if ('IntersectionObserver' in window) {
+    const faqObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('scroll-animate');
+            }
+        });
+    }, {
+        threshold: 0.3,
+        rootMargin: '0px 0px -20% 0px'
+    });
+
+    faqObserver.observe(document.getElementById('faqs'));
+}
+
 // Contact us
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -473,44 +505,47 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+
+
+// Scroll 
+
+function handleContactScrollAnimation() {
+    const contactSection = document.getElementById('contact');
+    const sectionRect = contactSection.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    
+    const threshold = windowHeight * 0.7;
+    
+    if (sectionRect.top < threshold && sectionRect.bottom > 0) {
+        contactSection.classList.add('scroll-animate');
+    }
+}
+
+window.addEventListener('scroll', handleContactScrollAnimation);
+document.addEventListener('DOMContentLoaded', handleContactScrollAnimation);
+
+if ('IntersectionObserver' in window) {
+    const contactObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('scroll-animate');
+            }
+        });
+    }, {
+        threshold: 0.3,
+        rootMargin: '0px 0px -20% 0px'
+    });
+
+    contactObserver.observe(document.getElementById('contact'));
+}
+
+
+
+
+
 // Footer
-const observerOptions3 = {
-  threshold: 0.1,
-  rootMargin: "0px 0px -50px 0px",
-};
+ 
 
-const observer3 = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.style.animationPlayState = "running";
-    }
-  });
-}, observerOptions3);
-
-// Observe footer elements
-document.querySelectorAll(".footer-section, .footer-brand").forEach((el) => {
-  observer3.observe(el);
-});
-
-// Newsletter form submission
-document
-  .querySelector(".newsletter-form")
-  .addEventListener("submit", function (e) {
-    e.preventDefault();
-    const input = this.querySelector(".newsletter-input");
-    const btn = this.querySelector(".newsletter-btn");
-
-    if (input.value.includes("@")) {
-      btn.textContent = "Subscribed!";
-      btn.style.background = "linear-gradient(135deg, #28a745, #20c997)";
-      input.value = "";
-
-      setTimeout(() => {
-        btn.textContent = "Subscribe";
-        btn.style.background = "linear-gradient(135deg, #00ff88, #00cc6a)";
-      }, 2000);
-    }
-  });
 
 // Add floating animation to social links
 document.querySelectorAll(".social-link").forEach((link, index) => {
@@ -523,7 +558,47 @@ document.querySelectorAll(".social-link").forEach((link, index) => {
   });
 });
 
-// Appear About
+// Scroll 
+
+function handleFooterScrollAnimation() {
+    const footerSection = document.querySelector('.footer');
+    const sectionRect = footerSection.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    
+    const threshold = windowHeight * 0.7;
+    
+    if (sectionRect.top < threshold && sectionRect.bottom > 0) {
+        footerSection.classList.add('scroll-animate');
+    }
+}
+
+window.addEventListener('scroll', handleFooterScrollAnimation);
+document.addEventListener('DOMContentLoaded', handleFooterScrollAnimation);
+
+if ('IntersectionObserver' in window) {
+    const footerObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('scroll-animate');
+            }
+        });
+    }, {
+        threshold: 0.3,
+        rootMargin: '0px 0px -20% 0px'
+    });
+
+    footerObserver.observe(document.querySelector('.footer'));
+}
+
+
+
+
+
+
+
+
+
+
 
 //SELECT COUNTRY
 
