@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EaseInvoice | Login</title>
+    <link rel="stylesheet" href="../css/home.css" />
+    <link rel="stylesheet" href="../css/register.css" />
+    <link rel="stylesheet" href="../css/nav.css" />
+
+    <link rel="icon" href="/img/logo.png" style="border-radius: 50%" />
+
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <style>
+      body {
+        display: flex;
+        margin-top: 33px;
+        justify-content: center;
+        align-items: center;
+        width: 95%;
+        height: fit-content;
+        background: url(../img/register.png) no-repeat;
+        background-size: cover;
+        background-position: center;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header from index.html -->
+    <nav
+      class="navbar navbar-expand-lg navbar-light fixed-top bg-white shadow-sm"
+      id="navbar"
+    >
+      <div class="container">
+        <a class="navbar-brand fw-bold fs-3" href="#home">
+          <i class="bi bi-receipt text-success"></i>
+          <span class="text-primary">Ease</span
+          ><span class="text-warning">Invoice</span>
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          onclick="toggleMobileMenu()"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <i class="fas fa-bars" id="menu-icon"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/#services">Services</a>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="/#team">Team</a></li>
+            <li class="nav-item">
+              <a class="nav-link" href="/#testimonials">Testimonials</a>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="/#faqs">FAQs</a></li>
+            <li class="nav-item">
+              <a class="nav-link" href="/#contact">Contact Us</a>
+            </li>
+            <li class="nav-item ms-2">
+              <button class="btn btn-success rounded-pill px-5">
+                <a href="./register.html">Sign Up</a>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <section class="wrapper logInMT logInW">
+      <div class="borderline">
+        <form method="POST" id="loginForm">
+          <h1>Sign In </h1>
+          <div class="input_box">
+            <box-icon name="rename" color="#4c0e2e"></box-icon>
+            <input
+              type="text"
+              name="full_name"
+              id="full_name"
+              minlength="2"
+              maxlength="30"
+              required
+            />
+            <label for="username">Full Name</label>
+            <i></i>
+            <small id="titleerror">error message</small>
+          </div>
+
+          <div class="input_box">
+            <box-icon type="solid" name="envelope" color="#4c0e2e"></box-icon>
+            <input name="email" id="email" type="email" required />
+            <label for="email">Email Address</label>
+            <i></i>
+            <small>error message</small>
+          </div>
+
+          <div class="input_box">
+            <box-icon type="solid" name="timer" color="#4c0e2e"></box-icon>
+            <input name="password" id="password" type="password" required />
+            <label for="password">Password</label>
+            <i></i>
+            <small>error message</small>
+          </div>
+
+          <div class="field">
+            <input
+              type="submit"
+              class="btn"
+              name="submit"
+              value="LOGIN"
+              required
+              style="color: white; font-size: 18px"
+            />
+          </div>
+
+          <p class="kudi">
+            Don't have an account? <a href="./register.html">Register</a>
+          </p>
+        </form>
+      </div>
+    </section>
+
+    <script src="../js/login.js"></script>
+  </body>
+</html>

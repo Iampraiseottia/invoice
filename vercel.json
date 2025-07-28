@@ -1,20 +1,26 @@
 {
-  "functions": {
-    "php/*.php": {
-      "runtime": "vercel-php@0.6.0"
-    }
-  },
-  "routes": [
+  "version": 2,
+  "builds": [
     {
-      "src": "/html/(.*)",
-      "dest": "/html/$1"
+      "src": "server/server.js",
+      "use": "@vercel/node"
     },
     {
-      "src": "/php/(.*)",
-      "dest": "/php/$1"
+      "src": "public/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/server/server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/public/$1"
     }
   ],
   "env": {
-    "DATABASE_URL": "@database_url"
+    "NODE_ENV": "production"
   }
 }
