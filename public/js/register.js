@@ -1,14 +1,195 @@
 const countries = [
   "Afghanistan",
   "Albania",
-  "Algeria", // ... include all countries from your original list
-  "United States",
-  "United Kingdom",
+  "Algeria",
+  "Andorra",
+  "Angola",
+  "Argentina",
+  "Armenia",
+  "Australia",
+  "Austria",
+  "Azerbaijan",
+  "Bahamas",
+  "Bahrain",
+  "Bangladesh",
+  "Barbados",
+  "Belarus",
+  "Belgium",
+  "Belize",
+  "Benin",
+  "Bhutan",
+  "Bolivia",
+  "Bosnia and Herzegovina",
+  "Botswana",
+  "Brazil",
+  "Brunei",
+  "Bulgaria",
+  "Burkina Faso",
+  "Burundi",
+  "Cambodia",
   "Cameroon",
-  "Germany",
+  "Canada",
+  "Cape Verde",
+  "Central African Republic",
+  "Chad",
+  "Chile",
+  "China",
+  "Colombia",
+  "Comoros",
+  "Congo",
+  "Costa Rica",
+  "Croatia",
+  "Cuba",
+  "Cyprus",
+  "Czech Republic",
+  "Denmark",
+  "Djibouti",
+  "Dominica",
+  "Dominican Republic",
+  "Ecuador",
+  "Egypt",
+  "El Salvador",
+  "Equatorial Guinea",
+  "Eritrea",
+  "Estonia",
+  "Ethiopia",
+  "Fiji",
+  "Finland",
   "France",
-  "Spain",
+  "Gabon",
+  "Gambia",
+  "Georgia",
+  "Germany",
+  "Ghana",
+  "Greece",
+  "Grenada",
+  "Guatemala",
+  "Guinea",
+  "Guinea-Bissau",
+  "Guyana",
+  "Haiti",
+  "Honduras",
+  "Hungary",
+  "Iceland",
+  "India",
+  "Indonesia",
+  "Iran",
+  "Iraq",
+  "Ireland",
+  "Israel",
   "Italy",
+  "Jamaica",
+  "Japan",
+  "Jordan",
+  "Kazakhstan",
+  "Kenya",
+  "Kiribati",
+  "Kuwait",
+  "Kyrgyzstan",
+  "Laos",
+  "Latvia",
+  "Lebanon",
+  "Lesotho",
+  "Liberia",
+  "Libya",
+  "Liechtenstein",
+  "Lithuania",
+  "Luxembourg",
+  "Madagascar",
+  "Malawi",
+  "Malaysia",
+  "Maldives",
+  "Mali",
+  "Malta",
+  "Marshall Islands",
+  "Mauritania",
+  "Mauritius",
+  "Mexico",
+  "Micronesia",
+  "Moldova",
+  "Monaco",
+  "Mongolia",
+  "Montenegro",
+  "Morocco",
+  "Mozambique",
+  "Myanmar",
+  "Namibia",
+  "Nauru",
+  "Nepal",
+  "Netherlands",
+  "New Zealand",
+  "Nicaragua",
+  "Niger",
+  "Nigeria",
+  "North Korea",
+  "North Macedonia",
+  "Norway",
+  "Oman",
+  "Pakistan",
+  "Palau",
+  "Panama",
+  "Papua New Guinea",
+  "Paraguay",
+  "Peru",
+  "Philippines",
+  "Poland",
+  "Portugal",
+  "Qatar",
+  "Romania",
+  "Russia",
+  "Rwanda",
+  "Saint Kitts and Nevis",
+  "Saint Lucia",
+  "Saint Vincent and the Grenadines",
+  "Samoa",
+  "San Marino",
+  "Sao Tome and Principe",
+  "Saudi Arabia",
+  "Senegal",
+  "Serbia",
+  "Seychelles",
+  "Sierra Leone",
+  "Singapore",
+  "Slovakia",
+  "Slovenia",
+  "Solomon Islands",
+  "Somalia",
+  "South Africa",
+  "South Korea",
+  "South Sudan",
+  "Spain",
+  "Sri Lanka",
+  "Sudan",
+  "Suriname",
+  "Sweden",
+  "Switzerland",
+  "Syria",
+  "Taiwan",
+  "Tajikistan",
+  "Tanzania",
+  "Thailand",
+  "Timor-Leste",
+  "Togo",
+  "Tonga",
+  "Trinidad and Tobago",
+  "Tunisia",
+  "Turkey",
+  "Turkmenistan",
+  "Tuvalu",
+  "Uganda",
+  "Ukraine",
+  "United Arab Emirates",
+  "United Kingdom",
+  "United States",
+  "Uruguay",
+  "Uzbekistan",
+  "Vanuatu",
+  "Vatican City",
+  "Venezuela",
+  "Vietnam",
+  "Yemen",
+  "Zambia",
+  "Zimbabwe",
 ];
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -23,7 +204,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Helper functions for error handling
+  // Error handling
   function showError(inputElement, message) {
     if (!inputElement) return;
     inputElement.classList.add("error");
@@ -63,7 +244,26 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Form handling
+  // Check if user is already logged in
+  async function checkAuthStatus() {
+    try {
+      const response = await fetch("/api/auth/me", {
+        credentials: "include",
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        if (result.success) {
+          window.location.href = "/html/invoice.html";
+        }
+      }
+    } catch (error) {
+      console.error("Auth check error:", error);
+    }
+  }
+
+  checkAuthStatus();
+
   const form = document.getElementById("registerForm");
 
   if (form) {
@@ -80,6 +280,12 @@ document.addEventListener("DOMContentLoaded", function () {
       const formData = new FormData(form);
       const data = Object.fromEntries(formData);
 
+      // Clear previous general errors
+      const generalError = document.getElementById("general-error");
+      if (generalError) {
+        generalError.style.display = "none";
+      }
+
       // Validation
       let hasErrors = false;
 
@@ -95,6 +301,22 @@ document.addEventListener("DOMContentLoaded", function () {
         showError(
           document.getElementById("email"),
           "Please enter a valid email"
+        );
+        hasErrors = true;
+      }
+
+      if (!data.phone_number || data.phone_number.length < 8) {
+        showError(
+          document.getElementById("phone_number"),
+          "Please enter a valid phone number"
+        );
+        hasErrors = true;
+      }
+
+      if (!data.Country) {
+        showError(
+          document.getElementById("Country"),
+          "Please select your country"
         );
         hasErrors = true;
       }
@@ -135,14 +357,13 @@ document.addEventListener("DOMContentLoaded", function () {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(data),
+          credentials: "include",
         });
 
         const result = await response.json();
 
         if (result.success) {
           showGeneralError("Registration successful! Redirecting...", true);
-          localStorage.setItem("user", JSON.stringify(result.user));
-          localStorage.setItem("token", result.token);
 
           setTimeout(() => {
             window.location.href = result.redirect;

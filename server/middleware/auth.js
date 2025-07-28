@@ -1,20 +1,78 @@
-const jwt = require('jsonwebtoken');
+const pool = require('../config/database');
 
-const authenticateToken = (req, res, next) => {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
+const authenticateSession = async (req, res, next) => {
+  try {
+    const sessionId = req.cookies.sessionId;
 
-  if (!token) {
-    return res.status(401).json({ error: 'Access token required' });
-  }
-
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    if (err) {
-      return res.status(403).json({ error: 'Invalid token' });
+    if (!sessionId) {
+      return res.status(401).json({ error: 'Authentication required' });
     }
-    req.user = user;
+
+    // Check if session exists and is valid
+    const sessionResult = await pool.query(
+      "SELECT s.user_id, u.full_name, u.email FROM sessions s JOIN users u ON s.user_id = u.id WHERE s.session_id = $1 AND s.expires_at > NOW()",
+      [sessionId]
+    );
+
+    if (sessionResult.rows.length === 0) {
+      // Clean up expired session
+      await pool.query("DELETE FROM sessions WHERE session_id = $1", [sessionId]);
+      res.clearCookie('sessionId');
+      return res.status(401).json({ error: 'Session expired' });
+    }
+
+    // Attach user info to request
+    req.user = {
+      userId: sessionResult.rows[0].user_id,
+      full_name: sessionResult.rows[0].full_name,
+      email: sessionResult.rows[0].email
+    };
+
     next();
-  });
+  } catch (error) {
+    console.error('Session authentication error:', error);
+    res.status(500).json({ error: 'Authentication error' });
+  }
 };
 
-module.exports = { authenticateToken };
+// Set authentication to doesn't fail if no session
+const optionalAuth = async (req, res, next) => {
+  try {
+    const sessionId = req.cookies.sessionId;
+
+    if (sessionId) {
+      const sessionResult = await pool.query(
+        "SELECT s.user_id, u.full_name, u.email FROM sessions s JOIN users u ON s.user_id = u.id WHERE s.session_id = $1 AND s.expires_at > NOW()",
+        [sessionId]
+      );
+
+      if (sessionResult.rows.length > 0) {
+        req.user = {
+          userId: sessionResult.rows[0].user_id,
+          full_name: sessionResult.rows[0].full_name,
+          email: sessionResult.rows[0].email
+        };
+      }
+    }
+
+    next();
+  } catch (error) {
+    console.error('Optional auth error:', error);
+    next(); 
+  }
+};
+
+// Clean up expired sessions (call this periodically)
+const cleanupExpiredSessions = async () => {
+  try {
+    await pool.query("DELETE FROM sessions WHERE expires_at < NOW()");
+  } catch (error) {
+    console.error('Session cleanup error:', error);
+  }
+};
+
+module.exports = { 
+  authenticateSession, 
+  optionalAuth, 
+  cleanupExpiredSessions 
+};
