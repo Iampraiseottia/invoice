@@ -83,11 +83,15 @@
 .profile-image {
   width: 44px !important;
   height: 44px !important;
-  border-radius: 50%;
   margin-right: 12px;
+  border-radius: 50% !important;
   object-fit: cover;
   flex-shrink: 0;
   background: #ddd; 
+}
+
+.profile-image img{
+  border-radius: 50% !important;
 }
 
 .user-info {

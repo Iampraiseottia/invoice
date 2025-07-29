@@ -24,7 +24,6 @@ document.addEventListener("DOMContentLoaded", function () {
           credentials: "include",
         });
 
-        // Check if response is ok
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -64,26 +63,5 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
-
-// Check if user is already logged in
-async function checkAuthStatus() {
-  try {
-    const response = await fetch("/api/auth/me", {
-      credentials: "include",
-    });
-
-    if (response.ok) {
-      const text = await response.text();
-      if (text) {
-        const result = JSON.parse(text);
-        if (result.success) {
-          window.location.href = "/html/invoice.html";
-        }
-      }
-    }
-  } catch (error) {
-    console.error("Auth check error:", error);
-  }
-}
 
 checkAuthStatus();

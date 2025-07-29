@@ -9,4 +9,8 @@ const pool = new Pool({
       : false,
 });
 
+pool.on("connect", (client) => {
+  console.log("Connected to the database");
+});
+
 module.exports = pool;

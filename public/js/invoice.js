@@ -1,501 +1,404 @@
-// DISPLAY & STORE TABLE VALUES, EDIT AND DELETE
 
 var selectedRow = null;
+var invoiceItems = JSON.parse(localStorage.getItem("invoiceItems")) || [];
+var currentUser = JSON.parse(localStorage.getItem("currentUser")) || null;
 
-function onSubmit() {
+// Load saved data on page load
+window.addEventListener("load", function () {
+  loadSavedInvoiceData();
+  loadUserProfile();
+  populateInvoiceItems();
+});
+
+// User Profile Management
+function loadUserProfile() {
+  if (currentUser) {
+    document.getElementById("full-name-get").textContent =
+      currentUser.full_name || "Not Set";
+    document.getElementById("email-get").textContent =
+      currentUser.email || "Not Set";
+    document.getElementById("num-get").textContent =
+      currentUser.phone_number || "Not Set";
+    document.getElementById("country-get").textContent =
+      currentUser.country || "Not Set";
+
+    if (currentUser.full_name) {
+      document.getElementById("getcompanyName").value = currentUser.full_name;
+      updateCompanyDisplays(currentUser.full_name);
+    }
+  }
+}
+
+function updateUserProfile(userData) {
+  currentUser = userData;
+  localStorage.setItem("currentUser", JSON.stringify(currentUser));
+  loadUserProfile();
+}
+
+// Save invoice data to local storage
+function saveinvoiceDataLocally() {
+  const invoiceData = {
+    companyName: document.getElementById("getcompanyName").value,
+    billingAddress: document.getElementById("getbillingAddress").value,
+    country: document.getElementById("Country").value,
+    invoiceNumber: document.getElementById("invoice-Number").value,
+    invoiceDate: document.getElementById("invoice-date").value,
+    termsConditions: document.querySelector("#try textarea").value,
+    items: invoiceItems,
+  };
+
+  localStorage.setItem("currentInvoiceData", JSON.stringify(invoiceData));
+}
+
+// Load saved invoice data
+function loadSavedInvoiceData() {
+  const savedData = JSON.parse(localStorage.getItem("currentInvoiceData"));
+  if (savedData) {
+    document.getElementById("getcompanyName").value =
+      savedData.companyName || "";
+    document.getElementById("getbillingAddress").value =
+      savedData.billingAddress || "";
+    document.getElementById("Country").value = savedData.country || "";
+    document.getElementById("invoice-Number").value =
+      savedData.invoiceNumber || "100";
+    document.getElementById("invoice-date").value = savedData.invoiceDate || "";
+    document.querySelector("#try textarea").value =
+      savedData.termsConditions || "";
+
+    updateCompanyDisplays(savedData.companyName);
+    updateBillingDisplays(savedData.billingAddress);
+
+    invoiceItems = savedData.items || [];
+  }
+}
+
+// Populate invoice items table from local storage
+function populateInvoiceItems() {
+  const outputTable = document.getElementById("output");
+  const resultTable = document.getElementById("result");
+
+  outputTable.innerHTML = "";
+  resultTable.innerHTML = "";
+
+  invoiceItems.forEach((item, index) => {
+    insertRowIntoTable(item, index);
+    insertRowIntoPrintTable(item);
+  });
+
+  updateTotals();
+}
+
+// onSubmit with local storage
+function onSubmit(event) {
+  if (event) event.preventDefault();
+
   var inputData = readData();
-  if (selectedRow == null) insertData(inputData);
-  else updateData(inputData);
+  if (!inputData.description || !inputData.amount) {
+    alert("Please fill in description and amount");
+    return;
+  }
+
+  if (selectedRow == null) {
+    insertData(inputData);
+  } else {
+    updateData(inputData);
+  }
 
   refreshData();
+  saveinvoiceDataLocally();
 }
 
 function readData() {
   var inputData = {};
   inputData["description"] = document.getElementById("Descriptipon").value;
-  inputData["amount"] = document.getElementById("Amount").value;
-  inputData["tax"] = document.getElementById("Tax").value;
+  inputData["amount"] = document
+    .getElementById("Amount")
+    .value.replace(/,/g, "");
+  inputData["tax"] =
+    document.getElementById("Tax").value.replace(/,/g, "") || "0";
   return inputData;
 }
 
 function insertData(data) {
-  var table = document
-      .getElementById("invoiceTable")
-      .getElementsByTagName("tbody")[0],
-    sum = 0;
-
-  var newRow = table.insertRow(table.length);
-
-  cell1 = newRow.insertCell(0);
-
-  cell1.innerHTML = data.description;
-
-  cell2 = newRow.insertCell(1);
-
-  cell2.innerHTML = data.amount;
-
-  cell3 = newRow.insertCell(2);
-
-  cell3.innerHTML = data.tax;
-
-  cell4 = newRow.insertCell(3);
-
-  cell4.innerHTML = `<a href="" onClick="onEdit(this)">Edit</a>
-                        <a href="" onClick="onDelete(this)">Delete</a>`;
-
-
-
-  //Print Table
-  let objectTable = {
+  const item = {
     description: data.description,
-    amount: data.amount,
-    tax: data.tax,
+    amount: parseFloat(data.amount) || 0,
+    tax_percentage: parseFloat(data.tax) || 0,
   };
 
-  let tableBody = document.getElementById("result");
+  invoiceItems.push(item);
 
+  // Insert into table
+  insertRowIntoTable(item, invoiceItems.length - 1);
+  insertRowIntoPrintTable(item);
+
+  updateTotals();
+}
+
+function insertRowIntoTable(item, index) {
+  var table = document
+    .getElementById("invoiceTable")
+    .getElementsByTagName("tbody")[0];
+  var newRow = table.insertRow(table.length);
+
+  newRow.insertCell(0).innerHTML = item.description;
+  newRow.insertCell(1).innerHTML = formatNumber(item.amount);
+  newRow.insertCell(2).innerHTML = formatNumber(item.tax_percentage);
+  newRow.insertCell(3).innerHTML = `
+    <a href="#" onClick="onEdit(this, ${index})" style="color: blue; text-decoration: none; margin-right: 10px;">Edit</a>
+    <a href="#" onClick="onDelete(this, ${index})" style="color: red; text-decoration: none;">Delete</a>
+  `;
+}
+
+function insertRowIntoPrintTable(item) {
+  let tableBody = document.getElementById("result");
   var row = document.createElement("tr");
 
-  Object.values(objectTable).forEach(function (value) {
+  ["description", "amount", "tax_percentage"].forEach(function (key) {
     var cell = document.createElement("td");
-
-    cell.textContent = value;
-
+    cell.textContent =
+      key === "description" ? item[key] : formatNumber(item[key]);
     row.appendChild(cell);
   });
 
   tableBody.appendChild(row);
 }
-refreshData();
 
+// edit
+function onEdit(td, index) {
+  event.preventDefault();
+  selectedRow = td.parentElement.parentElement;
 
+  const item = invoiceItems[index];
+  document.getElementById("Descriptipon").value = item.description;
+  document.getElementById("Amount").value = formatNumber(item.amount);
+  document.getElementById("Tax").value = formatNumber(item.tax_percentage);
+}
 
-//Thes is to automatically refresh the browser input field
+//  update
+function updateData(inputData) {
+  const rowIndex = selectedRow.rowIndex - 1;
+
+  invoiceItems[rowIndex] = {
+    description: inputData.description,
+    amount: parseFloat(inputData.amount) || 0,
+    tax_percentage: parseFloat(inputData.tax) || 0,
+  };
+
+  // Update table displays
+  selectedRow.cells[0].innerHTML = inputData.description;
+  selectedRow.cells[1].innerHTML = formatNumber(inputData.amount);
+  selectedRow.cells[2].innerHTML = formatNumber(inputData.tax);
+
+  // Update print table
+  const printTableRows = document.getElementById("result").rows;
+  if (printTableRows[rowIndex]) {
+    printTableRows[rowIndex].cells[0].textContent = inputData.description;
+    printTableRows[rowIndex].cells[1].textContent = formatNumber(
+      inputData.amount
+    );
+    printTableRows[rowIndex].cells[2].textContent = formatNumber(inputData.tax);
+  }
+
+  updateTotals();
+  saveinvoiceDataLocally();
+}
+
+// Delete
+function onDelete(td, index) {
+  event.preventDefault();
+
+  // Remove from array
+  invoiceItems.splice(index, 1);
+
+  // Remove from both tables
+  const mainTable = document.getElementById("invoiceTable");
+  const printTable = document.getElementById("result");
+
+  mainTable.deleteRow(td.parentElement.parentElement.rowIndex);
+  if (printTable.rows[index]) {
+    printTable.deleteRow(index);
+  }
+
+  populateInvoiceItems();
+  saveinvoiceDataLocally();
+}
+
+// Update totals calculation
+function updateTotals() {
+  let subtotal = 0;
+  let taxTotal = 0;
+
+  invoiceItems.forEach((item) => {
+    const amount = parseFloat(item.amount) || 0;
+    const taxPercentage = parseFloat(item.tax_percentage) || 0;
+    const taxAmount = (amount * taxPercentage) / 100;
+
+    subtotal += amount;
+    taxTotal += taxAmount;
+  });
+
+  const grandTotal = subtotal + taxTotal;
+
+  document.getElementById("sum").innerHTML = formatNumber(subtotal);
+  document.getElementById("boris").innerHTML = formatNumber(taxTotal);
+  document.getElementById("total").innerHTML = formatNumber(grandTotal);
+  document.getElementById("total2").innerHTML = formatNumber(grandTotal);
+
+  const printTotalElement = document.querySelector(".printTotal");
+  if (printTotalElement) {
+    printTotalElement.innerHTML = formatNumber(grandTotal);
+  }
+}
+
+// calculation
+function Calc(element) {
+  updateTotals();
+  saveinvoiceDataLocally();
+}
+
+// Format number with commas
+function formatNumber(num) {
+  return parseFloat(num || 0)
+    .toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 function refreshData() {
   document.getElementById("Descriptipon").value = "";
-
   document.getElementById("Amount").value = "";
-
   document.getElementById("Tax").value = "";
-
-  var selectedRow = null;
+  selectedRow = null;
 }
 
-
-
-//edit each content
-
-function onEdit(td) {
-  event.preventDefault();
-
-  selectedRow = td.parentElement.parentElement;
-
-  document.getElementById("Descriptipon").value =
-    selectedRow.cells[0].innerHTML;
-
-  document.getElementById("Amount").value = selectedRow.cells[1].innerHTML;
-
-  document.getElementById("Tax").value = selectedRow.cells[2].innerHTML;
+// Company displays
+function updateCompanyDisplays(value) {
+  const upperValue = value.toUpperCase();
+  document.getElementById("dispayuCompanyName").textContent = upperValue;
+  document.getElementById("dispayCompanyName").textContent = upperValue;
 }
 
-
-
-//update data in cell
-
-function updateData(inputData) {
-  selectedRow.cells[0].innerHTML = inputData.description;
-
-  selectedRow.cells[1].innerHTML = inputData.amount;
-
-  selectedRow.cells[2].innerHTML = inputData.tax;
+// Billing displays
+function updateBillingDisplays(value) {
+  const upperValue = value.toUpperCase();
+  document.getElementById("dispayBillingAddress").textContent = upperValue;
+  document.getElementById("dispayuBillingAddress").textContent = upperValue;
 }
 
+// Event listeners for real-time updates
+document
+  .getElementById("getcompanyName")
+  .addEventListener("input", function () {
+    updateCompanyDisplays(this.value);
+    saveinvoiceDataLocally();
+  });
 
+document
+  .getElementById("getbillingAddress")
+  .addEventListener("input", function () {
+    updateBillingDisplays(this.value);
+    saveinvoiceDataLocally();
+  });
 
-//delete cell
+document
+  .getElementById("invoice-Number")
+  .addEventListener("input", function () {
+    document.getElementById("displayInvoiceNumber").textContent = this.value;
+    saveinvoiceDataLocally();
+  });
 
-function onDelete(td) {
-  event.preventDefault();
-  row = td.parentElement.parentElement;
-  document.getElementById("invoiceTable").deleteRow(row.rowIndex);
-  refreshData();
-}
+document.getElementById("invoice-date").addEventListener("input", function () {
+  document.getElementById("date").textContent = this.value;
+  document.getElementById("displayDate").textContent = this.value;
+  saveinvoiceDataLocally();
+});
 
-
-
-//CALCULATION
-
-function Calc(all) {
-  var tax = all.parentElement.parentElement.children[2].children[1].value;
-  var amt = all.parentElement.parentElement.children[1].children[1].value;
-
-  const amtValue = parseInt(amt.replace(/,/g, ""));
-  const taxValue = parseInt(tax.replace(/,/g, ""));
-
-  var subtotal = amtValue + taxValue / 100;
-  document.getElementById("total2").innerHTML = subtotal
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-
-  var table = document
-      .getElementById("invoiceTable")
-      .getElementsByTagName("tbody")[0],
-    sumAmt = 0,
-    sumTax = 0;
-
-  for (var i = 0; i < table.rows.length; i++) {
-    sumAmt =
-      sumAmt + parseInt(table.rows[i].cells[1].innerHTML.replace(/,/g, ""));
+// Save and Print Invoice
+async function saveAndPrintInvoice() {
+  if (!currentUser) {
+    alert("Please log in to save invoices");
+    return;
   }
 
-  document.getElementById("sum").innerHTML = sumAmt
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  const invoiceData = {
+    invoice_number: document.getElementById("invoice-Number").value,
+    invoice_date: document.getElementById("invoice-date").value,
+    company_name: document.getElementById("getcompanyName").value,
+    billing_address: document.getElementById("getbillingAddress").value,
+    country: document.getElementById("Country").value,
+    terms_conditions: document.querySelector("#try textarea").value,
+    signature_image_data: getSignatureImageData(),
+    logo_image_data: getLogoImageData(),
+    items: invoiceItems.map((item) => ({
+      description: item.description,
+      amount: item.amount,
+      tax_percentage: item.tax_percentage,
+    })),
+  };
 
-  for (var i = 0; i < table.rows.length; i++) {
-    sumTax =
-      sumTax + parseInt(table.rows[i].cells[2].innerHTML.replace(/,/g, ""));
+  try {
+    const response = await fetch("/api/invoices", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(invoiceData),
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      alert("Invoice saved successfully!");
+      localStorage.removeItem("currentInvoiceData");
+      localStorage.removeItem("invoiceItems");
+
+      printInvoice();
+    } else {
+      alert("Failed to save invoice: " + result.error);
+    }
+  } catch (error) {
+    console.error("Error saving invoice:", error);
+    alert("Error saving invoice. Please try again.");
   }
-
-  document.getElementById("boris").innerHTML = sumTax
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-
-  grandSum = sumAmt + sumTax;
-  document.getElementById("total").innerHTML = grandSum
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-
-  var printTotalElement = document.querySelector(".printTotal");
-  printTotalElement.innerHTML = grandSum
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-
-
-//COMMA'S
-var amountEntered = document.getElementById("Amount");
-
-amountEntered.addEventListener("keypress", function (event) {
-  const key = event.key;
-
-  if (!/[\d\s\b]/.test(key)) {
-    event.preventDefault();
-  }
-});
-
-amountEntered.addEventListener("input", function () {
-  // Remove existing commas from the input value
-  let inputValue = this.value.replace(/,/g, "");
-
-  // Format the input value with commas
-  inputValue = addCommas(inputValue);
-
-  // Update the input value with the formatted number
-  this.value = inputValue;
-});
-
-
-
-// Function to add commas to a number
-function addCommas(number) {
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+// Get signature image data
+function getSignatureImageData() {
+  const signatureImg = document.querySelector("#image-container2 img");
+  return signatureImg ? signatureImg.src : null;
 }
 
-var TaxEntered = document.getElementById("Tax");
-
-TaxEntered.addEventListener("keypress", function (event) {
-  const key = event.key;
-
-  if (!/[\d\s\b]/.test(key)) {
-    event.preventDefault();
-  }
-});
-
-TaxEntered.addEventListener("input", function () {
-  // Remove existing commas from the input value
-  let inputValue = this.value.replace(/,/g, "");
-
-  // Format the input value with commas
-  inputValue = addCommas(inputValue);
-
-  // Update the input value with the formatted number
-  this.value = inputValue;
-});
-
-
-// Function to add commas to a number
-function addCommas(number) {
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+// Get logo image data
+function getLogoImageData() {
+  const logoImg = document.querySelector("#image-container img");
+  return logoImg ? logoImg.src : null;
 }
 
+// Print invoice function
+function printInvoice() {
+  document.getElementById("mainInvoiceTable").style.display = "block";
 
-//Get Company Name, Billing Address, Invoice# & Date
-
-const getCompanyName = document.getElementById("getcompanyName");
-
-const dispayCompanyName = document.getElementById("dispayuCompanyName");
-
-const dispayCompanyName2 = document.getElementById("dispayCompanyName");
-
-const getBillingAddress = document.getElementById("getbillingAddress");
-
-const dispayBilling = document.getElementById("dispayBillingAddress");
-
-const dispayBillingAddress2 = document.getElementById("dispayuBillingAddress");
-
-const inviceNum = document.getElementById("invoice-Number");
-
-const dateCollect = document.getElementById("invoice-date");
-
-const dispayDate = document.getElementById("date");
-
-const displayInvoiceNumber = document.getElementById("displayInvoiceNumber");
-
-const displayDate2 = document.getElementById("displayDate");
-
-const currentDate = new Date();
-
-const dateOptions = { dateStyle: "short" };
-
-const formattedDate = currentDate.toLocaleDateString(undefined, dateOptions);
-
-displayDate2.textContent = formattedDate;
-
-dispayDate.textContent = formattedDate;
-
-getCompanyName.addEventListener("input", function () {
-  const value = getCompanyName.value;
-
-  dispayCompanyName.textContent = value.toUpperCase();
-
-  dispayCompanyName2.textContent = value.toUpperCase();
-
-  dispayCompanyName2.style.fontWeight = "900";
-});
-
-getBillingAddress.addEventListener("input", function () {
-  const value = getBillingAddress.value;
-
-  dispayBilling.textContent = value.toUpperCase();
-
-  dispayBillingAddress2.textContent = value.toUpperCase();
-});
-
-dateCollect.addEventListener("input", function () {
-  const value = dateCollect.value;
-
-  dispayDate.textContent = value;
-
-  displayDate2.textContent = value;
-});
-
-inviceNum.addEventListener("input", function () {
-  const value = inviceNum.value;
-  displayInvoiceNumber.textContent = value;
-});
-
-
-
-//PRINT PDF
-
-document
-  .getElementById("printButtonInPdf")
-  .addEventListener("click", function () {
-    document.getElementById("mainInvoiceTable").style.display = "block";
-
-    printJS({
-      printable: "mainInvoiceTable",
-      type: "html",
-      targetStyles: ["*"],
-    });
-
-    document.getElementById("mainInvoiceTable").style.display = "none";
+  printJS({
+    printable: "mainInvoiceTable",
+    type: "html",
+    targetStyles: ["*"],
   });
 
-document
-  .getElementById("printButtonInPdf2")
-  .addEventListener("click", function () {
-    document.getElementById("mainInvoiceTable").style.display = "block";
+  document.getElementById("mainInvoiceTable").style.display = "none";
+}
 
-    printJS({
-      printable: "mainInvoiceTable",
-      type: "html",
-      targetStyles: ["*"],
-    });
-
-    document.getElementById("mainInvoiceTable").style.display = "none";
-  });
-
-document
-  .getElementById("printButtonInPdf3")
-  .addEventListener("click", function () {
-    document.getElementById("mainInvoiceTable").style.display = "block";
-
-    printJS({
-      printable: "mainInvoiceTable",
-      type: "html",
-      targetStyles: ["*"],
-    });
-
-    document.getElementById("mainInvoiceTable").style.display = "none";
-  });
-
-document
-  .getElementById("printButtonInPdf4")
-  .addEventListener("click", function () {
-    document.getElementById("mainInvoiceTable").style.display = "block";
-
-    printJS({
-      printable: "mainInvoiceTable",
-      type: "html",
-      targetStyles: ["*"],
-    });
-
-    document.getElementById("mainInvoiceTable").style.display = "none";
-  });
-
-document
-  .getElementById("printButtonInPdf5")
-  .addEventListener("click", function () {
-    document.getElementById("mainInvoiceTable").style.display = "block";
-
-    printJS({
-      printable: "mainInvoiceTable",
-      type: "html",
-      targetStyles: ["*"],
-    });
-
-    document.getElementById("mainInvoiceTable").style.display = "none";
-  });
-
-document
-  .getElementById("printButtonInPdf6")
-  .addEventListener("click", function () {
-    document.getElementById("mainInvoiceTable").style.display = "block";
-
-    printJS({
-      printable: "mainInvoiceTable",
-      type: "html",
-      targetStyles: ["*"],
-    });
-
-    document.getElementById("mainInvoiceTable").style.display = "none";
-  });
-
-document
-  .getElementById("printButtonInPdf7")
-  .addEventListener("click", function () {
-    document.getElementById("mainInvoiceTable").style.display = "block";
-
-    printJS({
-      printable: "mainInvoiceTable",
-      type: "html",
-      targetStyles: ["*"],
-    });
-
-    document.getElementById("mainInvoiceTable").style.display = "none";
-  });
-
-document
-  .getElementById("printButtonInPdf8")
-  .addEventListener("click", function () {
-    document.getElementById("mainInvoiceTable").style.display = "block";
-
-    printJS({
-      printable: "mainInvoiceTable",
-      type: "html",
-      targetStyles: ["*"],
-    });
-
-    document.getElementById("mainInvoiceTable").style.display = "none";
-  });
-
-document
-  .getElementById("printButtonInPdf9")
-  .addEventListener("click", function () {
-    document.getElementById("mainInvoiceTable").style.display = "block";
-
-    printJS({
-      printable: "mainInvoiceTable",
-      type: "html",
-      targetStyles: ["*"],
-    });
-
-    document.getElementById("mainInvoiceTable").style.display = "none";
-  });
-
-document
-  .getElementById("printButtonInPdf10")
-  .addEventListener("click", function () {
-    document.getElementById("mainInvoiceTable").style.display = "block";
-
-    printJS({
-      printable: "mainInvoiceTable",
-      type: "html",
-      targetStyles: ["*"],
-    });
-
-    document.getElementById("mainInvoiceTable").style.display = "none";
-  });
-
-document
-  .getElementById("printButtonInPdf11")
-  .addEventListener("click", function () {
-    document.getElementById("mainInvoiceTable").style.display = "block";
-
-    printJS({
-      printable: "mainInvoiceTable",
-      type: "html",
-      targetStyles: ["*"],
-    });
-
-    document.getElementById("mainInvoiceTable").style.display = "none";
-  });
-
-document
-  .getElementById("printButtonInPdf12")
-  .addEventListener("click", function () {
-    document.getElementById("mainInvoiceTable").style.display = "block";
-
-    printJS({
-      printable: "mainInvoiceTable",
-      type: "html",
-      targetStyles: ["*"],
-    });
-
-    document.getElementById("mainInvoiceTable").style.display = "none";
-  });
-
-document
-  .getElementById("printButtonInPdf13")
-  .addEventListener("click", function () {
-    document.getElementById("mainInvoiceTable").style.display = "block";
-
-    printJS({
-      printable: "mainInvoiceTable",
-      type: "html",
-      targetStyles: ["*"],
-    });
-
-    document.getElementById("mainInvoiceTable").style.display = "none";
-  });
-
-//Select Files Signature
-
+// Image selection
 function selectImage() {
   var fileInput = document.createElement("input");
-
   fileInput.type = "file";
-
-  fileInput.accept = ".pdf, image/*";
+  fileInput.accept = "image/*";
 
   fileInput.addEventListener("change", function (event) {
     var selectedFile = event.target.files[0];
-
-    displayImage(selectedFile);
+    if (selectedFile) {
+      displayImage(selectedFile);
+      saveinvoiceDataLocally();
+    }
   });
 
   fileInput.click();
@@ -512,49 +415,32 @@ function displayImage(file) {
 
     reader.onload = function (event) {
       var image = document.createElement("img");
-
-      if (file.type === "application/pdf") {
-        image.src = "img/default.png";
-        logoAll.style.display = "none";
-        image.style.marginTop = "80px";
-        image.style.marginRight = "30px";
-      } else {
-        image.src = event.target.result;
-        logoAll.style.display = "none";
-        image.style.marginTop = "80px";
-        image.style.marginRight = "30px";
-      }
-
+      image.src = event.target.result;
+      image.style.marginTop = "80px";
+      image.style.marginRight = "30px";
+      image.style.maxWidth = "150px";
+      image.style.maxHeight = "150px";
       image.classList.add("selected-image");
 
+      logoAll.style.display = "none";
       container.appendChild(image);
     };
 
-    if (file.type === "application/pdf") {
-      reader.readAsDataURL(file);
-    } else {
-      reader.readAsDataURL(file);
-    }
-  } else {
-    var gallery = document.getElementById("gallery").cloneNode(true);
-
-    container.appendChild(gallery);
+    reader.readAsDataURL(file);
   }
 }
 
-//Add signature
-
 function selectFile() {
   var fileInput = document.createElement("input");
-
   fileInput.type = "file";
-
-  fileInput.accept = ".jpg, .jpeg, .png, .webp, .pdf";
+  fileInput.accept = "image/*";
 
   fileInput.addEventListener("change", function (event) {
     var selectedFile = event.target.files[0];
-
-    displayFile(selectedFile);
+    if (selectedFile) {
+      displayFile(selectedFile);
+      saveinvoiceDataLocally();
+    }
   });
 
   fileInput.click();
@@ -562,9 +448,7 @@ function selectFile() {
 
 function displayFile(file) {
   var container = document.getElementById("image-container2");
-
   var sig = document.getElementById("sig");
-
   var arrange = document.getElementById("try");
 
   container.innerHTML = "";
@@ -573,56 +457,17 @@ function displayFile(file) {
     var reader = new FileReader();
 
     reader.onload = function (event) {
-      var fileContent;
+      var fileContent = document.createElement("img");
+      fileContent.src = event.target.result;
+      fileContent.style.height = "136px";
+      fileContent.style.width = "170px";
+      fileContent.style.marginTop = "50px";
+      fileContent.classList.add("selected-image");
 
-      if (file.type === "application/pdf") {
-        fileContent = document.createElement("img");
-
-        fileContent.src = "img/default.png";
-        fileContent.style.height = "136px";
-        fileContent.style.width = "170px";
-        fileContent.style.paddingTop = "50px";
-
-        sig.style.display = "none";
-        arrange.style.display = "flex";
-        arrange.style.justifyContent = "space-between";
-        arrange.style.marginRight = "20px";
-      } else if (
-        file.type === "image/jpeg" ||
-        file.type === "image/jpg" ||
-        file.type === "image/png" ||
-        file.type === "image/webp"
-      ) {
-        fileContent = document.createElement("img");
-
-        fileContent.src = event.target.result;
-        fileContent.style.height = "136px";
-        fileContent.style.width = "170px";
-        fileContent.style.marginTop = "50px";
-
-        fileContent.classList.add("selected-image");
-
-        sig.style.display = "none";
-        arrange.style.display = "flex";
-        arrange.style.justifyContent = "space-between";
-        arrange.style.marginRight = "20px";
-      } else {
-        fileContent = document.createElement("a");
-
-        fileContent.href = event.target.result;
-        fileContent.style.height = "136px";
-        fileContent.style.width = "170px";
-        fileContent.style.marginTop = "50px";
-
-        fileContent.target = "_blank";
-
-        fileContent.innerText = "View File";
-
-        sig.style.display = "none";
-        arrange.style.display = "flex";
-        arrange.style.justifyContent = "space-between";
-        arrange.style.marginRight = "20px";
-      }
+      sig.style.display = "none";
+      arrange.style.display = "flex";
+      arrange.style.justifyContent = "space-between";
+      arrange.style.marginRight = "20px";
 
       container.appendChild(fileContent);
     };
@@ -631,958 +476,896 @@ function displayFile(file) {
   }
 }
 
+// Print buttons
+document.addEventListener("DOMContentLoaded", function () {
+  document
+    .getElementById("printButtonInPdf")
+    .addEventListener("click", saveAndPrintInvoice);
 
+  for (let i = 2; i <= 13; i++) {
+    const button = document.getElementById(`printButtonInPdf${i}`);
+    if (button) {
+      button.addEventListener("click", saveAndPrintInvoice);
+    }
+  }
 
-//Country
+  document.getElementById("addItem").addEventListener("click", onSubmit);
+});
 
-const name = document.getElementById("name");
+// Input formatting for amounts
+var amountEntered = document.getElementById("Amount");
+amountEntered.addEventListener("keypress", function (event) {
+  const key = event.key;
+  if (!/[\d\s\b]/.test(key)) {
+    event.preventDefault();
+  }
+});
 
-const userName = document.getElementById("Username");
+amountEntered.addEventListener("input", function () {
+  let inputValue = this.value.replace(/,/g, "");
+  inputValue = addCommas(inputValue);
+  this.value = inputValue;
+});
 
-const email = document.getElementById("Email");
+var TaxEntered = document.getElementById("Tax");
+TaxEntered.addEventListener("keypress", function (event) {
+  const key = event.key;
+  if (!/[\d\s\b\.]/.test(key)) {
+    event.preventDefault();
+  }
+});
 
-const password = document.getElementById("Password");
+TaxEntered.addEventListener("input", function () {
+  let inputValue = this.value.replace(/,/g, "");
+  inputValue = addCommas(inputValue);
+  this.value = inputValue;
+});
 
-const form = document.getElementById("form");
+function addCommas(number) {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
-const confirmPassword = document.getElementById("Confirm-password");
-
-const country = document.getElementById("Country");
-
+// Country selection
 const countries = [
   {
     name: "Afghanistan",
-    image: "afghanistan.png",
   },
   {
     name: "Albania",
-    image: "albania.png",
   },
   {
     name: "Algeria",
-    image: "algeria.jpg",
   },
   {
     name: "American Samoa",
-    image: "American Samoa.png",
   },
   {
     name: "Andorra",
-    image: "Andorra.png",
   },
   {
     name: "Angola",
-    image: "Angola.png",
   },
   {
     name: "Anguilla",
-    image: "Anguilla.png",
   },
   {
     name: "Antarctica",
-    image: "Antarctica.jpg",
   },
   {
     name: "Antigua and Barbuda",
-    image: "Antigua and Barbuda.png",
   },
   {
     name: "Argentina",
-    image: "Argentina.png",
   },
   {
     name: "Armenia",
-    image: "Armenia.png",
   },
   {
     name: "Aruba",
-    image: "Aruba.png",
   },
   {
     name: "Australia",
-    image: "Australia.png",
   },
   {
     name: "Austria",
-    image: "Austria.png",
   },
   {
     name: "Azerbaijan",
-    image: "Azerbaijan.png",
   },
   {
     name: "Bahamas",
-    image: "Bahamas.png",
   },
   {
     name: "Bahrain",
-    image: "Bahrain.png",
   },
   {
     name: "Bangladesh",
-    image: "Bangladesh.png",
   },
   {
     name: "Barbados",
-    image: "Barbados.png",
   },
   {
     name: "Belarus",
-    image: "Belarus.png",
   },
   {
     name: "Belgium",
-    image: "Belgium.png",
   },
   {
     name: "Belize",
-    image: "Belize.png",
   },
   {
     name: "Benin",
-    image: "Benin.png",
   },
   {
     name: "Bermuda",
-    image: "Bermuda.png",
   },
   {
     name: "Bhutan",
-    image: "Bhutan.png",
   },
   {
     name: "Bolivia",
-    image: "Bolivia.png",
   },
   {
     name: "Bosnia and Herzegovina",
-    image: "Bosnia and Herzegovina.png",
   },
   {
     name: "Botswana",
-    image: "Botswana.png",
   },
   {
     name: "Brazil",
-    image: "Brazil.png",
   },
   {
     name: "Brunei Darussalam",
-    image: "Brunei Darussalam.png",
   },
   {
     name: "Bulgaria",
-    image: "Bulgaria.png",
   },
   {
     name: "Burkina Faso",
-    image: "Burkina Faso.png",
   },
   {
     name: "Burundi",
-    image: "Burundi.jpg",
   },
   {
     name: "Cambodia",
-    image: "Cambodia.png",
   },
   {
     name: "Cameroon",
-    image: "Cameroon.png",
   },
   {
     name: "Canada",
-    image: "Canada.png",
   },
   {
     name: "Cape Verde",
-    image: "Cape Verde.png",
   },
   {
     name: "Cayman Islands",
-    image: "Cayman Islands.png",
   },
   {
     name: "Central African Republic",
-    image: "Central African Republic.png",
   },
   {
     name: "Chad",
-    image: "Chad.png",
   },
   {
     name: "Chile",
-    image: "Chile.png",
   },
   {
     name: "China",
-    image: "China.png",
   },
   {
     name: "Christmas Island",
-    image: "Christmas Island.png",
   },
   {
     name: "Cocos (Keeling) Islands",
-    image: "Cocos (Keeling) Islands.png",
   },
   {
     name: "Colombia",
-    image: "Colombia.png",
   },
   {
     name: "Comoros",
-    image: "Comoros.png",
   },
   {
     name: "Democratic Republic of the Congo (Kinshasa)",
-    image: "Democratic Republic of the Congo (Kinshasa).png",
   },
   {
     name: "Congo, Republic of (Brazzaville)",
-    image: "Congo, Republic of (Brazzaville).png",
   },
   {
     name: "Cook Islands",
-    image: "Cook Islands.png",
   },
   {
     name: "Costa Rica",
-    image: "Costa Rica.png",
   },
   {
     name: `Côte D'ivoire (Ivory Coast)`,
-    image: `Côte D'ivoire (Ivory Coast).jpg`,
   },
   {
     name: "Croatia",
-    image: "Croatia.png",
   },
   {
     name: "Cuba",
-    image: "Cuba.png",
   },
   {
     name: "Cyprus",
-    image: "Cyprus.png",
   },
   {
     name: "Czech Republic",
-    image: "Czech Republic.png",
   },
   {
     name: "Denmark",
-    image: "Denmark.png",
   },
   {
     name: "Djibouti",
-    image: "Djibouti.png",
   },
   {
     name: "Dominica",
-    image: "Dominica.jpg",
   },
   {
     name: "Dominican Republic",
-    image: "Dominican Republic.png",
   },
   {
     name: "East Timor (Timor-Leste)",
-    image: "East Timor (Timor-Leste).jpg",
   },
   {
     name: "Ecuador",
-    image: "Ecuador.jpg",
   },
   {
     name: "Egypt",
-    image: "Egypt.png",
   },
   {
     name: "El Salvador",
-    image: "El Salvador.png",
   },
   {
     name: "Equatorial Guinea",
-    image: "Equatorial Guinea.jpg",
   },
   {
     name: "Eritrea",
-    image: "Eritrea.png",
   },
   {
     name: "Estonia",
-    image: "Estonia.png",
   },
   {
     name: "Ethiopia",
-    image: "Ethiopia.jpg",
   },
   {
     name: "Falkland Islands",
-    image: "Falkland Islands.png",
   },
   {
     name: "Faroe Islands",
-    image: "Faroe Islands.png",
   },
   {
     name: "Fiji",
-    image: "Fiji.png",
   },
   {
     name: "Finland",
-    image: "Finland.png",
   },
   {
     name: "France",
-    image: "France-flag.png",
   },
   {
     name: "Gabon",
-    image: "Gabon.png",
   },
   {
     name: "Gambia",
-    image: "Gambia.png",
   },
   {
     name: "Georgia",
-    image: "Georgia.png",
   },
   {
     name: "Germany",
-    image: "Germany-flag.png",
   },
   {
     name: "Ghana",
-    image: "Ghana.png",
   },
   {
     name: "Gibraltar",
-    image: "Gibraltar.png",
   },
   {
     name: "Greece",
-    image: "Greece.png",
   },
   {
     name: "Greenland",
-    image: "Greenland.png",
   },
   {
     name: "Grenada",
-    image: "Grenada.png",
   },
   {
     name: "Guadeloupe",
-    image: "Guadeloupe.jpg",
   },
   {
     name: "Guam",
-    image: "Guam.png",
   },
   {
     name: "Guinea",
-    image: "Guinea.png",
   },
   {
     name: "Guinea-Bissau",
-    image: "Guinea-Bissau.png",
   },
   {
     name: "Guyana",
-    image: "Guyana.png",
   },
   {
     name: "Haiti",
-    image: "Haiti.jpg",
   },
   {
     name: "Holy See",
-    image: "Holy See.jpg",
   },
   {
     name: "Honduras",
-    image: "Honduras.png",
   },
   {
     name: "Hong Kong",
-    image: "Hong Kong.png",
   },
   {
     name: "Hungary",
-    image: "Hungary.jpg",
   },
   {
     name: "Iceland",
-    image: "Iceland.png",
   },
   {
     name: "India",
-    image: "India.png",
   },
   {
     name: "Indonesia",
-    image: "Indonesia.png",
   },
   {
     name: "Iran",
-    image: "Iran.jpg",
   },
   {
     name: "Iraq",
-    image: "Iraq.png",
   },
   {
     name: "Ireland",
-    image: "Ireland.png",
   },
   {
     name: "Israel",
-    image: "Israel.jpg",
   },
   {
     name: "Italy",
-    image: "Italy-flag.png",
   },
   {
     name: "Jamaica",
-    image: "Jamaica.jpg",
   },
   {
     name: "Japan",
-    image: "Japan.png",
   },
   {
     name: "Jordan",
-    image: "Jordan.png",
   },
   {
     name: "Kazakhstan",
-    image: "Kazakhstan.jpg",
   },
   {
     name: "Kenya",
-    image: "Kenya.png",
   },
   {
     name: "Kiribati",
-    image: "Kiribati.png",
   },
   {
     name: "North Korea",
-    image: "North Korea.png",
   },
   {
     name: "South Korea",
-    image: "South Korea.jpg",
   },
   {
     name: "Kosovo",
-    image: "Kosovo.jpg",
   },
   {
     name: "Kuwait",
-    image: "Kuwait.jpg",
   },
   {
     name: "Kyrgyzstan",
-    image: "Kyrgyzstan.jpg",
   },
   {
     name: "Lao",
-    image: "Lao.png",
   },
   {
     name: "Latvia",
-    image: "Latvia.png",
   },
   {
     name: "Lebanon",
-    image: "Lebanon.png",
   },
   {
     name: "Lesotho",
-    image: "Lesotho.png",
   },
   {
     name: "Liberia",
-    image: "Liberia.jpg",
   },
   {
     name: "Libya",
-    image: "Libya.png",
   },
   {
     name: "Liechtenstein",
-    image: "Liechtenstein.png",
   },
   {
     name: "Lithuania",
-    image: "Lithuania.png",
   },
   {
     name: "Luxembourg",
-    image: "Luxembourg.png",
   },
   {
     name: "Macau",
-    image: "Macau.png",
   },
   {
     name: "Madagascar",
-    image: "Madagascar.png",
   },
   {
     name: "Malawi",
-    image: "Malawi.png",
   },
   {
     name: "Malaysia",
-    image: "Malaysia.jpg",
   },
   {
     name: "Maldives",
-    image: "Maldives.png",
   },
   {
     name: "Mali",
-    image: "Mali.png",
   },
   {
     name: "Malta",
-    image: "Malta.png",
   },
   {
     name: "Marshall Islands",
-    image: "Marshall Islands.jpg",
   },
   {
     name: "Mauritius",
-    image: "Mauritius.png",
   },
   {
     name: "Mayotte",
-    image: "Mayotte.jpg",
   },
   {
     name: "Mexico",
-    image: "Mexico.png",
   },
   {
     name: "Micronesia",
-    image: "Micronesia.png",
   },
   {
     name: "Moldova",
-    image: "Moldova.png",
   },
   {
     name: "Mongolia",
-    image: "Mongolia.jpg",
   },
   {
     name: "Montenegro",
-    image: "Montenegro.png",
   },
   {
     name: "Montserrat",
-    image: "Montserrat.png",
   },
   {
     name: "Morocco",
-    image: "Morocco.jpg",
   },
   {
     name: "Mozambique",
-    image: "Mozambique.jpg",
   },
   {
     name: "Myanmar",
-    image: "Myanmar.png",
   },
   {
     name: "Namibia",
-    image: "Namibia.png",
   },
   {
     name: "Nauru",
-    image: "Nauru.png",
   },
   {
     name: "Netherlands",
-    image: "Netherlands.jpg",
   },
   {
     name: "New Caledonia",
-    image: "New Caledonia.jpg",
   },
   {
     name: "New Zealand",
-    image: "New Zealand.jpg",
   },
   {
     name: "Nicaragua",
-    image: "Nicaragua.png",
   },
   {
     name: "Niger",
-    image: "Niger.png",
   },
   {
     name: "Nigeria",
-    image: "Nigeria.png",
   },
   {
     name: "Niue",
-    image: "Niue.png",
   },
   {
     name: "North Macedonia",
-    image: "North Macedonia.jpg",
   },
   {
     name: "Northern Mariana Islands",
-    image: "Northern Mariana Islands.png",
   },
   {
     name: "Norway",
-    image: "Norway.png",
   },
   {
     name: "Oman",
-    image: "Oman.png",
   },
   {
     name: "Pakistan",
-    image: "Pakistan.jpg",
   },
   {
     name: "Palau",
-    image: "Palau.png",
   },
   {
     name: "Palestine",
-    image: "Palestine.jpg",
   },
   {
     name: "Panama",
-    image: "Panama.png",
   },
   {
     name: "Papua New Guinea",
-    image: "Papua New Guinea.png",
   },
   {
     name: "Paraguay",
-    image: "Paraguay.png",
   },
   {
     name: "Peru",
-    image: "Peru.jpg",
   },
   {
     name: "Philippines",
-    image: "Philippines.jpg",
   },
   {
     name: "Pitcairn Island",
-    image: "Pitcairn Island.png",
   },
   {
     name: "Poland",
-    image: "Poland.png",
   },
   {
     name: "Portugal",
-    image: "Portugal-flag.png",
   },
   {
     name: "Puerto Rico",
-    image: "Puerto Rico.jpg",
   },
   {
     name: "Qatar",
-    image: "Qatar.png",
   },
   {
     name: "Reunion Island",
-    image: "Reunion Island.png",
   },
   {
     name: "Romania",
-    image: "Romania.png",
   },
   {
     name: "Russian Federation",
-    image: "Russian Federation.png",
   },
   {
     name: "Rwanda",
-    image: "Rwanda.jpg",
   },
   {
     name: "Saint Kitts and Nevis",
-    image: "Saint Kitts and Nevis.png",
   },
   {
     name: "Saint Lucia",
-    image: "Saint Lucia.jpg",
   },
   {
     name: "Saint Vincent and the Grenadines",
-    image: "Saint Vincent and the Grenadines.png",
   },
   {
     name: "Samoa",
-    image: "Samoa.png",
   },
   {
     name: "San Marino",
-    image: "San Marino.png",
   },
   {
     name: "Sao Tome and Principe",
-    image: "Sao Tome and Principe.png",
   },
   {
     name: "Saudi Arabia",
-    image: "Saudi Arabia.jpg",
   },
   {
     name: "Senegal",
-    image: "Senegal.jpg",
   },
   {
     name: "Serbia",
-    image: "Serbia.jpg",
   },
   {
     name: "Seychelles",
-    image: "Seychelles.jpg",
   },
   {
     name: "Sierra Leone",
-    image: "Sierra Leone.png",
   },
   {
     name: "Singapore",
-    image: "Singapore.png",
   },
   {
     name: "Slovakia",
-    image: "Slovakia.jpg",
   },
   {
     name: "Slovenia",
-    image: "Slovenia.png",
   },
   {
     name: "Solomon Islands",
-    image: "Solomon Islands.png",
   },
   {
     name: "Somalia",
-    image: "Somalia.png",
   },
   {
     name: "South Africa",
-    image: "South Africa.png",
   },
   {
     name: "South Sudan",
-    image: "South Sudan.jpg",
   },
   {
     name: "Spain",
-    image: "Spain.png",
   },
   {
     name: "Sudan",
-    image: "Sudan.png",
   },
   {
     name: "Suriname",
-    image: "Suriname.png",
   },
   {
     name: "Swaziland (Eswatini)",
-    image: "Swaziland (Eswatini).png",
   },
   {
     name: "Sweden",
-    image: "Sweden.png",
   },
   {
     name: "Switzerland",
-    image: "Switzerland.png",
   },
   {
     name: "Syria",
-    image: "Syria.png",
   },
   {
     name: "Taiwan",
-    image: "Taiwan.png",
   },
   {
     name: "Tajikistan",
-    image: "Tajikistan.jpg",
   },
   {
     name: "Tanzania",
-    image: "Tanzania.jpg",
   },
   {
     name: "Thailand",
-    image: "Thailand.png",
   },
   {
     name: "Tibet",
-    image: "Tibet.png",
   },
   {
     name: "Timor-Leste",
-    image: "Timor-Leste.png",
   },
   {
     name: "Togo",
-    image: "Togo.png",
   },
   {
     name: "Tokelau",
-    image: "Tokelau.png",
   },
   {
     name: "Tonga",
-    image: "Tonga.png",
   },
   {
     name: "Trinidad and Tobago",
-    image: "Trinidad and Tobago.jpg",
   },
   {
     name: "Tunisia",
-    image: "Tunisia.png",
   },
   {
     name: "Turkey",
-    image: "Turkey.png",
   },
   {
     name: "Turkmenistan",
-    image: "Turkmenistan.jpg",
   },
   {
     name: "Turks and Caicos Islands",
-    image: "Turks and Caicos Islands.png",
   },
   {
     name: "Tuvalu",
-    image: "Tuvalu.jpg",
   },
   {
     name: "Uganda",
-    image: "Uganda.png",
   },
   {
     name: "United Arab Emirates",
-    image: "United Arab Emirates.jpg",
   },
   {
     name: "United Kingdom",
-    image: "United Kingdom.jpg",
   },
   {
     name: "United States",
-    image: "United States.jpg",
   },
   {
     name: "Uruguay",
-    image: "Uruguay.png",
   },
   {
     name: "Uzbekistan",
-    image: "Uzbekistan.jpg",
   },
   {
     name: "Vanuatu",
-    image: "Vanuatu.png",
   },
   {
     name: "Venezuela",
-    image: "Venezuela.png",
   },
   {
     name: "Vietnam",
-    image: "Vietnam.png",
   },
   {
     name: "Western Sahara",
-    image: "Western Sahara.png",
   },
   {
     name: "Yemen",
-    image: "Yemen.png",
   },
   {
     name: "Zambia",
-    image: "Zambia.png",
   },
   {
     name: "Zimbabwe",
-    image: "Zimbabwe.jpg",
   },
 ];
 
-const selectElement = document.getElementById("Country");
-const selectedImageElement = document.getElementById("selectedImage");
-const selectedCountryElement = document.getElementById("selectedCountry");
-const selectedCountryContainer = document.getElementById(
-  "selectedCountryContainer"
-);
+// Set current date
+const currentDate = new Date();
+const dateOptions = { dateStyle: "short" };
+const formattedDate = currentDate.toLocaleDateString(undefined, dateOptions);
+document.getElementById("displayDate").textContent = formattedDate;
+document.getElementById("date").textContent = formattedDate;
 
+// Generate auto invoice ID
+async function generateAutoInvoiceId() {
+  try {
+    // Check if user is logged in
+    if (
+      !window.userProfileManager ||
+      !window.userProfileManager.isUserLoggedIn()
+    ) {
+      // For guest users
+      const lastId = localStorage.getItem("lastInvoiceId") || "100";
+      const nextId = (parseInt(lastId) + 1).toString();
+      localStorage.setItem("lastInvoiceId", nextId);
+      return nextId;
+    }
 
-// Populate the select element with options
-countries.forEach((country) => {
-  const option = document.createElement("option");
-  option.value = country.name;
-  option.textContent = country.name;
-  selectElement.appendChild(option);
-});
+    // For logged-in users, get from server
+    const response = await fetch("/api/invoices/next-number", {
+      method: "GET",
+      credentials: "include",
+    });
 
+    if (response.ok) {
+      const result = await response.json();
+      if (result.success) {
+        return result.next_invoice_number;
+      }
+    }
 
-// Event listener for the select element
-selectElement.addEventListener("change", (event) => {
-  const selectedCountry = event.target.value;
+    // Falling back to local storage
+    const lastId = localStorage.getItem("lastInvoiceId") || "100";
+    const nextId = (parseInt(lastId) + 1).toString();
+    localStorage.setItem("lastInvoiceId", nextId);
+    return nextId;
+  } catch (error) {
+    console.error("Error generating auto invoice ID:", error);
 
-  // Find the selected country object in the countries array
-  const country = countries.find((country) => country.name === selectedCountry);
+    return Date.now().toString().slice(-6);
+  }
+}
 
-  if (country) {
-    // Update the image source and height
-    selectedImageElement.src = "img/" + country.image;
-    selectedImageElement.style.height = "20px";
-    selectedImageElement.style.marginTop = "-32px ";
-    selectedImageElement.style.marginLeft = "45px ";
-    selectedImageElement.style.width = "30px";
+// Initialize auto invoice ID on page load
+async function initializeInvoiceId() {
+  const invoiceNumberField = document.getElementById("invoice-Number");
+  if (
+    invoiceNumberField &&
+    (!invoiceNumberField.value || invoiceNumberField.value === "100")
+  ) {
+    const autoId = await generateAutoInvoiceId();
+    invoiceNumberField.value = autoId;
 
-    // Update the country name
-    selectedCountryElement.textContent = country.name;
-    selectedCountryElement.style.color = "rgb(226, 243, 254)";
+    // Update display
+    const displayElement = document.getElementById("displayInvoiceNumber");
+    if (displayElement) {
+      displayElement.textContent = autoId;
+    }
+  }
+}
 
-    // Show the selected country container
-    selectedCountryContainer.style.display = "flex";
-  } else {
-    // Reset the image source and height
-    selectedImageElement.src = "";
-    selectedImageElement.style.height = "0";
+// Populate country dropdown with flags
+function populateCountryDropdown() {
+  const countrySelect = document.getElementById("Country");
+  if (!countrySelect) return;
 
-    // Reset the country name
-    selectedCountryElement.textContent = "";
+  countrySelect.innerHTML = '<option value="">Select Your Country</option>';
 
-    // Hide the selected country container
-    selectedCountryContainer.style.display = "none";
+  countries.forEach((country) => {
+    const option = document.createElement("option");
+    option.value = country.name;
+    option.textContent = country.name;
+    countrySelect.appendChild(option);
+  });
+}
+
+// Update the DOMContentLoaded event listener
+document.addEventListener("DOMContentLoaded", async function () {
+  const today = new Date().toISOString().split("T")[0];
+  const dateField = document.getElementById("invoice-date");
+  if (dateField) {
+    dateField.value = today;
+  }
+
+  await initializeInvoiceId();
+
+  populateCountryDropdown();
+
+  enhanceCountrySelection();
+
+  // Load saved data
+  loadSavedInvoiceData();
+  loadUserProfile();
+  populateInvoiceItems();
+
+  // Add event listeners for auto-save
+  const autoSaveFields = [
+    "getcompanyName",
+    "getbillingAddress",
+    "Country",
+    "invoice-Number",
+    "invoice-date",
+  ];
+  autoSaveFields.forEach((fieldId) => {
+    const field = document.getElementById(fieldId);
+    if (field) {
+      field.addEventListener("input", debouncedAutoSave);
+    }
+  });
+
+  const termsField = document.querySelector("#try textarea");
+  if (termsField) {
+    termsField.addEventListener("input", debouncedAutoSave);
+  }
+
+  // Add event listeners for new buttons
+  const saveAsDraftBtn = document.getElementById("saveAsDraft");
+  const loadInvoiceBtn = document.getElementById("loadInvoice");
+
+  if (saveAsDraftBtn) {
+    saveAsDraftBtn.addEventListener("click", saveAsDraft);
+  }
+
+  if (loadInvoiceBtn) {
+    loadInvoiceBtn.addEventListener("click", showInvoiceList);
+  }
+
+  // Check authentication and update UI
+  if (window.userProfileManager) {
+    await window.userProfileManager.checkAuthenticationStatus();
   }
 });
+
+// New invoice button functionality
+function createNewInvoice() {
+  clearInvoiceForm();
+
+  initializeInvoiceId();
+
+  const today = new Date().toISOString().split("T")[0];
+  const dateField = document.getElementById("invoice-date");
+  if (dateField) {
+    dateField.value = today;
+  }
+
+  localStorage.removeItem("currentInvoiceData");
+  localStorage.removeItem("invoiceItems");
+
+  // Reset invoice items array
+  invoiceItems = [];
+
+  alert("New invoice created!");
+}
+
+// Add new invoice button to the interface
+function addNewInvoiceButton() {
+  const actionsContainer = document.querySelector(".invoice-actions");
+  if (actionsContainer) {
+    const newInvoiceBtn = document.createElement("button");
+    newInvoiceBtn.className = "btn-secondary";
+    newInvoiceBtn.id = "newInvoice";
+    newInvoiceBtn.textContent = "New Invoice";
+    newInvoiceBtn.addEventListener("click", createNewInvoice);
+
+    actionsContainer.insertBefore(newInvoiceBtn, actionsContainer.firstChild);
+  }
+}
+
+// After DOM is loaded
+document.addEventListener("DOMContentLoaded", function () {
+  addNewInvoiceButton();
+});
+

@@ -29,13 +29,12 @@ app.use(
   })
 );
 app.use(morgan("combined"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 app.use(cookieParser());
 
 // Static files from public directory
 app.use(express.static(path.join(__dirname, "../public")));
-
 
 // API Routes
 app.use("/api/auth", authRoutes);
@@ -62,13 +61,49 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../public/index.html"));
 });
 
+// Health check endpoint
+app.get("/health", (req, res) => {
+  res.json({
+    status: "ok",
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+  });
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ error: "Something went wrong!" });
 });
 
+app.use((err, req, res, next) => {
+  console.error("Error:", err);
+
+  if (err.type === "entity.too.large") {
+    return res.status(413).json({
+      success: false,
+      error: "File too large. Maximum size allowed is 10MB.",
+    });
+  }
+
+  res.status(500).json({
+    success: false,
+    error:
+      process.env.NODE_ENV === "production"
+        ? "Internal server error"
+        : err.message,
+  });
+});
+
 setInterval(cleanupExpiredSessions, 60 * 60 * 1000);
+
+// 404 handler
+app.use("*", (req, res) => {
+  res.status(404).json({
+    success: false,
+    error: "Route not found",
+  });
+});
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

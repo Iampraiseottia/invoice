@@ -1,481 +1,1133 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Invoice Management | EaseInvoice</title>
-    <link rel="stylesheet" href="../css/invoice.css">
-    
-    <link rel="icon" href="/img/logo.png" style="border-radius: 50%;">
+    <link rel="stylesheet" href="../css/invoice.css" />
+
+    <link rel="icon" href="/img/logo.png" style="border-radius: 50%" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.3/jspdf.umd.min.js"></script>
-    <link rel="stylesheet" href="../css/print.min.css">
-    <link rel="stylesheet" href="../css/home.css">
-    <link rel="stylesheet" href="../css/edit.css">
-</head>
-<body>
-    
-    <!--------------------------HEADER------------------->
-    <section id="ottia">
-        <div class="invoice-left">
-            <h2 class="invoice-left-img">ease <span class="erica">invoice</span></h2>
-        </div>
-        <div class="invoice-right">
-            <img src="../img/us.png" class="invoice-right-img1">
-            <img src="../img/spain.png" class="invoice-right-img">
-            <img src="../img/france.png" class="invoice-right-img">
-            <img src="../img/germany.png" class="invoice-right-img">
-            <img src="../img/italy.png" class="invoice-right-img">
-            <img src="../img/portugal.png" class="invoice-right-img">
-            <img src="../img/CM.png" class="invoice-right-img2">
+    <link rel="stylesheet" href="../css/print.min.css" />
+    <link rel="stylesheet" href="../css/home.css" />
+    <link rel="stylesheet" href="../css/edit.css" />
 
-            <button onclick="openPopup()"  type="submit" id="popUpBtn" style="border: none; padding-right: 10px; margin-left: 11px; background: rgb(245, 245, 245); cursor: pointer;">
-                    <img src="../img/user.jpg" class="user">
+    <!-- Vercel Web Analytics -->
+    <script>
+      window.va =
+        window.va ||
+        function () {
+          (window.va.q = window.va.q || []).push(arguments);
+        };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <link rel="stylesheet" href="../css/nav.css" />
+
+    <style>
+      /* Additional styles for enhanced functionality */
+      .loading {
+        opacity: 0.7;
+        pointer-events: none;
+      }
+
+      .error-message {
+        color: #dc3545;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+      }
+
+      .success-message {
+        color: #28a745;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+      }
+
+      .user-status {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-left: 15px;
+      }
+
+      .user-status.logged-in::before {
+        content: "●";
+        color: #28a745;
+        font-size: 1.2em;
+      }
+
+      .user-status.logged-out::before {
+        content: "●";
+        color: #dc3545;
+        font-size: 1.2em;
+      }
+
+      .invoice-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .btn-secondary:hover {
+        background-color: #5a6268;
+      }
+
+      .auto-save-indicator {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #28a745;
+        color: white;
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-size: 0.8em;
+        opacity: 0;
+        transition: opacity 0.3s;
+        z-index: 1000;
+      }
+
+      .auto-save-indicator.show {
+        opacity: 1;
+      }
+
+      .user-greeting {
+        font-size: 0.9em;
+        color: #666;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Auto-save indicator -->
+    <div id="autoSaveIndicator" class="auto-save-indicator">
+      <i class="fas fa-check"></i> Auto-saved
+    </div>
+
+    <!--------------------------HEADER------------------->
+    <nav
+      class="navbar navbar-expand-lg navbar-light fixed-top bg-white shadow-sm"
+      id="navbar"
+    >
+      <div class="container">
+        <a class="navbar-brand fw-bold fs-3" href="/">
+          <i class="bi bi-receipt text-success"></i>
+          <span class="text-primary">Ease</span
+          ><span class="erica" style="color: gold">Invoice</span> 
+        </a>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          onclick="toggleMobileMenu()"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <i class="fas fa-bars" id="menu-icon"></i>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <div class="invoice-right">
+            <img src="../img/us.png" class="invoice-right-img1" />
+            <img src="../img/spain.png" class="invoice-right-img" />
+            <img src="../img/france.png" class="invoice-right-img" />
+            <img src="../img/germany.png" class="invoice-right-img" />
+            <img src="../img/italy.png" class="invoice-right-img" />
+            <img src="../img/portugal.png" class="invoice-right-img" />
+            <img src="../img/CM.png" class="invoice-right-img2" />
+
+            <!-- User status indicator -->
+            <div id="userStatus" class="user-status logged-out">
+              <span id="userGreeting" class="user-greeting">Not logged in</span>
+            </div>
+
+            <button
+              onclick="openPopup()"
+              type="submit"
+              id="popUpBtn"
+              style="
+                border: none;
+                padding-right: 10px;
+                margin-left: 11px;
+                background: rgb(245, 245, 245);
+                cursor: pointer;
+              "
+            >
+              <img src="../img/user.jpg" class="user" />
             </button>
+
+            <!-- Login/Logout buttons -->
+            <div id="authButtons" style="margin-left: 10px">
+              <button
+                id="loginBtn"
+                onclick="window.location.href='login.html'"
+                class="btn btn-sm btn-outline-primary"
+                style="display: none"
+              >
+                Login
+              </button>
+              <button
+                id="logoutBtn"
+                onclick="handleLogout()"
+                class="btn btn-sm btn-outline-danger"
+                style="display: none"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
         </div>
-    </section>
+      </div>
+    </nav>
 
     <!----------------------INVOICE MAIN---------------------->
-    <section id="praise">
-        <h1 class="invoice-header">
-            New Invoice
-        </h1>
+    <section id="praise" style="margin-top: 200px !important">
+      <h1 class="invoice-header">New Invoice</h1>
 
-        <div class="invoice-text">
-            <p class="invoice-text-box"></p>
-            <p class="new"><a href="../html/invoice.html">New:</a></p>
-            <p class="plug"><a href="../html/invoice.html">Invoice</a></p>
-            <p class="dot">&#183;</p>
-            <p class="text"><a href="../html/invoice.html">Tax Invoice</a></p>
-            <p class="dot">&#183;</p>
-            <p class="text"><a href="../html/invoice.html">Proformal Invoice</a></p>
-            <p class="dot">&#183;</p>
-            <p class="text"><a href="../html/invoice.html">Receipt</a></p>
-            <p class="dot">&#183;</p>
-            <p class="text"><a href="../html/invoice.html">Sales Receipt</a></p>
-            <p class="dot">&#183;</p>
-            <p class="text"><a href="../html/invoice.html">Cash Receipt</a></p>
+      <div class="invoice-text">
+        <p class="invoice-text-box"></p>
+        <p class="new"><a href="../html/invoice.html">New:</a></p>
+        <p class="plug"><a href="../html/invoice.html">Invoice</a></p>
+        <p class="dot">&#183;</p>
+        <p class="text"><a href="../html/invoice.html">Tax Invoice</a></p>
+        <p class="dot">&#183;</p>
+        <p class="text"><a href="../html/invoice.html">Proformal Invoice</a></p>
+        <p class="dot">&#183;</p>
+        <p class="text"><a href="../html/invoice.html">Receipt</a></p>
+        <p class="dot">&#183;</p>
+        <p class="text"><a href="../html/invoice.html">Sales Receipt</a></p>
+        <p class="dot">&#183;</p>
+        <p class="text"><a href="../html/invoice.html">Cash Receipt</a></p>
+      </div>
 
-        </div>
-        <div class="invoice-title">
-            <p class="text"><a href="../html/invoice.html">Quote</a></p>
-            <p class="dot">&#183;</p>
-            <p class="text"><a href="../html/invoice.html">Estimate</a></p>
-            <p class="dot">&#183;</p>
-            <p class="text"><a href="../html/invoice.html">Credit Memo</a></p>
-            <p class="dot">&#183;</p>
-            <p class="text"><a href="../html/invoice.html">Credit Note</a></p>
-            <p class="dot">&#183;</p>
-            <p class="text"><a href="../html/invoice.html">Purchase Order</a></p>
-            <p class="dot">&#183;</p>
-            <p class="text"><a href="../html/invoice.html">Delivery Note</a></p>
-        </div>
-        <p id="main"></p>
-        <div class="btn">
-            <button class="basic">Basic Form</button>
-            <button class="advance">Advanced Form - <span class="advance-span" style="color: gray;">Due Date, Ship To, Qty</span></button>
-            <br>
-        
-            <div class="prinzo">
-                <div class="beteck">
-                    <div class="bill">
-                        <div class="from">
-                            <div class="content1">
-                                <p class="form-box"></p>
-                                <label class="perkins">From</label>
-                            </div>
-                            <br>
-                            <textarea id="getcompanyName" cols="50" rows="5" placeholder="Your Company or Name
-    Address"></textarea>    
-                        </div>
-                        <div class="bill">
-                            <div class="from">
-                                <div class="content">
-                                    <div class="form-box"></div>
-                                    <div class="form-box1"></div> 
-                                    <label class="perkins">Bill To</label>
-                                </div>
-                                <br>
-                                <textarea id="getbillingAddress" cols="50" rows="5" placeholder="Your customer's billing address"></textarea>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <div class="content" style="margin-left: 35px; margin-top: 25px; margin-bottom: 12px;">
-                                <div class="form-box"></div>
-                                <div class="form-box1"></div> 
-                                <div class="form-box1"></div> 
-                                <label class="perkins">Country</label>
-                            </div>
-                            <div class="country" style="margin-bottom: 25px;">
-                                <select id="Country" class="contact-main-input-field country-name bizaro" style="width: 440px;">
-                                    <option value="">Select Your Country</option>
-                                </select>
-                                <div style="display: none;" id="selectedCountryContainer">
-                                    <img src="" alt="" id="selectedImage" style="height: 20px;">
-                                    <span id="selectedCountry"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-    
-                    <div class="date">
-    
-                        <div id="gallery" class="gallery" onclick="selectImage()" style="margin-bottom: 25px;">
-                            <p>Select Logo</p>
-                            <img src="../img/all-logos.png" class="all-logos">
-                            <p>Logo Gallery</p>
-                        </div>
-                        <div id="image-container" style="margin-bottom: 10px;"></div>
+      <div class="invoice-title">
+        <p class="text"><a href="../html/invoice.html">Quote</a></p>
+        <p class="dot">&#183;</p>
+        <p class="text"><a href="../html/invoice.html">Estimate</a></p>
+        <p class="dot">&#183;</p>
+        <p class="text"><a href="../html/invoice.html">Credit Memo</a></p>
+        <p class="dot">&#183;</p>
+        <p class="text"><a href="../html/invoice.html">Credit Note</a></p>
+        <p class="dot">&#183;</p>
+        <p class="text"><a href="../html/invoice.html">Purchase Order</a></p>
+        <p class="dot">&#183;</p>
+        <p class="text"><a href="../html/invoice.html">Delivery Note</a></p>
+      </div>
 
-    
-                        <div class="content2" style="margin-bottom: 12px;">
-                            <p class="form-box" style="margin-top: 25px;"></p>
-                            <label class="perkins" style=" margin-top: 35px;">Invoice #</label>
-                        </div>                    
-                        
-                        <input style="margin-bottom: 58px;" type="number" value="100" class="invoice-input" id="invoice-Number">
-                    
-                        <p class="invoice-date" style="margin-bottom: 20px;">Invoice Date</p>
-    
-                        <input  type="date" class="actual" value="29/01/2023" id="invoice-date">
-                    </div>
+      <p id="main"></p>
+
+      <div class="btn">
+        <button class="basic">Basic Form</button>
+        <button class="advance">
+          Advanced Form -
+          <span class="advance-span" style="color: gray"
+            >Due Date, Ship To, Qty</span
+          >
+        </button>
+        <br />
+
+        <div class="prinzo">
+          <div class="beteck">
+            <div class="bill">
+              <div class="from">
+                <div class="content1">
+                  <p class="form-box"></p>
+                  <label class="perkins">From</label>
                 </div>
+                <br />
+                <textarea
+                  id="getcompanyName"
+                  cols="50"
+                  rows="5"
+                  placeholder="Your Company or Name&#10;Address"
+                ></textarea>
+              </div>
 
-                <hr>
-
-                <div class="grumpii" onclick="event.preventDefault">
-                    <div class="descrip">
-                        <p class="eru">Description</p>
-                        <textarea  placeholder="Brief Descrisption" id="Descriptipon" class="des" name="describe" cols="30" rows="2"></textarea>
-                    </div>
-                    
-                    <div class="amt">
-                        <p class="fufu">Amount / FCFA</p>
-                        <input onchange="Calc(this)" value="" placeholder="Input the Cost" id="Amount" type="text" class="book2">
-                    </div>
-
-                    <div class="tx">
-                        <p class="meat">Tax ( % )</p>
-                        <input onchange="Calc(this)"  value=""  placeholder="Enter the Tax" id="Tax" type="text" class="book3">
-                    </div>
+              <div class="bill">
+                <div class="from">
+                  <div class="content">
+                    <div class="form-box"></div>
+                    <div class="form-box1"></div>
+                    <label class="perkins">Bill To</label>
+                  </div>
+                  <br />
+                  <textarea
+                    id="getbillingAddress"
+                    cols="50"
+                    rows="5"
+                    placeholder="Your customer's billing address"
+                  ></textarea>
                 </div>
+              </div>
 
-                <button onclick="onSubmit(event.preventDefault)" class="add" id="addItem">Add New Item</button>
-                
-                <table id="invoiceTable">   
-                    <thead>
-                        <tr>
-                            <th class="table-head">Description</th>
-                            <th class="table-head">Amount</th>
-                            <th class="table-head">Tax</th>
-                            <th class="table-head">Action</th>
-                        </tr>
-                    </thead>
-
-                        <tbody id="output"></tbody>
-                </table>
-
-                <div class="Subtotal-amt-tax">
-                    <p class="Subtotal-amt-tax-p">
-                        Subtotal Of All Amount & Tax
-                    </p>
-                    <div class="Subtotal-amt-tax-p-div">
-
-                        <div class="Subtotal-amt-tax-p-div-content mom">
-                            <h4 class="Subtotal-amt-tax-p-div-value1" id="sum">0</h4>
-                            <br>
-                            <p class="mac">FCFA</p>
-                        </div>
-
-                        <div class="Subtotal-amt-tax-p-div-content dad">
-                            <h4 class="Subtotal-amt-tax-p-div-value1" id="boris">0</h4>
-                            <p class="mac">FCFA</p>
-                        </div>
-                    </div>
+              <div>
+                <div
+                  class="content"
+                  style="
+                    margin-left: 35px;
+                    margin-top: 25px;
+                    margin-bottom: 12px;
+                  "
+                >
+                  <div class="form-box"></div>
+                  <div class="form-box1"></div>
+                  <div class="form-box1"></div>
+                  <label class="perkins">Country</label>
                 </div>
-                
-                <div class="stew">
-                    <p class="sub">Subtotal Of Current Items/Task</p>                    
-                    <div class="pufpuf">
-                        <p class="sub2" id="total2">0</p> 
-                        <h5 class="archumbo">FCFA</h5>                   
-                    </div>
+                <div class="country" style="margin-bottom: 25px">
+                  <select
+                    id="Country"
+                    class="contact-main-input-field country-name bizaro"
+                    style="width: 440px"
+                  >
+                    <option value="">Select Your Country</option>
+                  </select>
+                  <div id="selectedCountryContainer" style="display: none">
+                    <img
+                      src=""
+                      alt=""
+                      id="selectedImage"
+                      style="
+                        height: 20px;
+                        width: 30px;
+                        object-fit: cover;
+                        border-radius: 3px;
+                      "
+                    />
+                    <span id="selectedCountry" style="font-weight: 500"></span>
+                    <small style="color: #666; margin-left: auto"
+                      >Click to change</small
+                    >
+                  </div>
                 </div>
-
-                <div class="beans">
-                    <p class="total">TOTAL <span>XAF<h6>Edit</h6></span></p>
-                    <div class="plantain">
-                        <p class="plantain1" id="total">0</p>
-                        <br>
-                        <span>CFA</span>
-                    </div>
-                </div>
-
-                <div id="try">
-                    <div>
-                        <div class="content3">
-                            <p class="form-box"></p>
-                            <label class="perkins"><span>Terms & Conditions</span></label>
-                        </div>
-        
-                        <div class="pay" id="addSig" >
-                            <textarea cols="50" rows="5" placeholder="Payment is due within 15 days"></textarea>
-                            <div id="sig" class="signature" onclick="selectFile()">
-                                <p>Add Your</p>
-                                <p>Signature</p>
-                                <p class="form-box3"></p>
-                            </div>
-                        </div>
-                    </div>
-    
-                    <div id="image-container2"></div>
-                </div>
+              </div>
             </div>
 
-            <button class="action" id="printButtonInPdf">
-                <p class="form-box4"></p>
-                <p class="sweet">Save Invoice, Print or via Email</p>
-            </button>
-        </div>
-    </section>
-    <p id="invoice-template"></p>
-    <section id="dacute">
-        <h2 class="muma">
-            Select a Template
-        </h2>
+            <div class="date">
+              <div
+                id="gallery"
+                class="gallery"
+                onclick="selectImage()"
+                style="margin-bottom: 25px"
+              >
+                <p>Select Logo</p>
+                <img src="../img/all-logos.png" class="all-logos" />
+                <p>Logo Gallery</p>
+              </div>
+              <div id="image-container"></div>
 
-        <h3 class="aldriss">
-            More templates inside!
-        </h3>
+              <div class="content2" style="margin-bottom: 12px">
+                <p class="form-box" style="margin-top: 25px"></p>
+                <label class="perkins" style="margin-top: 35px"
+                  >Invoice #</label
+                >
+              </div>
 
-        <div class="love">
-            <button style="border: none;cursor: pointer;" id="printButtonInPdf2">
-                <img src="../img/invoicepic.png" class="joy">
-            </button>
-            <button style="border: none;cursor: pointer;" id="printButtonInPdf3">
-                <img src="../img/invoice-template-4.jpg" class="joy">
-            </button>
-            <button style="border: none;cursor: pointer;" id="printButtonInPdf4">
-                <img src="../img/invoice-template-5.png" class="joy">
-            </button>
-            <button style="border: none;cursor: pointer;" id="printButtonInPdf5">
-                <img src="../img/invoice-template-6.jpg" class="joy">
-            </button>
-            <button style="border: none;cursor: pointer;" id="printButtonInPdf6">
-                <img src="../img/invoice-template-8.jpg" class="joy">
-            </button>
-            <button style="border: none;cursor: pointer;" id="printButtonInPdf7">
-                <img src="../img/invoice-template-9.png" class="joy">
-            </button>
-        </div>
-        <div class="love">
-            <button style="border: none;cursor: pointer;" id="printButtonInPdf8">
-                <img src="../img/invoice-template-10.jpg" class="joy">
-            </button>
-            <button style="border: none;cursor: pointer;" id="printButtonInPdf9">
-                <img src="../img/invoice-template-11.jpg" class="joy">
-            </button>
-            <button style="border: none;cursor: pointer;" id="printButtonInPdf10">
-                <img src="../img/invoice-template-13.png" class="joy">
-            </button>
-            <button style="border: none;cursor: pointer;" id="printButtonInPdf11">
-                <img src="../img/invoice-template-14.png" class="joy">
-            </button>
-            <button style="border: none;cursor: pointer;" id="printButtonInPdf12">
-                <img src="../img/invoice-template-15.jpg" class="joy">
-            </button>
-            <button style="border: none;cursor: pointer;" id="printButtonInPdf13">
-                <img src="../img/invoice-template-12.png       " class="joy">
-            </button>       
-        </div>
+              <input
+                style="margin-bottom: 58px"
+                type="number"
+                value="100"
+                class="invoice-input"
+                id="invoice-Number"
+              />
 
-        
-        <div class="links_invoice">
-            <a class="control" href="index.html">Home</a>
-            <a class="dot">&#183;</a>
-            <a class="control" href="#invoice-template">Invoice Templates</a>
-            <a class="dot">&#183;</a>
-            <a class="control" href="index.html#service-scroll">Features</a>
-            <a class="dot">&#183;</a>
-            <a class="control" href="login.html">Sign In</a>
-            <a class="dot">&#183;</a>
-            <a class="control" href="register.html">Sign Up</a>
-            <a class="dot">&#183;</a>
-            <a class="control" href="invoice.html">Terms</a>
-            <a class="dot">&#183;</a>
-            <a class="control" href="invoice.html">Sitemap</a>
-            <a class="dot">&#183;</a>
-            <a class="control" href="invoice.html">Privacy</a>
-            <a class="dot">&#183;</a>
-            <a class="control" href="index.html#clients">FAQ</a>
-            <a class="dot">&#183;</a>
-            <a class="control" href="index.html#contact-us">Contact Us</a>
-            <a class="dot">&#183;</a>
-        </div>       
-
-        <div class="links_invoice2">
-            <a class="control" href="index.html#our-team">Facebook</a>
-            <a class="dot">&#183;</a>
-            <a class="control" href="index.html#our-team">Twitter</a>
-            <a class="dot">&#183;</a>
-            <a class="control" href="index.html#our-team">Youtube</a>
-            <a class="dot">&#183;</a>
-            <a class="control" href="index.html#our-team">Pinterest</a>
-            <a class="dot">&#183;</a>
-            <a class="control" href="index.html#our-team">Instalgram</a>
-            <a class="dot">&#183;</a>
-            <a class="control" href="index.html#our-team">LinkedIn</a>
-            <a class="dot">&#183;</a>
-            <a class="control" href="index.html#our-team">Blog</a>
-        </div>
-
-        <div class="download">
-            <img src="../img/googleplay.en.png" class="store1">
-            <br>
-            <img src="../img/appstore.en.png" class="store">
-        </div>
-
-        <div class="footer">
-            <img src="../img/CM.png" class="cameroon">
-            <p class="finally">Cameroon</p>
-            <p class="thanks">&#183;</p>
-            <p class="finally">Copyright © 2023</p>
-            <p class="thanks">&#183;</p>
-            <p class="finally">Invoice Home Inc.</p>
-
-        </div>
-
-        <p class="finito">
-            SW /
-        </p>
-
-    </section>
-   
-    <!-- Print Menu -->
-
-    <section id="mainInvoiceTable" style="display: none;">
-        
-        <section id="printHead">
-            <div class="lefthead">
-                <img src="../img/logoprint.png" class="printlogoimg">
+              <p class="invoice-date" style="margin-bottom: 20px">
+                Invoice Date
+              </p>
+              <input type="date" class="actual" id="invoice-date" />
             </div>
-            <div class="righthead">
-                <p id="dispayCompanyName">Company Name</p>
-                <br>
-                <p id="dispayBillingAddress">Billing Address</p>
-                <br>
-                <p id="date">Date</p>
-            </div>
-        </section>
+          </div>
 
-        <section id="detailsPrint">
-            <div class="leftprintdetails">
-                <h3 class="printbill">
-                    BILL TO:
-                </h3>
-                <br>
-                <p class="detailsPrintName" id="dispayuCompanyName">
-                    company Name
-                </p>
-                <br>
-                <p class="printaddress" id="dispayuBillingAddress">
-                    Address
-                </p>
-            </div>
-            <div class="rightdetailsprint">
-                <h3>
-                    Invoice #
-                </h3>
-                <br>
-                <p class="detailsPrintNumber" id="displayInvoiceNumber">
-                    00001
-                </p>
-                <br>
-                <h3>
-                    Invoice Due Date
-                </h3>
-                <br>
-                <p class="detailsPrintDate" id="displayDate">09/11/2023</p>
-                
-            </div>
-        </section>
+          <hr />
 
-        <hr>
+          <div class="grumpii">
+            <div class="descrip">
+              <p class="eru">Description</p>
+              <textarea
+                placeholder="Brief Description"
+                id="Descriptipon"
+                class="des"
+                name="describe"
+                cols="30"
+                rows="2"
+              ></textarea>
+            </div>
 
-        <table id="tableInvoice" style="margin-left: 60px;
-        margin-top: 40px;
-        margin-bottom: 20px;">   
+            <div class="amt">
+              <p class="fufu">Amount / FCFA</p>
+              <input
+                onchange="Calc(this)"
+                value=""
+                placeholder="Input the Cost"
+                id="Amount"
+                type="text"
+                class="book2"
+              />
+            </div>
+
+            <div class="tx">
+              <p class="meat">Tax ( % )</p>
+              <input
+                onchange="Calc(this)"
+                value=""
+                placeholder="Enter the Tax"
+                id="Tax"
+                type="text"
+                class="book3"
+              />
+            </div>
+          </div>
+
+          <button type="button" class="add" id="addItem">Add New Item</button>
+
+          <table id="invoiceTable">
             <thead>
-                <tr>
-                    <th class="table-head" style="background-color: rgb(208, 248, 246);">Description</th>
-                    <th class="table-head" style="background-color: rgb(208, 248, 246);">Amount</th>
-                    <th class="table-head" style="background-color: rgb(208, 248, 246);">Tax</th>
-                </tr>
+              <tr>
+                <th class="table-head">Description</th>
+                <th class="table-head">Amount</th>
+                <th class="table-head">Tax</th>
+                <th class="table-head">Action</th>
+              </tr>
             </thead>
+            <tbody id="output"></tbody>
+          </table>
 
-                <tbody id="result"></tbody>
-        </table>
-
-        <div id="werey"></div>
-        <br>
-        <hr>
-
-        <section id="notesPrint">
-            <div class="notesPrintMessage">
-                <h3>
-                    NOTES:
-                </h3>
-                <br>
-                <p class="notesPrintText">
-                    The Total Sum Of Everything As Listed Above is <span class="unique">&#8594</span>
-                </p>
-
+          <div class="Subtotal-amt-tax">
+            <p class="Subtotal-amt-tax-p">Subtotal Of All Amount & Tax</p>
+            <div class="Subtotal-amt-tax-p-div">
+              <div class="Subtotal-amt-tax-p-div-content mom">
+                <h4 class="Subtotal-amt-tax-p-div-value1" id="sum">0</h4>
+                <br />
+                <p class="mac">FCFA</p>
+              </div>
+              <div class="Subtotal-amt-tax-p-div-content dad">
+                <h4 class="Subtotal-amt-tax-p-div-value1" id="boris">0</h4>
+                <p class="mac">FCFA</p>
+              </div>
             </div>
-            <br>
-            <h3 class="valuePrint">
-                <p class="printTotal" >
-                    0000
-                </p>
-                <span>FCFA</span>
-            </h3>
-        </section>
+          </div>
+
+          <div class="stew">
+            <p class="sub">Subtotal Of Current Items/Task</p>
+            <div class="pufpuf">
+              <p class="sub2" id="total2">0</p>
+              <h5 class="archumbo">FCFA</h5>
+            </div>
+          </div>
+
+          <div class="beans">
+            <p class="total">
+              TOTAL
+              <span
+                >XAF
+                <h6>Edit</h6></span
+              >
+            </p>
+            <div class="plantain">
+              <p class="plantain1" id="total">0</p>
+              <br />
+              <span>CFA</span>
+            </div>
+          </div>
+
+          <div id="try">
+            <div>
+              <div class="content3">
+                <p class="form-box"></p>
+                <label class="perkins"
+                  ><span>Any Special Detail or Note</span></label
+                >
+              </div>
+
+              <div class="pay" id="addSig">
+                <textarea cols="50" rows="5" placeholder="Details"></textarea>
+                <div id="sig" class="signature" onclick="selectFile()">
+                  <p>Add Your</p>
+                  <p>Signature</p>
+                  <p class="form-box3"></p>
+                </div>
+              </div>
+            </div>
+            <div id="image-container2"></div>
+          </div>
+        </div>
+
+        <!-- Action buttons -->
+        <div class="invoice-actions">
+          <button class="btn-secondary" id="saveAsDraft">Save as Draft</button>
+          <button class="action" id="printButtonInPdf">
+            <p class="form-box4"></p>
+            <p class="sweet">Save & Print Invoice</p>
+          </button>
+          <button class="btn-secondary" id="loadInvoice" style="display: none">
+            Load Previous Invoice
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <p id="invoice-template"></p>
+
+    <!-- Template selection section remains the same -->
+    <section id="dacute">
+      <h2 class="muma">Select a Template</h2>
+      <h3 class="aldriss">More templates inside!</h3>
+
+      <div class="love">
+        <button style="border: none; cursor: pointer" id="printButtonInPdf2">
+          <img src="../img/invoicepic.png" class="joy" />
+        </button>
+        <button style="border: none; cursor: pointer" id="printButtonInPdf3">
+          <img src="../img/invoice-template-4.jpg" class="joy" />
+        </button>
+        <button style="border: none; cursor: pointer" id="printButtonInPdf4">
+          <img src="../img/invoice-template-5.png" class="joy" />
+        </button>
+        <button style="border: none; cursor: pointer" id="printButtonInPdf5">
+          <img src="../img/invoice-template-6.jpg" class="joy" />
+        </button>
+        <button style="border: none; cursor: pointer" id="printButtonInPdf6">
+          <img src="../img/invoice-template-8.jpg" class="joy" />
+        </button>
+        <button style="border: none; cursor: pointer" id="printButtonInPdf7">
+          <img src="../img/invoice-template-9.png" class="joy" />
+        </button>
+      </div>
+
+      <div class="love">
+        <button style="border: none; cursor: pointer" id="printButtonInPdf8">
+          <img src="../img/invoice-template-10.jpg" class="joy" />
+        </button>
+        <button style="border: none; cursor: pointer" id="printButtonInPdf9">
+          <img src="../img/invoice-template-11.jpg" class="joy" />
+        </button>
+        <button style="border: none; cursor: pointer" id="printButtonInPdf10">
+          <img src="../img/invoice-template-13.png" class="joy" />
+        </button>
+        <button style="border: none; cursor: pointer" id="printButtonInPdf11">
+          <img src="../img/invoice-template-14.png" class="joy" />
+        </button>
+        <button style="border: none; cursor: pointer" id="printButtonInPdf12">
+          <img src="../img/invoice-template-15.jpg" class="joy" />
+        </button>
+        <button style="border: none; cursor: pointer" id="printButtonInPdf13">
+          <img src="../img/invoice-template-12.png" class="joy" />
+        </button>
+      </div>
+
+      <!-- Footer links remain the same -->
+      <div class="links_invoice">
+        <a class="control" href="index.html">Home</a>
+        <a class="dot">&#183;</a>
+        <a class="control" href="#invoice-template">Invoice Templates</a>
+        <a class="dot">&#183;</a>
+        <a class="control" href="index.html#service-scroll">Features</a>
+        <a class="dot">&#183;</a>
+        <a class="control" href="login.html">Sign In</a>
+        <a class="dot">&#183;</a>
+        <a class="control" href="register.html">Sign Up</a>
+        <a class="dot">&#183;</a>
+        <a class="control" href="invoice.html">Terms</a>
+        <a class="dot">&#183;</a>
+        <a class="control" href="invoice.html">Sitemap</a>
+        <a class="dot">&#183;</a>
+        <a class="control" href="invoice.html">Privacy</a>
+        <a class="dot">&#183;</a>
+        <a class="control" href="index.html#clients">FAQ</a>
+        <a class="dot">&#183;</a>
+        <a class="control" href="index.html#contact-us">Contact Us</a>
+        <a class="dot">&#183;</a>
+      </div>
+
+      <div class="links_invoice2">
+        <a class="control" href="index.html#our-team">Facebook</a>
+        <a class="dot">&#183;</a>
+        <a class="control" href="index.html#our-team">Twitter</a>
+        <a class="dot">&#183;</a>
+        <a class="control" href="index.html#our-team">Youtube</a>
+        <a class="dot">&#183;</a>
+        <a class="control" href="index.html#our-team">Pinterest</a>
+        <a class="dot">&#183;</a>
+        <a class="control" href="index.html#our-team">Instagram</a>
+        <a class="dot">&#183;</a>
+        <a class="control" href="index.html#our-team">LinkedIn</a>
+        <a class="dot">&#183;</a>
+        <a class="control" href="index.html#our-team">Blog</a>
+      </div>
+
+      <div class="footer">
+        <img src="../img/CM.png" class="cameroon" />
+        <p class="finally">Cameroon</p>
+        <p class="thanks">&#183;</p>
+        <p class="finally">Copyright © 2023</p>
+        <p class="thanks">&#183;</p>
+        <p class="finally">Invoice Home Inc.</p>
+      </div>
+    </section>
+
+    <!-- Print Menu (hidden section) -->
+    <section id="mainInvoiceTable" style="display: none">
+      <section id="printHead">
+        <div class="lefthead">
+          <img src="../img/logoprint.png" class="printlogoimg" />
+        </div>
+        <div class="righthead">
+          <p id="dispayCompanyName">Company Name</p>
+          <br />
+          <p id="dispayBillingAddress">Billing Address</p>
+          <br />
+          <p id="date">Date</p>
+        </div>
+      </section>
+
+      <section id="detailsPrint">
+        <div class="leftprintdetails">
+          <h3 class="printbill">BILL TO:</h3>
+          <br />
+          <p class="detailsPrintName" id="dispayuCompanyName">company Name</p>
+          <br />
+          <p class="printaddress" id="dispayuBillingAddress">Address</p>
+        </div>
+        <div class="rightdetailsprint">
+          <h3>Invoice #</h3>
+          <br />
+          <p class="detailsPrintNumber" id="displayInvoiceNumber">00001</p>
+          <br />
+          <h3>Invoice Due Date</h3>
+          <br />
+          <p class="detailsPrintDate" id="displayDate">09/11/2023</p>
+        </div>
+      </section>
+
+      <hr />
+
+      <table
+        id="tableInvoice"
+        style="margin-left: 60px; margin-top: 40px; margin-bottom: 20px"
+      >
+        <thead>
+          <tr>
+            <th class="table-head" style="background-color: rgb(208, 248, 246)">
+              Description
+            </th>
+            <th class="table-head" style="background-color: rgb(208, 248, 246)">
+              Amount
+            </th>
+            <th class="table-head" style="background-color: rgb(208, 248, 246)">
+              Tax
+            </th>
+          </tr>
+        </thead>
+        <tbody id="result"></tbody>
+      </table>
+
+      <div id="werey"></div>
+      <br />
+      <hr />
+
+      <section id="notesPrint">
+        <div class="notesPrintMessage">
+          <h3>NOTES:</h3>
+          <br />
+          <p class="notesPrintText">
+            The Total Sum Of Everything As Listed Above is
+            <span class="unique">&#8594;</span>
+          </p>
+        </div>
+        <br />
+        <h3 class="valuePrint">
+          <p class="printTotal">0000</p>
+          <span>FCFA</span>
+        </h3>
+      </section>
     </section>
 
     <!-------------- POP UP SECTION  --------------------->
     <section class="container-popup" id="pop-up">
-        <img class="pop-img" src="../img/popup confirm.PNG">
-        <h2>Organisation Details</h2>
-        <div class="pop">
-            <label>Full Name:  <p class="pop-val" id="full-name-get">OTTIA PRAISE</p></label>
-            <label>Email Address:  <p class="pop-val" id="email-get">ottiapraise50@gmail.com</p></label>
-            <label>Phone Number:  <p class="pop-val" id="num-get">679 81 70 21</p></label>
-            <label>Country:  <p class="pop-val" id="country-get">Canada</p></label>
-            <label>Password:  <p class="pop-val" id="pass-get">091104$Beteck</p></label>
-        </div>
-        <div class="up-btn">
-            <button class="close" onclick="closePopup()">Okay!!!</button>
-            <button class="edit-pop" onclick="editDetails()">Edit</button>
-        </div>
+      <img class="pop-img" src="../img/popup confirm.PNG" />
+      <h2>Organisation Details</h2>
+      <div class="pop">
+        <label
+          >Full Name:
+          <p class="pop-val" id="full-name-get">Not Set</p></label
+        >
+        <label
+          >Email Address:
+          <p class="pop-val" id="email-get">Not Set</p></label
+        >
+        <label
+          >Phone Number:
+          <p class="pop-val" id="num-get">Not Set</p></label
+        >
+        <label
+          >Country:
+          <p class="pop-val" id="country-get">Not Set</p></label
+        >
+
+        <label
+          >Status:
+          <p class="pop-val" id="login-status">Guest User</p></label
+        >
+      </div>
+      <div class="up-btn">
+        <button class="close" onclick="closePopup()">Close</button>
+        <button class="edit-pop" onclick="editDetails()">Edit Profile</button>
+        <button
+          id="registerBtn"
+          class="edit-pop"
+          onclick="window.location.href='register.html'"
+          style="display: none"
+        >
+          Register
+        </button>
+      </div>
     </section>
 
     <!---------------- Edit details --------------------->
-    <section id="editMain">
-        <h2>Edit Details</h2>
-        <div class="fields-det">
-            <label>Full Name:  <input type="text" id="name-dis"></label>
-            <label>Email Address:  <input type="email" id="email-dis"></label>
-            <label>Phone Number:  <input type="text" id="num-dis"></label>
-            <label>Country:  <input type="text" id="country-dis"></label>
-            <label>Password:  <input type="text" id="password-dis"></label>
-        </div>
-        <button class="update" id="update">Update</button>
+    <section id="editMain" style="display: none">
+      <h2>Edit Profile Details</h2>
+      <div class="fields-det">
+        <label>Full Name: <input type="text" id="name-dis" required /></label>
+        <label
+          >Email Address: <input type="email" id="email-dis" required
+        /></label>
+        <label>Phone Number: <input type="text" id="num-dis" /></label>
+        <label>Country: <input type="text" id="country-dis" /></label>
+        <label
+          >Password:
+          <input
+            type="password"
+            id="password-dis"
+            placeholder="Leave empty to keep current password"
+        /></label>
+      </div>
+      <div id="profile-error" class="error-message"></div>
+      <div id="profile-success" class="success-message"></div>
+      <div class="up-btn">
+        <button class="update" id="update">Update Profile</button>
+        <button
+          class="close"
+          onclick="document.getElementById('editMain').style.display='none'"
+        >
+          Cancel
+        </button>
+      </div>
     </section>
 
+    <!-- Invoice List Modal (for loading previous invoices) -->
+    <div
+      id="invoiceListModal"
+      style="
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+      "
+    >
+      <div
+        style="
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: white;
+          padding: 30px;
+          border-radius: 10px;
+          max-width: 80%;
+          max-height: 80%;
+          overflow-y: auto;
+        "
+      >
+        <h3>Select Invoice to Load</h3>
+        <div id="invoiceList"></div>
+        <button
+          onclick="closeInvoiceListModal()"
+          style="
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+          "
+        >
+          Close
+        </button>
+      </div>
+    </div>
+
+    <!-- Scripts -->
     <script src="../js/invoice.js" type="text/javascript"></script>
     <script src="../js/popup.js" type="text/javascript"></script>
     <script src="../js/print.min.js"></script>
 
-</body>
-</html>
+    <script>
+      // Enhanced UI functionality
+      let autoSaveTimeout;
 
+      // Show auto-save indicator
+      function showAutoSaveIndicator() {
+        const indicator = document.getElementById("autoSaveIndicator");
+        indicator.classList.add("show");
+        setTimeout(() => {
+          indicator.classList.remove("show");
+        }, 2000);
+      }
+
+      function debouncedAutoSave() {
+        clearTimeout(autoSaveTimeout);
+        autoSaveTimeout = setTimeout(() => {
+          if (typeof saveinvoiceDataLocally === "function") {
+            saveinvoiceDataLocally();
+            showAutoSaveIndicator();
+          }
+        }, 1000);
+      }
+
+      // Update user status in navigation
+      function updateUserStatus(user) {
+        const userStatus = document.getElementById("userStatus");
+        const userGreeting = document.getElementById("userGreeting");
+        const loginBtn = document.getElementById("loginBtn");
+        const logoutBtn = document.getElementById("logoutBtn");
+        const registerBtn = document.getElementById("registerBtn");
+        const loginStatus = document.getElementById("login-status");
+
+        if (user && user.id) {
+          userStatus.className = "user-status logged-in";
+          userGreeting.textContent = `Welcome, ${user.full_name}`;
+          loginBtn.style.display = "none";
+          logoutBtn.style.display = "inline-block";
+          registerBtn.style.display = "none";
+          loginStatus.textContent = "Logged In";
+        } else {
+          userStatus.className = "user-status logged-out";
+          userGreeting.textContent = "Not logged in";
+          loginBtn.style.display = "inline-block";
+          logoutBtn.style.display = "none";
+          registerBtn.style.display = "inline-block";
+          loginStatus.textContent = "Guest User";
+        }
+      }
+
+      // Logout
+      async function handleLogout() {
+        if (
+          confirm(
+            "Are you sure you want to logout? Any unsaved data will be lost."
+          )
+        ) {
+          try {
+            if (
+              typeof userProfileManager !== "undefined" &&
+              userProfileManager.logoutUser
+            ) {
+              await userProfileManager.logoutUser();
+            } else {
+              await fetch("/api/auth/logout", {
+                method: "POST",
+                credentials: "include",
+              });
+
+              localStorage.clear();
+
+              updateUIForLoggedOutUser();
+            }
+
+            alert("Logged out successfully!");
+
+            window.location.reload();
+          } catch (error) {
+            console.error("Logout error:", error);
+            localStorage.clear();
+            window.location.reload();
+          }
+        }
+      }
+
+      // Save as draft functionality
+      async function saveAsDraft() {
+        if (
+          !window.userProfileManager ||
+          !window.userProfileManager.isUserLoggedIn()
+        ) {
+          alert("Please log in to save drafts");
+          window.location.href = "login.html";
+          return;
+        }
+
+        const invoiceData = {
+          invoice_number: document.getElementById("invoice-Number").value,
+          invoice_date: document.getElementById("invoice-date").value,
+          company_name: document.getElementById("getcompanyName").value,
+          billing_address: document.getElementById("getbillingAddress").value,
+          country: document.getElementById("Country").value,
+          terms_conditions: document.querySelector("#try textarea").value,
+          signature_image_data: getSignatureImageData(),
+          logo_image_data: getLogoImageData(),
+          status: "draft",
+          items: invoiceItems || [],
+        };
+
+        try {
+          const response = await fetch("/api/invoices", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify(invoiceData),
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            alert("Draft saved successfully!");
+            localStorage.removeItem("currentInvoiceData");
+          } else {
+            alert("Failed to save draft: " + result.error);
+          }
+        } catch (error) {
+          console.error("Error saving draft:", error);
+          alert("Error saving draft. Please try again.");
+        }
+      }
+
+      // Load invoice list
+      async function showInvoiceList() {
+        if (
+          !window.userProfileManager ||
+          !window.userProfileManager.isUserLoggedIn()
+        ) {
+          alert("Please log in to load invoices");
+          return;
+        }
+
+        try {
+          const invoices = await window.userProfileManager.loadUserInvoices();
+
+          if (invoices.success && invoices.invoices.length > 0) {
+            const modal = document.getElementById("invoiceListModal");
+            const list = document.getElementById("invoiceList");
+
+            list.innerHTML = invoices.invoices
+              .map(
+                (invoice) => `
+                        <div style="border: 1px solid #ddd; padding: 15px; margin: 10px 0; border-radius: 5px; cursor: pointer;" onclick="loadInvoice(${
+                          invoice.id
+                        })">
+                            <h4>Invoice #${invoice.invoice_number}</h4>
+                            <p><strong>Date:</strong> ${new Date(
+                              invoice.invoice_date
+                            ).toLocaleDateString()}</p>
+                            <p><strong>Company:</strong> ${
+                              invoice.company_name || "N/A"
+                            }</p>
+                            <p><strong>Total:</strong> ${
+                              invoice.total_amount
+                            } FCFA</p>
+                            <p><strong>Status:</strong> ${invoice.status}</p>
+                        </div>
+                    `
+              )
+              .join("");
+
+            modal.style.display = "block";
+          } else {
+            alert("No invoices found");
+          }
+        } catch (error) {
+          console.error("Error loading invoices:", error);
+          alert("Error loading invoices");
+        }
+      }
+
+      // Load specific invoice
+      async function loadInvoice(invoiceId) {
+        try {
+          const response = await fetch(`/api/invoices/${invoiceId}`, {
+            credentials: "include",
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            const invoice = result.invoice;
+
+            // Fill form with invoice data
+            document.getElementById("getcompanyName").value =
+              invoice.company_name || "";
+            document.getElementById("getbillingAddress").value =
+              invoice.billing_address || "";
+            document.getElementById("Country").value = invoice.country || "";
+            document.getElementById("invoice-Number").value =
+              invoice.invoice_number || "";
+            document.getElementById("invoice-date").value =
+              invoice.invoice_date || "";
+            document.querySelector("#try textarea").value =
+              invoice.terms_conditions || "";
+
+            if (invoice.items) {
+              window.invoiceItems = invoice.items;
+              populateInvoiceItems();
+            }
+
+            if (invoice.logo_image_url) {
+              displayImageFromUrl(invoice.logo_image_url, "image-container");
+            }
+
+            if (invoice.signature_image_url) {
+              displayImageFromUrl(
+                invoice.signature_image_url,
+                "image-container2"
+              );
+            }
+
+            updateCompanyDisplays(invoice.company_name || "");
+            updateBillingDisplays(invoice.billing_address || "");
+
+            closeInvoiceListModal();
+            alert("Invoice loaded successfully!");
+          } else {
+            alert("Failed to load invoice: " + result.error);
+          }
+        } catch (error) {
+          console.error("Error loading invoice:", error);
+          alert("Error loading invoice");
+        }
+      }
+
+      function closeInvoiceListModal() {
+        document.getElementById("invoiceListModal").style.display = "none";
+      }
+
+      // Display image from URL
+      function displayImageFromUrl(imageUrl, containerId) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = "";
+
+        const img = document.createElement("img");
+        img.src = imageUrl;
+        img.style.maxWidth = "150px";
+        img.style.maxHeight = "150px";
+        img.style.marginTop = "20px";
+
+        container.appendChild(img);
+      }
+
+      // Initialize page on load
+      document.addEventListener("DOMContentLoaded", function () {
+        // Set current date
+        const today = new Date().toISOString().split("T")[0];
+        document.getElementById("invoice-date").value = today;
+
+        const autoSaveFields = [
+          "getcompanyName",
+          "getbillingAddress",
+          "Country",
+          "invoice-Number",
+          "invoice-date",
+        ];
+        autoSaveFields.forEach((fieldId) => {
+          const field = document.getElementById(fieldId);
+          if (field) {
+            field.addEventListener("input", debouncedAutoSave);
+          }
+        });
+
+        const termsField = document.querySelector("#try textarea");
+        if (termsField) {
+          termsField.addEventListener("input", debouncedAutoSave);
+        }
+
+        // Add event listeners for new buttons
+        document
+          .getElementById("saveAsDraft")
+          .addEventListener("click", saveAsDraft);
+        document
+          .getElementById("loadInvoice")
+          .addEventListener("click", showInvoiceList);
+
+        const currentUser = window.userProfileManager
+          ? window.userProfileManager.getCurrentUser()
+          : null;
+        updateUserStatus(currentUser);
+
+        // Show load invoice button if user is logged in
+        if (currentUser && currentUser.id) {
+          document.getElementById("loadInvoice").style.display = "inline-block";
+        }
+      });
+
+      function toggleMobileMenu() {
+        const navbarNav = document.getElementById("navbarNav");
+        const menuIcon = document.getElementById("menu-icon");
+
+        if (navbarNav.classList.contains("show")) {
+          navbarNav.classList.remove("show");
+          menuIcon.classList.remove("fa-times");
+          menuIcon.classList.add("fa-bars");
+        } else {
+          navbarNav.classList.add("show");
+          menuIcon.classList.remove("fa-bars");
+          menuIcon.classList.add("fa-times");
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", async function () {
+        try {
+          if (
+            window.userProfileManager &&
+            window.userProfileManager.checkAuthenticationStatus
+          ) {
+            const user =
+              await window.userProfileManager.checkAuthenticationStatus();
+            if (user) {
+              updateUserStatus(user);
+            }
+          }
+
+          // Initialize other components
+          await initializeInvoiceId();
+          populateCountryDropdown();
+          enhanceCountrySelection();
+          loadSavedInvoiceData();
+          populateInvoiceItems();
+
+          const today = new Date().toISOString().split("T")[0];
+          const dateField = document.getElementById("invoice-date");
+          if (dateField && !dateField.value) {
+            dateField.value = today;
+          }
+        } catch (error) {
+          console.error("Error during page initialization:", error);
+        }
+      });
+    </script>
+  </body>
+</html>

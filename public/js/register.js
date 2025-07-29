@@ -280,7 +280,6 @@ document.addEventListener("DOMContentLoaded", function () {
       const formData = new FormData(form);
       const data = Object.fromEntries(formData);
 
-      // Clear previous general errors
       const generalError = document.getElementById("general-error");
       if (generalError) {
         generalError.style.display = "none";

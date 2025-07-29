@@ -2,11 +2,13 @@
 * {
   margin: 0px;
   padding: 0px;
+  box-sizing: border-box;
 }
 
 body {
   font-family: sans-serif;
   background: white;
+  overflow-x: hidden;
 }
 
 /* HEADER */
@@ -14,19 +16,28 @@ body {
   background: rgb(244, 244, 244);
   opacity: 0.9;
   padding: 15px 20px;
-  height: 40px;
-  width: auto;
+  height: auto;
+  min-height: 70px;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-top: 1px solid rgb(211, 208, 208);
   border-bottom: 1px solid rgb(211, 208, 208);
+  flex-wrap: wrap;
 }
 
 .invoice-left-img {
   width: auto;
   height: 30px;
   margin-left: 15px;
+}
+
+.invoice-right {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
 }
 
 .invoice-right-img {
@@ -36,7 +47,7 @@ body {
 
 .erica {
   background-color: skyblue;
-  padding: 5px 6px;
+  padding: 3px 12px;
   border-radius: 9px;
 }
 
@@ -64,54 +75,55 @@ body {
 }
 
 .selected-image {
-  width: 170px;
+  width: 100%;
+  max-width: 170px;
   height: 120px;
   margin-top: 10px;
   border: 2px solid #000;
   border-radius: 5px;
   margin-left: 22px;
 }
-.pay
-/* INVOICE-MAIN */
 
+/* INVOICE-MAIN */
 #praise {
-  margin-top: 30px;
+  margin-top: 130px !important;
   font-size: 20px;
   font-weight: 100;
   opacity: 0.9;
+  padding: 0 20px;
 }
 
 .invoice-header {
   text-align: center;
+  font-size: clamp(24px, 4vw, 32px);
 }
 
 .invoice-text-box {
   height: 21px;
   width: 16px;
   border: 1px solid lightgreen;
+  flex-shrink: 0;
 }
 
 .invoice-text,
 .invoice-title {
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
-  margin-top: 28px;
-  margin-left: 130px;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 28px 20px 0 20px;
   font-size: 16px;
-  margin-right: 120px;
   cursor: pointer;
 }
 
 .invoice-text a,
-.invoice-title a{
+.invoice-title a {
   text-decoration: none;
 }
 
 .invoice-title {
   margin-top: 15px;
-  margin-left: 150px;
-  margin-right: 170px;
 }
 
 .new {
@@ -146,16 +158,11 @@ body {
   cursor: text;
 }
 
+/* RESPONSIVE BUTTON SECTION */
 .btn {
   margin-top: 40px;
-  margin-left: 130px;
-}
-
-.basic,
-.advance {
-  height: 42px;
-  width: auto;
-  padding: 10px;
+  width: 100%;
+  padding: 0 20px;
 }
 
 .basic,
@@ -168,12 +175,20 @@ body {
   border-top-right-radius: 9px;
   border-bottom: none;
   cursor: pointer;
+  height: 42px;
+  width: 20%;
+  padding: 10px 15px;
+  display: inline-block;
+  margin-left: -40%;
+  margin-top: 10px;
 }
 
 .advance {
   background-color: rgb(255, 255, 196);
   border: 1px solid rgb(232, 232, 132);
+  /* width: 60%; */
   border-bottom: none;
+  margin-left: -4px !important;
 }
 
 .advance-span {
@@ -191,7 +206,8 @@ body {
 .prinzo {
   border: 1px solid rgb(183, 221, 245) !important;
   height: auto;
-  width: 750px;
+  width: 80%;
+  max-width: none;
   background-color: rgb(226, 243, 254) !important;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -199,56 +215,61 @@ body {
   margin-bottom: 20px;
   border-top: none;
   padding-bottom: 20px;
+  margin-left: 10%;
 }
 
 .beteck {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .content {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  width: 100px;
+  /* width: 100px; */
 }
 
 .content1 {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  width: 60px;
+  /* width: 60px; */
 }
 
 .content2 {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  width: 90px;
+  /* width: 90px; */
   margin-top: 24px;
   margin-left: 18px;
 }
 
 .form-box {
-  height: 9px;
-  width: 6px;
-  border: 1px solid orange;
+  height: 15px;
+  width: 12px;
+  border: 2px solid orange;
 }
 
 .form-box1 {
-  height: 9px;
-  width: 6px;
-  border: 1px solid orange;
+  height: 15px;
+  width: 12px;
+  border: 2px solid orange;
 }
 
 .from {
   margin-left: 30px;
   margin-top: 36px;
+  flex: 1;
+  min-width: 300px;
 }
 
 .perkins {
   margin-left: 20px;
-  font-size: 12px;
+  font-size: 18px;
   font-weight: 600;
   vertical-align: text-top;
 }
@@ -256,29 +277,55 @@ body {
 .bizaro {
   margin-left: 33px;
   border-radius: 2px;
+  width: 100%;
+  max-width: 440px;
 }
 
 textarea {
   line-height: 1.5;
-  font-size: 14.8px;
+  font-size: 16px;
   padding: 8px;
   border: 1px solid lightgray;
   border-radius: 4px;
+  width: 150%;
+  max-width: 150%;
+  resize: vertical;
+}
+
+#Country {
+  margin-left: 20px;
+  border-radius: 2px;
+  margin-left: 2%;
+  width: 140% !important;
+  max-width: 150%;
+  height: 50px;
+  background-color: white;
+  font-size: 17px;
+}
+
+.date {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0 20px;
+  margin-right: 170px;
 }
 
 .gallery {
   margin-left: 20px;
-  height: 108px;
-  width: 170px;
+  height: 190px;
+  width: 130%;
+  max-width: 450px !important;
   background: rgb(255, 243, 192);
   text-align: center;
-  padding-top: 20px;
-  font-size: 15px;
-  line-height: 1.5;
+  padding-top: 40px;
+  font-size: 19px;
+  line-height: 1.7;
   border: 1px solid rgb(233, 220, 159);
   margin-top: 68px;
   margin-right: 24px;
   border-radius: 5px;
+  font-weight: 500;
 }
 
 .all-logos {
@@ -294,15 +341,16 @@ textarea {
 
 .invoice-input,
 .actual {
-  height: 26px;
-  width: 160px;
-  background-color: rgb(241, 240, 240);
+  height: 55px;
+  width: 100%;
+  max-width: 160px;
+  background-color: white;
   border: 1px solid rgb(211, 210, 210);
   border-radius: 3px;
   padding: 5px 7px;
-  margin-top: 20px;
   margin-left: 18px;
   margin-bottom: 30px;
+  font-size: 17px;
 }
 
 .invoice-date {
@@ -327,22 +375,55 @@ hr {
   opacity: 0.8;
   display: flex;
   margin-bottom: 18px;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.descrip,
+.amt,
+.tx {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 200px;
 }
 
 .eru {
   margin-left: 20px;
-  margin-right: 280px;
+  margin-bottom: 10px;
 }
 
-.fufu {
-  margin-right: 120px;
+.fufu,
+.meat {
+  margin-bottom: 10px;
+}
+
+.des,
+.book2,
+.book3 {
+  width: 95%;
+  font-size: 17px;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding: 7px 10px;
+  margin-top: 10px;
+  height: 50px;
+  min-height: 62px;
+}
+
+.des {
+  font-size: 16px;
+  margin-left: 15px;
+  padding: 6px 9px;
+  resize: vertical;
 }
 
 .add {
   cursor: pointer;
-  margin: 0px 20px;
-  width: 710px;
-  height: 34px;
+  margin: 20px;
+  width: calc(100% - 40px);
+  height: 45px;
   text-align: center;
   background-color: rgb(255, 243, 192);
   border: 1px solid rgb(208, 197, 148);
@@ -367,16 +448,18 @@ hr {
   display: flex;
   align-items: center;
   justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .stew {
-  margin-left: 90px;
+  margin: 30px 20px;
   display: flex;
   justify-content: space-between;
-  margin-top: 30px;
   font-size: 18px;
   font-weight: 600;
-  margin-right: 110px;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .sub1 {
@@ -388,14 +471,16 @@ hr {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-left: 20px;
-  margin-right: 40px;
+  margin: 30px 20px;
   font-size: 18px;
-  margin-top: 30px;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .Subtotal-amt-tax-p-div-content {
   display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
 .mom {
@@ -414,6 +499,8 @@ hr {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .sub2 {
@@ -421,13 +508,14 @@ hr {
 }
 
 .beans {
-  margin-top: 34px;
-  margin-left: 350px;
+  margin: 34px 20px 60px 20px;
   display: flex;
   justify-content: space-between;
-  margin-right: 10px;
   font-size: 23px;
   font-weight: 600;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
 }
 
 .beans span,
@@ -453,7 +541,7 @@ h6 {
 .content3 {
   display: flex;
   align-items: center;
-  justify-content: space;
+  justify-content: flex-start;
   width: 200px;
   margin-top: 19px;
   margin-left: 24px;
@@ -466,15 +554,19 @@ h6 {
 .pay {
   margin-top: 13px;
   margin-left: 24px;
+  margin-right: 24px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .signature {
   margin-left: 20px;
   height: 120px;
-  width: 170px;
+  width: 100%;
+  max-width: 170px;
   background: rgb(255, 243, 192);
   text-align: center;
   padding-top: 25px;
@@ -504,6 +596,8 @@ h6 {
 .plantain {
   margin-right: 16px;
   display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .plantain1 {
@@ -511,10 +605,10 @@ h6 {
 }
 
 .action {
-  height: 40px;
-  width: 755px;
-  margin-bottom: 20px;
-  font-size: 16px;
+  height: 55px;
+  width: calc(80% - 40px);
+  margin: 20px;
+  font-size: 18px;
   background-color: black;
   border: 1px solid rgb(38, 79, 136);
   color: white;
@@ -532,8 +626,9 @@ h6 {
   width: 9px;
   border: 1px solid white;
   opacity: 0.8;
-  margin-left: 240px;
   position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   margin-top: 1px;
 }
 
@@ -541,8 +636,7 @@ h6 {
 #dacute {
   margin-bottom: 140px;
   margin-top: 40px;
-  margin-left: 14px;
-  margin-right: 14px;
+  padding: 0 20px;
 }
 
 #dacute h2,
@@ -558,39 +652,38 @@ h6 {
 
 .joy {
   height: 200px;
-  width: auto;
+  width: 100%;
+  max-width: 300px;
+  object-fit: cover;
   box-shadow: lightgray 1px 1px 8px 0.5px;
 }
 
 .love {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 50px;
+  justify-items: center;
+}
+
+.links_invoice,
+.links_invoice2 {
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
-  margin-top: 50px;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px;
+  font-size: 16px;
+  opacity: 0.6;
+  cursor: pointer;
 }
 
 .links_invoice {
-  margin-left: 130px;
-  margin-right: 130px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 70px;
-  font-size: 14px;
-  opacity: 0.6;
-  cursor: pointer;
+  margin-top: 90px;
 }
 
 .links_invoice2 {
-  cursor: pointer;
-  margin-left: 180px;
-  margin-right: 180px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 10px;
-  font-size: 14px;
-  opacity: 0.6;
   margin-bottom: 30px;
 }
 
@@ -611,13 +704,6 @@ h6 {
   cursor: pointer;
 }
 
-.download {
-  margin-left: 300px;
-  margin-right: 300px;
-  display: flex;
-  justify-content: space-evenly;
-}
-
 .cameroon {
   width: 32px;
   height: 32px;
@@ -626,10 +712,11 @@ h6 {
 
 .footer {
   display: flex;
-  justify-content: space-evenly;
-  margin-left: 290px;
-  margin-right: 290px;
-  margin-top: 30px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 30px 20px;
 }
 
 .finally,
@@ -640,39 +727,11 @@ h6 {
   margin-top: 8px;
 }
 
-.finito {
-  text-align: center;
-  opacity: 0.6;
-  font-size: 15px;
-  font-weight: 100;
-  padding-top: 20px;
-}
-
 .fine-boy {
   height: 30px;
   margin-top: 10px;
   padding: 5px 9px;
   font-size: 16px;
-}
-
-.des {
-  font-size: 16px;
-  margin-left: 15px;
-  margin-top: 13px;
-  padding: 6px 9px;
-}
-
-.book2,
-.book3 {
-  margin-left: -15px;
-  padding: 7px 10px;
-  width: 120px;
-  margin-top: 20px;
-  height: 32px;
-}
-
-.book3 {
-  margin-left: -40px;
 }
 
 .links_invoice a,
@@ -690,10 +749,14 @@ h6 {
 
 /* TABLE */
 #invoiceTable {
-  margin: 40px 50px 4px 50px;
-  align-items: center;
-  height: max-content;
-  padding-bottom: 100px;
+  margin: 40px 20px 4px 20px;
+  width: calc(100% - 40px);
+  overflow-x: auto;
+}
+
+#invoiceTable table {
+  width: 100%;
+  min-width: 600px;
 }
 
 tr .urgly {
@@ -704,6 +767,7 @@ th,
 td {
   border: 1px solid black;
   padding: 8px;
+  word-wrap: break-word;
 }
 
 table {
@@ -711,7 +775,7 @@ table {
   border: 1px solid gray;
   text-align: center;
   vertical-align: middle;
-  width: 88%;
+  width: 100%;
 }
 
 table th {
@@ -730,31 +794,21 @@ tr {
   font-size: 14px;
 }
 
-.beans {
-  margin-left: 180px;
-  margin-top: 60px;
-  margin-bottom: 60px;
-  margin-right: 50px;
-}
-
-.stew,
-.Subtotal-amt-tax {
-  margin-top: 60px;
-  margin-bottom: 60px;
-}
-
 /* Print Menu */
 #printHead {
   background: rgb(57, 143, 189);
-  padding: 30px 60px;
+  padding: 30px 20px;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .printlogoimg {
   height: 140px;
   border: 1px solid rgb(57, 143, 189);
   border-radius: 10px;
+  max-width: 100%;
 }
 
 .righthead {
@@ -781,9 +835,11 @@ tr {
 }
 
 #detailsPrint {
-  margin: 30px 60px;
+  margin: 30px 20px;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .detailsPrintName {
@@ -802,8 +858,8 @@ tr {
 }
 
 hr {
-  margin-left: 58px;
-  margin-right: 58px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 #notesPrint {
@@ -811,14 +867,16 @@ hr {
   padding-bottom: 10px;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .notesPrintMessage {
   height: 110px;
   background: rgb(114, 222, 216);
-  padding-left: 58px;
-  padding-right: 90px;
-  padding-top: 30px;
+  padding: 30px 20px;
+  flex: 1;
+  min-width: 250px;
 }
 
 .valuePrint {
@@ -826,8 +884,10 @@ hr {
   display: flex;
   height: 90px;
   padding-top: 50px;
-  width: 307px;
-  padding-left: 200px;
+  width: 100%;
+  max-width: 307px;
+  padding-left: 20px;
+  justify-content: center;
   font-size: 30px;
   letter-spacing: 2px;
 }
@@ -844,30 +904,31 @@ hr {
   font-size: 26px;
 }
 
-/* Popup  */
+/* Popup */
 .container-popup {
-  width: 600px;
+  width: 90%;
+  max-width: 600px;
   background: snow;
   justify-content: center;
   align-items: center;
   text-align: center;
   border: 1px solid lightgray;
-  margin-left: 280px;
-  line-height: 0.5;
+  line-height: 1.7;
   border-radius: 8px;
   box-shadow: 1px 4px 12px lightgray;
-  position: absolute;
-  top: 0;
+  position: fixed;
+  top: 50%;
   left: 50%;
-  transform: translate(-95%, -45%) scale(0.1);
+  transform: translate(-50%, -50%) scale(0.1);
   visibility: hidden;
   transition: transform 0.4s, top 0.4s;
+  z-index: 1000;
+  height: 50vh;
 }
 
 .open-popup {
   visibility: visible;
-  top: 53%;
-  transform: translate(-95%, -45%) scale(1);
+  transform: translate(-50%, -50%) scale(1);
 }
 
 .pop-img {
@@ -889,10 +950,12 @@ hr {
   align-items: center;
   justify-content: center;
   font-size: 17.3px;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .pop label .pop-val {
-  padding-left: 58px;
+  padding-left: 20px;
   font-family: sans-serif;
   font-weight: bold;
 }
@@ -903,6 +966,8 @@ hr {
   justify-content: space-evenly;
   align-items: center;
   margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .close,
@@ -920,4 +985,616 @@ hr {
 .edit-pop a {
   text-decoration: none;
   color: white;
+}
+
+/* RESPONSIVE BREAKPOINTS */
+
+/* Tablets */
+@media screen and (max-width: 768px) {
+  .beteck {
+    flex-direction: column;
+  }
+
+  .from {
+    margin-left: 20px;
+    min-width: auto;
+    width: 100%;
+  }
+
+  .date {
+    padding: 0 20px;
+    width: 100%;
+  }
+
+  .grumpii {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .descrip,
+  .amt,
+  .tx {
+    min-width: auto;
+    width: 100%;
+  }
+
+  .beans {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .stew {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .Subtotal-amt-tax {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .pay {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .love {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
+/* Mobile Phones */
+@media screen and (max-width: 480px) {
+  .country {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .bizaro {
+    width: calc(100% - 20px);
+    margin-left: 10px;
+  }
+}
+
+/* Additional responsive improvements */
+.content,
+.content1,
+.content2 {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 5px;
+}
+
+@media screen and (max-width: 768px) {
+  .content2 {
+    margin-left: 10px;
+    width: auto;
+  }
+}
+
+/* Ensure table is always scrollable on small screens */
+@media screen and (max-width: 768px) {
+  #invoiceTable {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #tableInvoice {
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+}
+
+/* Print section responsiveness */
+@media screen and (max-width: 768px) {
+  #printHead {
+    padding: 20px 10px;
+  }
+
+  .printlogoimg {
+    height: 100px;
+  }
+
+  .righthead {
+    padding-top: 10px;
+    letter-spacing: 1px;
+  }
+
+  #companyName {
+    font-size: 20px;
+  }
+
+  #billingAddress {
+    font-size: 16px;
+  }
+
+  #detailsPrint {
+    margin: 20px 10px;
+    flex-direction: column;
+  }
+
+  .rightdetailsprint {
+    text-align: left;
+    margin-top: 20px;
+  }
+
+  .notesPrintMessage {
+    padding: 20px 10px;
+    height: auto;
+    min-height: 80px;
+  }
+
+  .valuePrint {
+    width: 100%;
+    max-width: none;
+    justify-content: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 24px;
+  }
+}
+
+/* Edit details section responsiveness */
+#editMain {
+  position: fixed !important;
+  top: 50%;
+  left: 150px !important;
+  transform: translate(-50%, -50%);
+  z-index: 1100; 
+  background: white !important;
+  border: 1px solid lightgray;
+  border-radius: 8px;
+  box-shadow: 1px 4px 12px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+  height: 80vh !important;
+  margin-top: 100px !important;
+}
+
+#editMain h2{
+  color: blue !important;
+}
+
+
+.fields-det {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: 20px 0;
+  justify-content: start !important;
+  align-items: center;
+}
+
+.fields-det label {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 5px;
+  font-weight: 600;
+}
+
+.fields-det input {
+  padding: 8px 12px;
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  font-size: 17px;
+  height: 50px !important;
+  transition: ease-in-out 3s;
+  margin-top: 5px !important;
+}
+
+.fields-det input:focus{
+  border: 1px solid green !important;
+}
+
+
+
+.update {
+  width: 100%;
+  height: 40px;
+  background-color: green !important;
+  color: white;
+  border: 1px solid green !important;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.update:hover {
+  background-color: darkgreen;
+}
+
+@media screen and (max-width: 480px) {
+  #editMain {
+    width: 95%;
+    padding: 15px;
+  }
+
+  .fields-det input {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+}
+
+/* Improved button responsiveness */
+@media screen and (max-width: 480px) {
+  .basic,
+  .advance {
+    display: block;
+    width: 100%;
+    margin-bottom: 5px;
+    border-radius: 4px;
+  }
+
+  .advance {
+    border-top-left-radius: 4px;
+  }
+}
+
+/* Enhanced form field responsiveness */
+@media screen and (max-width: 768px) {
+  .from textarea {
+    width: calc(100% - 40px);
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .from textarea {
+    width: calc(100% - 20px);
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
+
+/* Signature and gallery improvements for mobile */
+@media screen and (max-width: 480px) {
+  .signature {
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    max-width: none;
+  }
+
+  .gallery {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .pay {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .pay textarea {
+    width: 100%;
+    margin: 0;
+  }
+}
+
+/* Ensure images don't overflow */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Improved flex layouts for better mobile experience */
+.Subtotal-amt-tax-p-div {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .Subtotal-amt-tax-p-div-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .mom,
+  .dad {
+    margin-right: 0;
+  }
+
+  .mac {
+    margin-left: 0;
+  }
+}
+
+/* Improved navigation responsiveness */
+@media screen and (max-width: 768px) {
+  .navbar-collapse {
+    width: 100%;
+  }
+
+  .invoice-right {
+    width: 100%;
+    justify-content: center;
+    padding: 10px 0;
+  }
+
+  #ottia {
+    padding: 10px;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .invoice-right {
+    justify-content: center;
+  }
+
+  .invoice-right-img,
+  .invoice-right-img1,
+  .invoice-right-img2 {
+    height: 24px;
+  }
+
+  .user {
+    height: 30px;
+    margin-left: 15px;
+  }
+
+  .invoice-text,
+  .invoice-title {
+    margin: 20px 10px 0 10px;
+    font-size: 14px;
+  }
+
+  .btn {
+    padding: 0 10px;
+  }
+
+  .basic,
+  .advance {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+
+  .from {
+    margin-left: 10px;
+  }
+
+  textarea {
+    font-size: 14px;
+  }
+
+  .gallery {
+    margin-left: 10px;
+    margin-right: 10px;
+    width: calc(100% - 20px);
+    max-width: none;
+  }
+
+  .invoice-input,
+  .actual {
+    margin-left: 10px;
+    max-width: calc(100% - 20px);
+  }
+
+  .add {
+    margin: 10px;
+    width: calc(100% - 20px);
+  }
+
+  .action {
+    margin: 10px;
+    width: calc(100% - 20px);
+  }
+
+  #invoiceTable {
+    margin: 20px 10px;
+    width: calc(100% - 20px);
+  }
+
+  .table-head {
+    font-size: 16px;
+  }
+
+  tr {
+    font-size: 12px;
+  }
+
+  .beans {
+    font-size: 18px;
+    margin: 20px 10px;
+  }
+
+  .stew,
+  .Subtotal-amt-tax {
+    margin: 20px 10px;
+    font-size: 16px;
+  }
+
+  .love {
+    grid-template-columns: 1fr;
+  }
+
+  .joy {
+    height: 150px;
+  }
+
+  .links_invoice,
+  .links_invoice2 {
+    font-size: 12px;
+    margin: 10px;
+  }
+
+  .download {
+    margin: 0 10px;
+  }
+
+  .footer {
+    margin: 20px 10px;
+  }
+
+  .container-popup {
+    width: 95%;
+    margin: 0 2.5%;
+  }
+
+  .pop-img {
+    height: 120px;
+    margin-top: -60px;
+  }
+
+  .container-popup h2 {
+    font-size: 24px;
+  }
+
+  .pop label {
+    font-size: 15px;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .pop label .pop-val {
+    padding-left: 0;
+    padding-top: 5px;
+  }
+
+  .close,
+  .edit-pop {
+    width: 120px;
+    height: 45px;
+    font-size: 16px;
+  }
+}
+
+/* Extra small devices */
+@media screen and (max-width: 320px) {
+  .invoice-header {
+    font-size: 20px;
+  }
+
+  .invoice-text,
+  .invoice-title {
+    font-size: 12px;
+  }
+
+  .basic,
+  .advance {
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+
+  .table-head {
+    font-size: 14px;
+  }
+
+  tr {
+    font-size: 11px;
+  }
+
+  .beans {
+    font-size: 16px;
+  }
+
+  .stew,
+  .Subtotal-amt-tax {
+    font-size: 14px;
+  }
+}
+
+/* Country dropdown responsive */
+.country {
+  width: 100%;
+  margin-left: 33px;
+  margin-right: 33px;
+}
+
+.bizaro {
+  width: calc(100% - 66px);
+  max-width: none;
+}
+
+@media screen and (max-width: 768px) {
+  .country {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .bizaro {
+    width: calc(100% - 40px);
+    margin-left: 20px;
+  }
+}
+
+.country-name {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  background-color: white;
+  transition: border-color 0.3s ease;
+}
+
+.country-name:focus {
+  outline: none;
+  border-color: green;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+#selectedCountryContainer {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 440px;
+  box-sizing: border-box;
+}
+
+#selectedCountryContainer:hover {
+  background-color: #f8f9fa;
+  border-color: green;
+}
+
+#selectedImage {
+  height: 20px;
+  width: 30px;
+  object-fit: cover;
+  border-radius: 3px;
+  border: 1px solid #eee;
+}
+
+.auto-invoice-id {
+  position: relative;
+}
+
+.auto-invoice-id::after {
+  content: "Auto-generated";
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 10px;
+  color: #28a745;
+  background: #d4edda;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: 500;
+}
+
+.invoice-input {
+  padding-right: 80px;
+}
+
+
+#saveAsDraft,
+#loadInvoice,
+#newInvoice{
+  width: 20% !important;
+  height: 45px;
+  font-size: 18px;
+  margin-top: 24px;
 }
