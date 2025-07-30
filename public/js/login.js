@@ -37,24 +37,24 @@ document.addEventListener("DOMContentLoaded", function () {
         const result = JSON.parse(text);
 
         if (result.success) {
-          alert(result.message || "Login successful");
+          console.log(result.message || "Login successful");
           window.location.href = result.redirect || "/html/invoice.html";
         } else {
-          alert(result.error || "Login failed");
+          console.log(result.error || "Login failed");
         }
       } catch (error) {
         console.error("Login error:", error);
 
         if (error.message.includes("404")) {
-          alert("Login service not found. Please check server configuration.");
+          console.log("Login service not found. Please check server configuration.");
         } else if (error.message.includes("405")) {
-          alert("Login method not allowed. Please check server setup.");
+          console.log("Login method not allowed. Please check server setup.");
         } else if (error.message.includes("Failed to fetch")) {
-          alert(
+          console.log(
             "Cannot connect to server. Please check if the server is running."
           );
         } else {
-          alert("Login error: " + error.message);
+          console.log("Login error: " + error.message);
         }
       } finally {
         submitBtn.textContent = originalText;

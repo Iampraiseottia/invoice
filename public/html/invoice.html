@@ -6,7 +6,7 @@
     <title>Invoice Management | EaseInvoice</title>
     <link rel="stylesheet" href="../css/invoice.css" />
 
-    <link rel="icon" href="/img/logo.png" style="border-radius: 50%" />
+    <link rel="icon" href="../img/logo.png" style="border-radius: 50%" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.3/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="../css/print.min.css" />
@@ -134,7 +134,7 @@
         <a class="navbar-brand fw-bold fs-3" href="/">
           <i class="bi bi-receipt text-success"></i>
           <span class="text-primary">Ease</span
-          ><span class="erica" style="color: gold">Invoice</span> 
+          ><span class="erica" style="color: gold">Invoice</span>
         </a>
 
         <button
@@ -157,6 +157,30 @@
             <img src="../img/italy.png" class="invoice-right-img" />
             <img src="../img/portugal.png" class="invoice-right-img" />
             <img src="../img/CM.png" class="invoice-right-img2" />
+
+            <!-- View Invoices Button -->
+            <button
+              onclick="showAllInvoices()"
+              type="button"
+              id="viewInvoicesBtn"
+              style="
+                border: 1px solid #398fbd;
+                padding: 8px 16px;
+                margin-left: 15px;
+                background: #398fbd;
+                color: white;
+                cursor: pointer;
+                border-radius: 5px;
+                font-size: 14px;
+                font-weight: 500;
+                transition: all 0.3s ease;
+              "
+              onmouseover="this.style.background='#2980b9'"
+              onmouseout="this.style.background='#398fbd'"
+            >
+              <i class="fas fa-file-invoice" style="margin-right: 5px"></i>
+              View Invoices
+            </button>
 
             <!-- User status indicator -->
             <div id="userStatus" class="user-status logged-out">
@@ -440,10 +464,7 @@
           <div class="beans">
             <p class="total">
               TOTAL
-              <span
-                >XAF
-                <h6>Edit</h6></span
-              >
+              <span>XAF </span>
             </p>
             <div class="plantain">
               <p class="plantain1" id="total">0</p>
@@ -462,7 +483,12 @@
               </div>
 
               <div class="pay" id="addSig">
-                <textarea cols="50" rows="5" placeholder="Details"></textarea>
+                <textarea
+                  cols="50"
+                  rows="5"
+                  id="special_details"
+                  placeholder="Details"
+                ></textarea>
                 <div id="sig" class="signature" onclick="selectFile()">
                   <p>Add Your</p>
                   <p>Signature</p>
@@ -476,14 +502,10 @@
 
         <!-- Action buttons -->
         <div class="invoice-actions">
-          <button class="btn-secondary" id="saveAsDraft">Save as Draft</button>
           <button class="action" id="printButtonInPdf">
-            <p class="form-box4"></p>
             <p class="sweet">Save & Print Invoice</p>
           </button>
-          <button class="btn-secondary" id="loadInvoice" style="display: none">
-            Load Previous Invoice
-          </button>
+          
         </div>
       </div>
     </section>
@@ -539,11 +561,11 @@
 
       <!-- Footer links remain the same -->
       <div class="links_invoice">
-        <a class="control" href="index.html">Home</a>
+        <a class="control" href="/">Home</a>
         <a class="dot">&#183;</a>
-        <a class="control" href="#invoice-template">Invoice Templates</a>
+        <a class="control" href="invoice.html">Invoice Templates</a>
         <a class="dot">&#183;</a>
-        <a class="control" href="index.html#service-scroll">Features</a>
+        <a class="control" href="/#services">Features</a>
         <a class="dot">&#183;</a>
         <a class="control" href="login.html">Sign In</a>
         <a class="dot">&#183;</a>
@@ -555,26 +577,24 @@
         <a class="dot">&#183;</a>
         <a class="control" href="invoice.html">Privacy</a>
         <a class="dot">&#183;</a>
-        <a class="control" href="index.html#clients">FAQ</a>
+        <a class="control" href="/#faqs">FAQ</a>
         <a class="dot">&#183;</a>
-        <a class="control" href="index.html#contact-us">Contact Us</a>
+        <a class="control" href="/#contact">Contact Us</a>
         <a class="dot">&#183;</a>
       </div>
 
       <div class="links_invoice2">
-        <a class="control" href="index.html#our-team">Facebook</a>
+        <a class="control" href="/#contact">Facebook</a>
         <a class="dot">&#183;</a>
-        <a class="control" href="index.html#our-team">Twitter</a>
+        <a class="control" href="/#contact">Twitter</a>
         <a class="dot">&#183;</a>
-        <a class="control" href="index.html#our-team">Youtube</a>
+        <a class="control" href="/#contact">Youtube</a>
         <a class="dot">&#183;</a>
-        <a class="control" href="index.html#our-team">Pinterest</a>
+        <a class="control" href="/#contact">Pinterest</a>
         <a class="dot">&#183;</a>
-        <a class="control" href="index.html#our-team">Instagram</a>
+        <a class="control" href="/#contact">Instagram</a>
         <a class="dot">&#183;</a>
-        <a class="control" href="index.html#our-team">LinkedIn</a>
-        <a class="dot">&#183;</a>
-        <a class="control" href="index.html#our-team">Blog</a>
+        <a class="control" href="/#contact">LinkedIn</a>
       </div>
 
       <div class="footer">
@@ -861,7 +881,7 @@
               updateUIForLoggedOutUser();
             }
 
-            alert("Logged out successfully!");
+            console.log("Logged out successfully!");
 
             window.location.reload();
           } catch (error) {
@@ -872,51 +892,6 @@
         }
       }
 
-      // Save as draft functionality
-      async function saveAsDraft() {
-        if (
-          !window.userProfileManager ||
-          !window.userProfileManager.isUserLoggedIn()
-        ) {
-          alert("Please log in to save drafts");
-          window.location.href = "login.html";
-          return;
-        }
-
-        const invoiceData = {
-          invoice_number: document.getElementById("invoice-Number").value,
-          invoice_date: document.getElementById("invoice-date").value,
-          company_name: document.getElementById("getcompanyName").value,
-          billing_address: document.getElementById("getbillingAddress").value,
-          country: document.getElementById("Country").value,
-          terms_conditions: document.querySelector("#try textarea").value,
-          signature_image_data: getSignatureImageData(),
-          logo_image_data: getLogoImageData(),
-          status: "draft",
-          items: invoiceItems || [],
-        };
-
-        try {
-          const response = await fetch("/api/invoices", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            credentials: "include",
-            body: JSON.stringify(invoiceData),
-          });
-
-          const result = await response.json();
-
-          if (result.success) {
-            alert("Draft saved successfully!");
-            localStorage.removeItem("currentInvoiceData");
-          } else {
-            alert("Failed to save draft: " + result.error);
-          }
-        } catch (error) {
-          console.error("Error saving draft:", error);
-          alert("Error saving draft. Please try again.");
-        }
-      }
 
       // Load invoice list
       async function showInvoiceList() {
@@ -924,7 +899,7 @@
           !window.userProfileManager ||
           !window.userProfileManager.isUserLoggedIn()
         ) {
-          alert("Please log in to load invoices");
+          console.log("Please log in to load invoices");
           return;
         }
 
@@ -959,11 +934,11 @@
 
             modal.style.display = "block";
           } else {
-            alert("No invoices found");
+            console.log("No invoices found");
           }
         } catch (error) {
           console.error("Error loading invoices:", error);
-          alert("Error loading invoices");
+          console.log("Error loading invoices");
         }
       }
 
@@ -1012,13 +987,13 @@
             updateBillingDisplays(invoice.billing_address || "");
 
             closeInvoiceListModal();
-            alert("Invoice loaded successfully!");
+            console.log("Invoice loaded successfully!");
           } else {
-            alert("Failed to load invoice: " + result.error);
+            console.log("Failed to load invoice: " + result.error);
           }
         } catch (error) {
-          console.error("Error loading invoice:", error);
-          alert("Error loading invoice");
+          console.error("Error loading invoice:", error); 
+          console.log("Error loading invoice");
         }
       }
 
@@ -1066,9 +1041,6 @@
         }
 
         // Add event listeners for new buttons
-        document
-          .getElementById("saveAsDraft")
-          .addEventListener("click", saveAsDraft);
         document
           .getElementById("loadInvoice")
           .addEventListener("click", showInvoiceList);

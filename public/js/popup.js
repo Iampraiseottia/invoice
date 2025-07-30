@@ -42,7 +42,6 @@ function updateUIForLoggedInUser(userData) {
   const logoutBtn = document.getElementById("logoutBtn");
   const registerBtn = document.getElementById("registerBtn");
   const loginStatus = document.getElementById("login-status");
-  const loadInvoiceBtn = document.getElementById("loadInvoice");
 
   if (userStatus) {
     userStatus.className = "user-status logged-in";
@@ -62,9 +61,7 @@ function updateUIForLoggedInUser(userData) {
   if (loginStatus) {
     loginStatus.textContent = "Logged In";
   }
-  if (loadInvoiceBtn) {
-    loadInvoiceBtn.style.display = "inline-block";
-  }
+  
 
   displayUserData(userData);
 
@@ -79,7 +76,6 @@ function updateUIForLoggedOutUser() {
   const logoutBtn = document.getElementById("logoutBtn");
   const registerBtn = document.getElementById("registerBtn");
   const loginStatus = document.getElementById("login-status");
-  const loadInvoiceBtn = document.getElementById("loadInvoice");
 
   if (userStatus) {
     userStatus.className = "user-status logged-out";
@@ -99,9 +95,7 @@ function updateUIForLoggedOutUser() {
   if (loginStatus) {
     loginStatus.textContent = "Guest User";
   }
-  if (loadInvoiceBtn) {
-    loadInvoiceBtn.style.display = "none";
-  }
+  
 }
 
 // Open popup

@@ -1,3 +1,4 @@
+/* invoice.ss */
 /* GENERAL */
 * {
   margin: 0px;
@@ -655,7 +656,6 @@ h6 {
   width: 100%;
   max-width: 300px;
   object-fit: cover;
-  box-shadow: lightgray 1px 1px 8px 0.5px;
 }
 
 .love {
@@ -1143,7 +1143,7 @@ hr {
   top: 50%;
   left: 150px !important;
   transform: translate(-50%, -50%);
-  z-index: 1100; 
+  z-index: 1100;
   background: white !important;
   border: 1px solid lightgray;
   border-radius: 8px;
@@ -1155,10 +1155,9 @@ hr {
   margin-top: 100px !important;
 }
 
-#editMain h2{
+#editMain h2 {
   color: blue !important;
 }
-
 
 .fields-det {
   display: flex;
@@ -1187,11 +1186,9 @@ hr {
   margin-top: 5px !important;
 }
 
-.fields-det input:focus{
+.fields-det input:focus {
   border: 1px solid green !important;
 }
-
-
 
 .update {
   width: 100%;
@@ -1215,7 +1212,7 @@ hr {
   }
 
   .fields-det input {
-    font-size: 16px; /* Prevents zoom on iOS */
+    font-size: 16px;
   }
 }
 
@@ -1589,12 +1586,245 @@ img {
   padding-right: 80px;
 }
 
-
-#saveAsDraft,
-#loadInvoice,
-#newInvoice{
+#newInvoice {
   width: 20% !important;
   height: 45px;
   font-size: 18px;
   margin-top: 24px;
+}
+
+@media (max-width: 480px) {
+  .basic {
+    width: 175% !important;
+    text-align: center !important;
+  }
+
+  .advance {
+    width: 108% !important;
+    text-align: center !important;
+  }
+
+  .prinzo {
+    width: 108% !important;
+    margin-left: -20px !important;
+  }
+
+  textarea {
+    margin-left: -180px !important;
+    width: 65% !important;
+  }
+
+  .content1,
+  .content2,
+  .content {
+    margin-left: 20px !important;
+  }
+
+  #Country {
+    margin-left: -200px !important;
+    width: 63% !important;
+  }
+
+  .gallery {
+    margin-top: -5px !important;
+  }
+
+  #Descriptipon {
+    margin-left: 18px !important;
+    width: 92% !important;
+    height: 140px !important;
+    margin-bottom: 15px !important;
+  }
+
+  .eru,
+  .fufu,
+  .meat {
+    text-align: left !important;
+  }
+
+  .fufu,
+  .meat {
+    margin-left: 20px !important;
+  }
+
+  #Amount,
+  #Tax {
+    margin: 0 12px 15px 12px !important;
+  }
+
+  .mom,
+  .dad,
+  .plantain,
+  .beans {
+    display: flex !important;
+    flex-direction: row !important;
+    margin-left: 30px !important;
+  }
+
+  .content3 {
+    width: 110% !important;
+    margin-top: 40px !important;
+  }
+
+  #special_details {
+    width: 94% !important;
+    margin-left: 15px !important;
+    margin-right: 20px !important;
+  }
+
+  .form-box3 {
+    margin-left: 170px !important;
+  }
+
+  #try {
+    position: relative;
+    padding-bottom: 170px !important;
+  }
+
+  #image-container2 {
+    position: absolute !important;
+    top: 170px !important;
+    left: 0 !important;
+  }
+
+  #newInvoice {
+    margin-top: 10px !important;
+    width: 80% !important;
+  }
+
+  #printButtonInPdf {
+    width: 120% !important;
+  }
+
+  .love {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 15px !important;
+    margin-top: 30px !important;
+  }
+
+  .joy {
+    width: 100% !important;
+    height: 150px !important;
+    max-width: none !important;
+    gap: 10px !important;
+    margin-bottom: 40px !important;
+  }
+
+  .container-popup {
+    height: 60vh !important;
+    padding-left: 30px !important;
+  }
+
+  #editMain {
+    left: -360px !important;
+    width: 90% !important;
+    height: 95vh !important;
+    margin-top: -40px !important;
+  }
+}
+
+@media (max-width: 1200px) and (min-width: 900px) {
+  .date {
+    display: flex !important;
+    flex-direction: row !important;
+  }
+
+  .advance {
+    width: 50% !important;
+    margin-left: 220px !important;
+  }
+
+  .basic,
+  .advance {
+    margin-right: -250px !important;
+  }
+
+  .date {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .gallery {
+    flex: 0 0 40%;
+    text-align: center;
+    border: 1px solid #ccc;
+    padding: 10px;
+    cursor: pointer;
+    margin-bottom: 0 !important;
+  }
+
+  .gallery p {
+    margin: 5px 0;
+    font-size: 12px;
+  }
+
+  .all-logos {
+    max-width: 100%;
+    height: auto;
+    max-height: 60px;
+  }
+
+  .content2 {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 0 !important;
+  }
+
+  .perkins {
+    margin: 0 0 10px 0 !important;
+    font-weight: bold;
+  }
+
+  .invoice-input {
+    width: 80px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+    margin-bottom: 0 !important;
+  }
+
+  .date-section {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .invoice-date {
+    margin: 0 0 10px 0 !important;
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  .actual {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 140px;
+  }
+
+  #image-container {
+    display: none;
+  }
+
+  #getcompanyName,
+  #getbillingAddress,
+  #Country {
+    width: 120% !important;
+  }
+}
+
+/* Loading spinner animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

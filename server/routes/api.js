@@ -1,3 +1,4 @@
+// route/api.js
 const express = require("express");
 const bcrypt = require("bcrypt");
 const pool = require("../config/database");
@@ -337,14 +338,14 @@ router.post("/invoices", authenticateSession, async (req, res) => {
 
     const total_amount = subtotal + tax_total;
 
-    // Insert invoice with support for both image data and file paths
+    // Insert invoice
     const invoiceResult = await pool.query(
       `INSERT INTO invoices 
        (user_id, invoice_number, invoice_date, company_name, billing_address, country, 
         terms_conditions, signature_image_data, signature_filename, signature_mimetype,
         logo_image_data, logo_filename, logo_mimetype, signature_path, logo_path,
-        subtotal, tax_total, total_amount) 
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18) 
+        subtotal, tax_total, total_amount, status) 
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19) 
        RETURNING *`,
       [
         req.user.userId,
@@ -365,6 +366,7 @@ router.post("/invoices", authenticateSession, async (req, res) => {
         subtotal,
         tax_total,
         total_amount,
+        'completed'
       ]
     );
 
@@ -407,6 +409,28 @@ router.post("/invoices", authenticateSession, async (req, res) => {
     });
   }
 });
+
+// Invoice count for user
+router.get("/invoices/count", authenticateSession, async (req, res) => {
+  try {
+    const result = await pool.query(
+      "SELECT COUNT(*) as count FROM invoices WHERE user_id = $1",
+      [req.user.userId]
+    );
+
+    res.json({
+      success: true,
+      count: parseInt(result.rows[0].count)
+    });
+  } catch (error) {
+    console.error("Get invoice count error:", error);
+    res.status(500).json({
+      success: false,
+      error: "Failed to get invoice count",
+    });
+  }
+});
+
 
 // Get user's invoices
 router.get("/invoices", authenticateSession, async (req, res) => {
