@@ -3,6 +3,10 @@ var selectedRow = null;
 var invoiceItems = JSON.parse(localStorage.getItem("invoiceItems")) || [];
 var currentUser = JSON.parse(localStorage.getItem("currentUser")) || null;
 
+var editingInvoiceId = null;
+var editingInvoiceSource = null;
+
+
 // Load saved data on page load
 window.addEventListener("load", function () {
   loadSavedInvoiceData();
@@ -563,12 +567,13 @@ async function saveAndPrintInvoice() {
 
   const saveButton = document.getElementById('printButtonInPdf');
   const originalText = saveButton.innerHTML;
-  saveButton.innerHTML = '<div style="display: flex; align-items: center; justify-content: center;"><div style="width: 20px; height: 20px; border: 2px solid #fff; border-top: 2px solid transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div><span style="margin-left: 10px;">Saving...</span></div>';
+  const isUpdating = editingInvoiceId !== null;
+  
+  saveButton.innerHTML = `<div style="display: flex; align-items: center; justify-content: center;"><div style="width: 20px; height: 20px; border: 2px solid #fff; border-top: 2px solid transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div><span style="margin-left: 10px;">${isUpdating ? 'Updating...' : 'Saving...'}</span></div>`;
   saveButton.disabled = true;
 
   try {
-    //Form values with validation
-
+    // Form values with validation
     const invoiceNumber = document.getElementById("invoice-Number")?.value?.trim();
     const invoiceDate = document.getElementById("invoice-date")?.value;
     const companyName = document.getElementById("getcompanyName")?.value?.trim();
@@ -588,6 +593,10 @@ async function saveAndPrintInvoice() {
     if (!Array.isArray(invoiceItems) || invoiceItems.length === 0) {
       throw new Error('At least one invoice item is required');
     }
+
+
+    const signatureImageData = getSignatureImageData();
+    const logoImageData = getLogoImageData();
 
     // Prepare invoice data 
     const invoiceData = {
@@ -610,16 +619,19 @@ async function saveAndPrintInvoice() {
 
     const totalAmount = calculateTotalAmount();
 
-    // Check if user is logged in and save to server first
+    // Check if user is logged in and save/update to server
     let serverSaveSuccess = false;
-    let serverInvoiceId = null;
+    let serverInvoiceId = editingInvoiceId;
 
     if (window.userProfileManager && window.userProfileManager.isUserLoggedIn()) {
       try {
-        console.log('Attempting to save to server...', invoiceData);
+        const url = isUpdating ? `/api/invoices/${editingInvoiceId}` : "/api/invoices";
+        const method = isUpdating ? "PUT" : "POST";
         
-        const response = await fetch("/api/invoices", {
-          method: "POST",
+        console.log(`Attempting to ${isUpdating ? 'update' : 'save'} to server...`, invoiceData);
+        
+        const response = await fetch(url, {
+          method: method,
           headers: {
             "Content-Type": "application/json",
           },
@@ -648,49 +660,73 @@ async function saveAndPrintInvoice() {
         
         if (result.success) {
           serverSaveSuccess = true;
-          serverInvoiceId = result.invoice.id;
-          showNotification('Invoice saved to server successfully!', 'success');
+          if (!isUpdating) {
+            serverInvoiceId = result.invoice.id;
+          }
+          showNotification(`Invoice ${isUpdating ? 'updated' : 'saved'} to server successfully!`, 'success');
         } else {
-          throw new Error(result.error || 'Server save failed');
+          throw new Error(result.error || `Server ${isUpdating ? 'update' : 'save'} failed`);
         }
       } catch (serverError) {
-        console.error('Server save failed:', serverError);
-        showNotification(`Server save failed: ${serverError.message}. Saving locally instead.`, 'warning');
+        console.error(`Server ${isUpdating ? 'update' : 'save'} failed:`, serverError);
+        showNotification(`Server ${isUpdating ? 'update' : 'save'} failed: ${serverError.message}. ${isUpdating ? 'Updating' : 'Saving'} locally instead.`, 'warning');
       }
     } else {
       console.log('User not logged in, saving locally only');
     }
 
-    // Always save to localStorage as backup 
+    // Handle local storage updates
     const savedInvoices = JSON.parse(localStorage.getItem("savedInvoices")) || [];
     const invoiceWithId = {
       ...invoiceData,
-      id: serverInvoiceId || Date.now(),
-      created_at: new Date().toISOString(),
+      id: serverInvoiceId || editingInvoiceId || Date.now(),
+      created_at: isUpdating ? (savedInvoices.find(inv => inv.id == editingInvoiceId)?.created_at || new Date().toISOString()) : new Date().toISOString(),
+      updated_at: isUpdating ? new Date().toISOString() : undefined,
       status: 'completed',
       total_amount: totalAmount,
       saved_to_server: serverSaveSuccess
     };
     
-    savedInvoices.push(invoiceWithId);
+    if (isUpdating) {
+      // Update existing invoice in local storage
+      const existingIndex = savedInvoices.findIndex(inv => inv.id == editingInvoiceId);
+      if (existingIndex !== -1) {
+        savedInvoices[existingIndex] = invoiceWithId;
+      } else {
+        savedInvoices.push(invoiceWithId);
+      }
+    } else {
+      // Add new invoice
+      savedInvoices.push(invoiceWithId);
+    }
+    
     localStorage.setItem("savedInvoices", JSON.stringify(savedInvoices));
 
     if (serverSaveSuccess) {
-      showNotification('Invoice saved successfully to database!', 'success');
+      showNotification(`Invoice ${isUpdating ? 'updated' : 'saved'} successfully to database!`, 'success');
     } else {
-      showNotification('Invoice saved locally!', 'success');
+      showNotification(`Invoice ${isUpdating ? 'updated' : 'saved'} locally!`, 'success');
     }
     
-    // Clear temporary storage
     localStorage.removeItem("currentInvoiceData");
     localStorage.removeItem("invoiceItems");
 
     // Generate and download PDF
     await generateAndDownloadPDF(invoiceWithId);
 
-    // Clear form and create new invoice 
+    // Reset editing state and create new invoice 
     setTimeout(() => {
-      console.log('Invoice saved successfully! Creating new invoice...');
+      console.log(`Invoice ${isUpdating ? 'updated' : 'saved'} successfully! Creating new invoice...`);
+      
+      // Reset editing state
+      editingInvoiceId = null;
+      editingInvoiceSource = null;
+      
+      const printButton = document.getElementById('printButtonInPdf');
+      if (printButton) {
+        printButton.innerHTML = `<i class="fas fa-print"></i> Save & Print Invoice`;
+      }
+      
       clearInvoiceForm();
       
       const today = new Date().toISOString().split('T')[0];
@@ -973,7 +1009,11 @@ window.loadInvoiceToEdit = async function(invoiceId, source = 'local') {
   closeInvoiceModal();
   
   if (invoice) {
-    // Load invoice data into form
+    // Set editing state
+    editingInvoiceId = invoiceId;
+    editingInvoiceSource = source;
+    
+    // Load invoice data into form (excluding images)
     document.getElementById("getcompanyName").value = invoice.company_name || "";
     document.getElementById("getbillingAddress").value = invoice.billing_address || "";
     document.getElementById("Country").value = invoice.country || "";
@@ -990,11 +1030,44 @@ window.loadInvoiceToEdit = async function(invoiceId, source = 'local') {
     updateCompanyDisplays(invoice.company_name || "");
     updateBillingDisplays(invoice.billing_address || "");
     
-    showNotification('Invoice loaded for editing', 'success');
+    // Reset logo container and show gallery
+    const imageContainer = document.getElementById('image-container');
+    const gallery = document.getElementById('gallery');
+    if (imageContainer) {
+      imageContainer.innerHTML = '';
+    }
+    if (gallery) {
+      gallery.style.display = 'block';
+    }
+    
+    // Reset signature container and show signature area
+    const imageContainer2 = document.getElementById('image-container2');
+    const sig = document.getElementById('sig');
+    const arrange = document.getElementById('try');
+    if (imageContainer2) {
+      imageContainer2.innerHTML = '';
+    }
+    if (sig) {
+      sig.style.display = 'block';
+    }
+    if (arrange) {
+      arrange.style.display = 'block';
+      arrange.style.justifyContent = '';
+      arrange.style.marginRight = '';
+    }
+    
+    // Update button text to indicate editing
+    const printButton = document.getElementById('printButtonInPdf');
+    if (printButton) {
+      printButton.innerHTML = `<i class="fas fa-save"></i> Update & Print Invoice`;
+    }
+    
+    showNotification('Invoice loaded for editing. Please select logo and signature again.', 'info');
   } else {
     showNotification('Invoice not found', 'error');
   }
 };
+
 
 
 window.deleteInvoice = async function(invoiceId, source = 'local') {
@@ -1039,17 +1112,23 @@ window.deleteInvoice = async function(invoiceId, source = 'local') {
 
 
 
-// Get signature image data
+// Get signature image and Logo data
 function getSignatureImageData() {
   const signatureImg = document.querySelector("#image-container2 img");
-  return signatureImg ? signatureImg.src : null;
+  if (signatureImg && signatureImg.src && signatureImg.src !== '') {
+    return signatureImg.src;
+  }
+  return null;
 }
 
-// Get logo image data
 function getLogoImageData() {
   const logoImg = document.querySelector("#image-container img");
-  return logoImg ? logoImg.src : null;
+  if (logoImg && logoImg.src && logoImg.src !== '') {
+    return logoImg.src;
+  }
+  return null;
 }
+
 
 // Print invoice function
 function printInvoice() {
@@ -1988,8 +2067,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     termsField.addEventListener("input", debouncedAutoSave);
   }
 
- 
-
 
   // Check authentication and update UI
   if (window.userProfileManager) {
@@ -1997,8 +2074,13 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 });
 
+
 // New invoice button functionality
 function createNewInvoice() {
+  // Reset editing state
+  editingInvoiceId = null;
+  editingInvoiceSource = null;
+  
   clearInvoiceForm();
 
   initializeInvoiceId();
@@ -2017,6 +2099,7 @@ function createNewInvoice() {
 
   console.log("New invoice created!");
 }
+
 
 // Add new invoice button to the interface
 function addNewInvoiceButton() {
@@ -2266,6 +2349,15 @@ function clearItemErrors() {
 
 // Clearing invoice fields 
 function clearInvoiceForm() {
+  // Reset editing state
+  editingInvoiceId = null;
+  editingInvoiceSource = null;
+  
+  const printButton = document.getElementById('printButtonInPdf');
+  if (printButton) {
+    printButton.innerHTML = `<i class="fas fa-print"></i> Save & Print Invoice`;
+  }
+  
   document.getElementById('getcompanyName').value = '';
   document.getElementById('getbillingAddress').value = '';
   document.getElementById('Country').value = '';
