@@ -567,38 +567,57 @@ async function saveAndPrintInvoice() {
   saveButton.disabled = true;
 
   try {
+    //Form values with validation
+
+    const invoiceNumber = document.getElementById("invoice-Number")?.value?.trim();
+    const invoiceDate = document.getElementById("invoice-date")?.value;
+    const companyName = document.getElementById("getcompanyName")?.value?.trim();
+    const billingAddress = document.getElementById("getbillingAddress")?.value?.trim();
+    const country = document.getElementById("Country")?.value?.trim();
+    const termsConditions = document.querySelector("#try textarea")?.value?.trim();
+
+    if (!invoiceNumber) {
+      throw new Error('Invoice number is required');
+    }
+    if (!invoiceDate) {
+      throw new Error('Invoice date is required');
+    }
+    if (!companyName) {
+      throw new Error('Company name is required');
+    }
+    if (!Array.isArray(invoiceItems) || invoiceItems.length === 0) {
+      throw new Error('At least one invoice item is required');
+    }
+
+    // Prepare invoice data 
     const invoiceData = {
-      invoice_number: document.getElementById("invoice-Number").value,
-      invoice_date: document.getElementById("invoice-date").value,
-      company_name: document.getElementById("getcompanyName").value,
-      billing_address: document.getElementById("getbillingAddress").value,
-      country: document.getElementById("Country").value,
-      terms_conditions: document.querySelector("#try textarea").value,
+      invoice_number: invoiceNumber,
+      invoice_date: invoiceDate,
+      company_name: companyName,
+      billing_address: billingAddress || '',
+      country: country || '',
+      terms_conditions: termsConditions || '',
       signature_image_data: getSignatureImageData(),
       logo_image_data: getLogoImageData(),
       items: invoiceItems.map((item) => ({
-        description: item.description,
-        amount: item.amount,
-        tax_percentage: item.tax_percentage,
-      })),
+        description: (item.description || '').toString().trim(),
+        amount: parseFloat(item.amount) || 0,
+        tax_percentage: parseFloat(item.tax_percentage) || 0,
+      }))
     };
 
-    // Save to localStorage for local storage
-    const savedInvoices = JSON.parse(localStorage.getItem("savedInvoices")) || [];
-    const invoiceWithId = {
-      ...invoiceData,
-      id: Date.now(),
-      created_at: new Date().toISOString(),
-      status: 'completed',
-      total_amount: calculateTotalAmount()
-    };
-    
-    savedInvoices.push(invoiceWithId);
-    localStorage.setItem("savedInvoices", JSON.stringify(savedInvoices));
+    console.log('Prepared invoice data:', invoiceData);
 
-    // Save to server if user is logged in
+    const totalAmount = calculateTotalAmount();
+
+    // Check if user is logged in and save to server first
+    let serverSaveSuccess = false;
+    let serverInvoiceId = null;
+
     if (window.userProfileManager && window.userProfileManager.isUserLoggedIn()) {
       try {
+        console.log('Attempting to save to server...', invoiceData);
+        
         const response = await fetch("/api/invoices", {
           method: "POST",
           headers: {
@@ -608,17 +627,61 @@ async function saveAndPrintInvoice() {
           body: JSON.stringify(invoiceData),
         });
 
-        const result = await response.json();
-        if (!result.success) {
-          console.warn('Server save failed, but local save succeeded');
+        console.log('Server response status:', response.status);
+        const responseText = await response.text();
+        console.log('Raw server response:', responseText);
+        
+        if (!response.ok) {
+          console.error('Server response error:', responseText);
+          throw new Error(`Server error: ${response.status} - ${responseText}`);
+        }
+
+        let result;
+        try {
+          result = JSON.parse(responseText);
+        } catch (jsonError) {
+          console.error('JSON parse error:', jsonError);
+          throw new Error('Invalid JSON response from server');
+        }
+        
+        console.log('Parsed server response:', result);
+        
+        if (result.success) {
+          serverSaveSuccess = true;
+          serverInvoiceId = result.invoice.id;
+          showNotification('Invoice saved to server successfully!', 'success');
+        } else {
+          throw new Error(result.error || 'Server save failed');
         }
       } catch (serverError) {
-        console.warn('Server save failed, but local save succeeded:', serverError);
+        console.error('Server save failed:', serverError);
+        showNotification(`Server save failed: ${serverError.message}. Saving locally instead.`, 'warning');
       }
+    } else {
+      console.log('User not logged in, saving locally only');
     }
 
-    showNotification('Invoice saved successfully!', 'success');
+    // Always save to localStorage as backup 
+    const savedInvoices = JSON.parse(localStorage.getItem("savedInvoices")) || [];
+    const invoiceWithId = {
+      ...invoiceData,
+      id: serverInvoiceId || Date.now(),
+      created_at: new Date().toISOString(),
+      status: 'completed',
+      total_amount: totalAmount,
+      saved_to_server: serverSaveSuccess
+    };
     
+    savedInvoices.push(invoiceWithId);
+    localStorage.setItem("savedInvoices", JSON.stringify(savedInvoices));
+
+    if (serverSaveSuccess) {
+      showNotification('Invoice saved successfully to database!', 'success');
+    } else {
+      showNotification('Invoice saved locally!', 'success');
+    }
+    
+    // Clear temporary storage
     localStorage.removeItem("currentInvoiceData");
     localStorage.removeItem("invoiceItems");
 
@@ -633,7 +696,6 @@ async function saveAndPrintInvoice() {
       const today = new Date().toISOString().split('T')[0];
       document.getElementById('invoice-date').value = today;
       
-      // Generate new invoice ID
       initializeInvoiceId();
       
       showNotification('New invoice ready!', 'success');
@@ -646,7 +708,7 @@ async function saveAndPrintInvoice() {
     saveButton.innerHTML = originalText;
     saveButton.disabled = false;
   }
-}
+} 
 
 
 
@@ -675,7 +737,7 @@ function showNotification(message, type = 'info') {
   notification.innerHTML = `
     <div style="display: flex; align-items: center; justify-content: space-between;">
       <span>${message}</span>
-      <button onclick="this.parentElement.parentElement.remove()" style="background: none; border: none; color: white; font-size: 18px; cursor: pointer; margin-left: 10px;">&times;</button>
+      <button onclick="this.parentElement.parentElement.remove()" style="background: none; border: none; color: white; font-size: 18px; cursor: pointer !important; margin-left: 10px;">&times;</button>
     </div>
   `;
 
@@ -690,9 +752,51 @@ function showNotification(message, type = 'info') {
 }
 
 
-function showAllInvoices() {
-  const savedInvoices = JSON.parse(localStorage.getItem("savedInvoices")) || [];
+async function showAllInvoices() {
+  let allInvoices = [];
+  
+  // Check if user is logged in and fetch from server
+  if (window.userProfileManager && window.userProfileManager.isUserLoggedIn()) {
+    try {
+      console.log('Fetching invoices from server...');
+      
+      const response = await fetch("/api/invoices", {
+        method: "GET",
+        credentials: 'include',
+      });
 
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Server invoices:', result);
+        
+        if (result.success && result.invoices) {
+          allInvoices = result.invoices.map(invoice => ({
+            ...invoice,
+            source: 'server',
+            total_amount: parseFloat(invoice.total_amount) || 0
+          }));
+          showNotification('Loaded invoices from database', 'success');
+        }
+      } else {
+        console.warn('Failed to fetch from server, using local storage');
+        throw new Error('Server fetch failed');
+      }
+    } catch (error) {
+      console.error('Error fetching server invoices:', error);
+      showNotification('Using local invoices only', 'warning');
+    }
+  }
+  
+  // Get local invoices 
+  const localInvoices = JSON.parse(localStorage.getItem("savedInvoices")) || [];
+  
+  // If no server invoices, use local ones
+  if (allInvoices.length === 0) {
+    allInvoices = localInvoices.map(invoice => ({
+      ...invoice,
+      source: 'local'
+    }));
+  }
 
   // Create modal to display invoices
   const modal = document.createElement('div');
@@ -722,24 +826,30 @@ function showAllInvoices() {
     box-shadow: 0 4px 20px rgba(0,0,0,0.3);
   `;
 
+  const invoiceSource = allInvoices.length > 0 && allInvoices[0].source === 'server' ? 'Database' : 'Local Storage';
+  
   modalContent.innerHTML = `
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; ">
-      <h3 style="margin: 0; color: #398fbd;">Saved Invoices (${savedInvoices.length})</h3>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+      <div>
+        <h3 style="margin: 0; color: #398fbd;">Saved Invoices (${allInvoices.length})</h3>
+        <small style="color: #666;">Source: ${invoiceSource}</small>
+      </div>
       <button onclick="closeInvoiceModal()" style="background: #dc3545; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer;">&times;</button>
     </div>
     <div id="invoiceGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px;">
-      ${savedInvoices.map(invoice => `
-        <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; background: #f8f9fa;">
+      ${allInvoices.map(invoice => `
+        <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; background: #f8f9fa; position: relative;">
+          ${invoice.source === 'server' ? '<div style="position: absolute; top: 5px; right: 5px; background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 10px;">DB</div>' : ''}
           <h4 style="margin: 0 0 10px 0; color: #398fbd;">Invoice #${invoice.invoice_number}</h4>
-          <p style="margin: 5px 0;"><strong>Company:</strong> ${invoice.company_name}</p>
+          <p style="margin: 5px 0;"><strong>Company:</strong> ${invoice.company_name || 'N/A'}</p>
           <p style="margin: 5px 0;"><strong>Date:</strong> ${new Date(invoice.invoice_date).toLocaleDateString()}</p>
-          <p style="margin: 5px 0;"><strong>Total:</strong> ${invoice.total_amount?.toLocaleString() || 'N/A'} FCFA</p>
-          <p style="margin: 5px 0;"><strong>Items:</strong> ${invoice.items?.length || 0}</p>
+          <p style="margin: 5px 0;"><strong>Total:</strong> ${(invoice.total_amount || 0).toLocaleString()} FCFA</p>
+          <p style="margin: 5px 0;"><strong>Items:</strong> ${(invoice.items && invoice.items.length) || 0}</p>
           <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
-            <button onclick="viewInvoice(${invoice.id})" style="background: #28a745; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;">View</button>
-            <button onclick="printSavedInvoice(${invoice.id})" style="background: #17a2b8; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;">Print</button>
-            <button onclick="loadInvoiceToEdit(${invoice.id})" style="background: #ffc107; color: #212529; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;">Edit</button>
-            <button onclick="deleteInvoice(${invoice.id})" style="background: #dc3545; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;">Delete</button>
+            <button onclick="viewInvoice('${invoice.id}', '${invoice.source}')" style="background: #28a745; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;">View</button>
+            <button onclick="printSavedInvoice('${invoice.id}', '${invoice.source}')" style="background: #17a2b8; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;">Print</button>
+            <button onclick="loadInvoiceToEdit('${invoice.id}', '${invoice.source}')" style="background: #ffc107; color: #212529; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;">Edit</button>
+            <button onclick="deleteInvoice('${invoice.id}', '${invoice.source}')" style="background: #dc3545; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;">Delete</button>
           </div>
         </div>
       `).join('')}
@@ -750,33 +860,118 @@ function showAllInvoices() {
   document.body.appendChild(modal);
 }
 
+
 // Invoice modal
 window.closeInvoiceModal = function() {
   const modal = document.getElementById('invoiceListModal');
   if (modal) modal.remove();
 };
 
-window.viewInvoice = function(invoiceId) {
-  const savedInvoices = JSON.parse(localStorage.getItem("savedInvoices")) || [];
-  const invoice = savedInvoices.find(inv => inv.id === invoiceId);
+
+// View All Invoices 
+window.viewInvoice = async function(invoiceId, source = 'local') {
+  let invoice = null;
+  
+  if (source === 'server') {
+    try {
+      const response = await fetch(`/api/invoices/${invoiceId}`, {
+        credentials: 'include'
+      });
+      
+      if (response.ok) {
+        const result = await response.json();
+        if (result.success) {
+          invoice = result.invoice;
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching invoice from server:', error);
+    }
+  }
+  
+  // Fallback to local storage
+  if (!invoice) {
+    const savedInvoices = JSON.parse(localStorage.getItem("savedInvoices")) || [];
+    invoice = savedInvoices.find(inv => inv.id == invoiceId);
+  }
+  
+  closeInvoiceModal();
+  
   if (invoice) {
     const printWindow = window.open('', '_blank');
     printWindow.document.write(generateInvoiceHTML(invoice));
     printWindow.document.close();
+  } else {
+    showNotification('Invoice not found', 'error');
   }
 };
 
-window.printSavedInvoice = function(invoiceId) {
-  const savedInvoices = JSON.parse(localStorage.getItem("savedInvoices")) || [];
-  const invoice = savedInvoices.find(inv => inv.id === invoiceId);
+
+
+window.printSavedInvoice = async function(invoiceId, source = 'local') {
+  let invoice = null;
+  
+  if (source === 'server') {
+    try {
+      const response = await fetch(`/api/invoices/${invoiceId}`, {
+        credentials: 'include'
+      });
+      
+      if (response.ok) {
+        const result = await response.json();
+        if (result.success) {
+          invoice = result.invoice;
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching invoice from server:', error);
+    }
+  }
+  
+  // Fallback to local storage
+  if (!invoice) {
+    const savedInvoices = JSON.parse(localStorage.getItem("savedInvoices")) || [];
+    invoice = savedInvoices.find(inv => inv.id == invoiceId);
+  }
+  
+  closeInvoiceModal();
+  
   if (invoice) {
     generateAndDownloadPDF(invoice);
+  } else {
+    showNotification('Invoice not found', 'error');
   }
 };
 
-window.loadInvoiceToEdit = function(invoiceId) {
-  const savedInvoices = JSON.parse(localStorage.getItem("savedInvoices")) || [];
-  const invoice = savedInvoices.find(inv => inv.id === invoiceId);
+
+window.loadInvoiceToEdit = async function(invoiceId, source = 'local') {
+  let invoice = null;
+  
+  if (source === 'server') {
+    try {
+      const response = await fetch(`/api/invoices/${invoiceId}`, {
+        credentials: 'include'
+      });
+      
+      if (response.ok) {
+        const result = await response.json();
+        if (result.success) {
+          invoice = result.invoice;
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching invoice from server:', error);
+    }
+  }
+  
+  // Fallback to local storage
+  if (!invoice) {
+    const savedInvoices = JSON.parse(localStorage.getItem("savedInvoices")) || [];
+    invoice = savedInvoices.find(inv => inv.id == invoiceId);
+  }
+  
+  closeInvoiceModal();
+  
   if (invoice) {
     // Load invoice data into form
     document.getElementById("getcompanyName").value = invoice.company_name || "";
@@ -786,7 +981,6 @@ window.loadInvoiceToEdit = function(invoiceId) {
     document.getElementById("invoice-date").value = invoice.invoice_date || "";
     document.querySelector("#try textarea").value = invoice.terms_conditions || "";
 
-    // Load items
     if (invoice.items) {
       invoiceItems = invoice.items;
       populateInvoiceItems();
@@ -796,22 +990,54 @@ window.loadInvoiceToEdit = function(invoiceId) {
     updateCompanyDisplays(invoice.company_name || "");
     updateBillingDisplays(invoice.billing_address || "");
     
-    closeInvoiceModal();
     showNotification('Invoice loaded for editing', 'success');
+  } else {
+    showNotification('Invoice not found', 'error');
   }
 };
 
-window.deleteInvoice = function(invoiceId) {
+
+window.deleteInvoice = async function(invoiceId, source = 'local') {
   if (confirm('Are you sure you want to delete this invoice? This action cannot be undone.')) {
+    let deleteSuccess = false;
+    
+    // Delete from server if it's a server invoice
+    if (source === 'server') {
+      try {
+        const response = await fetch(`/api/invoices/${invoiceId}`, {
+          method: 'DELETE',
+          credentials: 'include'
+        });
+        
+        if (response.ok) {
+          const result = await response.json();
+          if (result.success) {
+            deleteSuccess = true;
+            showNotification('Invoice deleted from database successfully', 'success');
+          }
+        }
+      } catch (error) {
+        console.error('Error deleting from server:', error);
+        showNotification('Failed to delete from server', 'error');
+      }
+    }
+    
+    // Also remove from local storage
     const savedInvoices = JSON.parse(localStorage.getItem("savedInvoices")) || [];
-    const filteredInvoices = savedInvoices.filter(inv => inv.id !== invoiceId);
+    const filteredInvoices = savedInvoices.filter(inv => inv.id != invoiceId);
     localStorage.setItem("savedInvoices", JSON.stringify(filteredInvoices));
-    showNotification('Invoice deleted successfully', 'success');
-    // Refresh the modal
+    
+    if (source === 'local' || deleteSuccess) {
+      showNotification('Invoice deleted successfully', 'success');
+    }
+    
     closeInvoiceModal();
     setTimeout(showAllInvoices, 100);
   }
 };
+
+
+
 
 // Get signature image data
 function getSignatureImageData() {
@@ -1850,19 +2076,46 @@ function validateFormFields() {
 
   clearAllErrors();
 
-  // Required fields mapping
+  // Required fields 
   const requiredFields = [
-    { id: 'getcompanyName', name: 'From (Company Name)', message: 'Company name is required' },
-    { id: 'getbillingAddress', name: 'Bill To Address', message: 'Billing address is required' },
-    { id: 'Country', name: 'Country', message: 'Please select a country' },
-    { id: 'invoice-Number', name: 'Invoice Number', message: 'Invoice number is required' },
-    { id: 'invoice-date', name: 'Invoice Date', message: 'Invoice date is required' }
+    { 
+      id: 'getcompanyName', 
+      name: 'Company Name', 
+      message: 'Company name is required',
+      validate: (val) => val && val.trim().length > 0
+    },
+    { 
+      id: 'getbillingAddress', 
+      name: 'Billing Address', 
+      message: 'Billing address is required',
+      validate: (val) => val && val.trim().length > 0
+    },
+    { 
+      id: 'Country', 
+      name: 'Country', 
+      message: 'Please select a country',
+      validate: (val) => val && val.trim().length > 0
+    },
+    { 
+      id: 'invoice-Number', 
+      name: 'Invoice Number', 
+      message: 'Invoice number is required',
+      validate: (val) => val && val.toString().trim().length > 0
+    },
+    { 
+      id: 'invoice-date', 
+      name: 'Invoice Date', 
+      message: 'Invoice date is required',
+      validate: (val) => val && val.length > 0
+    }
   ];
 
-  // Validate text/select fields
+  // Validate form fields
   requiredFields.forEach(field => {
     const element = document.getElementById(field.id);
-    if (!element || !element.value.trim()) {
+    const value = element ? element.value : null;
+    
+    if (!field.validate(value)) {
       showFieldError(field.id, field.message);
       isValid = false;
     }
@@ -1871,7 +2124,8 @@ function validateFormFields() {
   // Check if logo is selected
   const logoContainer = document.getElementById('image-container');
   const logoGallery = document.getElementById('gallery');
-  if (!logoContainer.innerHTML.trim() || logoGallery.style.display !== 'none') {
+  if (!logoContainer || !logoContainer.innerHTML.trim() || 
+      (logoGallery && logoGallery.style.display !== 'none')) {
     showImageError('gallery', 'Please select a logo');
     isValid = false;
   }
@@ -1879,15 +2133,30 @@ function validateFormFields() {
   // Check if signature is selected
   const signatureContainer = document.getElementById('image-container2');
   const signatureDiv = document.getElementById('sig');
-  if (!signatureContainer.innerHTML.trim() || signatureDiv.style.display !== 'none') {
+  if (!signatureContainer || !signatureContainer.innerHTML.trim() || 
+      (signatureDiv && signatureDiv.style.display !== 'none')) {
     showImageError('sig', 'Please add your signature');
     isValid = false;
   }
 
   // Check if at least one item is added
-  if (invoiceItems.length === 0) {
+  if (!Array.isArray(invoiceItems) || invoiceItems.length === 0) {
     showFieldError('invoiceTable', 'Please add at least one item to the invoice');
     isValid = false;
+  }
+
+  // Validate invoice items
+  if (Array.isArray(invoiceItems)) {
+    invoiceItems.forEach((item, index) => {
+      if (!item.description || !item.description.toString().trim()) {
+        showNotification(`Item ${index + 1}: Description is required`, 'error');
+        isValid = false;
+      }
+      if (!item.amount || parseFloat(item.amount) <= 0) {
+        showNotification(`Item ${index + 1}: Valid amount is required`, 'error');
+        isValid = false;
+      }
+    });
   }
 
   return isValid;
@@ -2042,4 +2311,3 @@ function clearInvoiceForm() {
 
   clearAllErrors();
 }
-

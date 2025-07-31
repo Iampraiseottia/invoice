@@ -1,3 +1,4 @@
+
 const pool = require("../config/database");
 
 const authenticateSession = async (req, res, next) => {
@@ -38,8 +39,9 @@ const authenticateSession = async (req, res, next) => {
     req.user = {
       userId: session.user_id,
       full_name: session.full_name,
-      fullName: session.full_name,
       email: session.email,
+      phone_number: session.phone_number,
+      country: session.country,
     };
 
     await pool.query(

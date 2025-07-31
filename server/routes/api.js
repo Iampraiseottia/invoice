@@ -1,4 +1,4 @@
-// route/api.js
+
 const express = require("express");
 const bcrypt = require("bcrypt");
 const pool = require("../config/database");
@@ -278,7 +278,14 @@ router.put("/user/profile", authenticateSession, async (req, res) => {
 
 // Create a new invoice
 router.post("/invoices", authenticateSession, async (req, res) => {
+  const client = await pool.connect();
+  
   try {
+    await client.query('BEGIN');
+    
+    console.log('Creating invoice for user:', req.user.userId);
+    console.log('Request body keys:', Object.keys(req.body));
+    
     const {
       invoice_number,
       invoice_date,
@@ -288,81 +295,130 @@ router.post("/invoices", authenticateSession, async (req, res) => {
       terms_conditions,
       signature_image_data,
       logo_image_data,
-      signature_path,
-      logo_path,
-      items,
+      items = [] 
     } = req.body;
 
+    // Enhanced validation
+    if (!invoice_number?.toString().trim()) {
+      await client.query('ROLLBACK');
+      return res.status(400).json({
+        success: false,
+        error: "Invoice number is required"
+      });
+    }
+
+    if (!invoice_date) {
+      await client.query('ROLLBACK');
+      return res.status(400).json({
+        success: false,
+        error: "Invoice date is required"
+      });
+    }
+
+    if (!company_name?.trim()) {
+      await client.query('ROLLBACK');
+      return res.status(400).json({
+        success: false,
+        error: "Company name is required"
+      });
+    }
+
+    // Check for duplicate invoice number for this user
+    const duplicateCheck = await client.query(
+      "SELECT id FROM invoices WHERE user_id = $1 AND invoice_number = $2",
+      [req.user.userId, invoice_number.toString()]
+    );
+
+    if (duplicateCheck.rows.length > 0) {
+      await client.query('ROLLBACK');
+      return res.status(400).json({
+        success: false,
+        error: "Invoice number already exists. Please use a different number."
+      });
+    }
+
     // Process signature image
-    let signatureData = null,
-      signatureFilename = null,
-      signatureMimetype = null;
+    let signatureData = null, signatureFilename = null, signatureMimetype = null;
     if (signature_image_data && signature_image_data.startsWith("data:")) {
-      const matches = signature_image_data.match(/^data:([^;]+);base64,(.+)$/);
-      if (matches) {
-        signatureMimetype = matches[1];
-        signatureData = matches[2];
-        signatureFilename = `signature_${Date.now()}.${
-          signatureMimetype.split("/")[1]
-        }`;
+      try {
+        const matches = signature_image_data.match(/^data:([^;]+);base64,(.+)$/);
+        if (matches) {
+          signatureMimetype = matches[1];
+          signatureData = matches[2];
+          const ext = signatureMimetype.split("/")[1] || 'png';
+          signatureFilename = `signature_${Date.now()}.${ext}`;
+        }
+      } catch (imgError) {
+        console.warn('Signature image processing failed:', imgError);
       }
     }
 
     // Process logo image
-    let logoData = null,
-      logoFilename = null,
-      logoMimetype = null;
+    let logoData = null, logoFilename = null, logoMimetype = null;
     if (logo_image_data && logo_image_data.startsWith("data:")) {
-      const matches = logo_image_data.match(/^data:([^;]+);base64,(.+)$/);
-      if (matches) {
-        logoMimetype = matches[1];
-        logoData = matches[2];
-        logoFilename = `logo_${Date.now()}.${logoMimetype.split("/")[1]}`;
+      try {
+        const matches = logo_image_data.match(/^data:([^;]+);base64,(.+)$/);
+        if (matches) {
+          logoMimetype = matches[1];
+          logoData = matches[2];
+          const ext = logoMimetype.split("/")[1] || 'png';
+          logoFilename = `logo_${Date.now()}.${ext}`;
+        }
+      } catch (imgError) {
+        console.warn('Logo image processing failed:', imgError);
       }
     }
 
-    // Calculate totals
+    // Calculate totals with better error handling
     let subtotal = 0;
     let tax_total = 0;
 
-    if (items && items.length > 0) {
-      items.forEach((item) => {
-        const amount = parseFloat(item.amount) || 0;
-        const tax_percentage = parseFloat(item.tax_percentage) || 0;
-        const tax_amount = (amount * tax_percentage) / 100;
+    if (Array.isArray(items) && items.length > 0) {
+      items.forEach((item, index) => {
+        try {
+          const amount = parseFloat(item.amount) || 0;
+          const tax_percentage = parseFloat(item.tax_percentage) || 0;
+          const tax_amount = (amount * tax_percentage) / 100;
 
-        subtotal += amount;
-        tax_total += tax_amount;
+          subtotal += amount;
+          tax_total += tax_amount;
+          
+          console.log(`Item ${index + 1}: amount=${amount}, tax%=${tax_percentage}, tax_amount=${tax_amount}`);
+        } catch (itemError) {
+          console.warn(`Error processing item ${index}:`, itemError);
+        }
       });
+    } else {
+      console.warn('No items provided or items is not an array:', items);
     }
 
     const total_amount = subtotal + tax_total;
 
-    // Insert invoice
-    const invoiceResult = await pool.query(
+    console.log('Calculated totals:', { subtotal, tax_total, total_amount });
+
+    // Insert invoice - ensure all required fields are provided
+    const invoiceResult = await client.query(
       `INSERT INTO invoices 
        (user_id, invoice_number, invoice_date, company_name, billing_address, country, 
         terms_conditions, signature_image_data, signature_filename, signature_mimetype,
-        logo_image_data, logo_filename, logo_mimetype, signature_path, logo_path,
-        subtotal, tax_total, total_amount, status) 
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19) 
+        logo_image_data, logo_filename, logo_mimetype, 
+        subtotal, tax_total, total_amount, status, created_at, updated_at) 
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, NOW(), NOW()) 
        RETURNING *`,
       [
         req.user.userId,
-        invoice_number,
+        invoice_number.toString(),
         invoice_date,
-        company_name,
-        billing_address,
-        country,
-        terms_conditions,
+        company_name.trim(),
+        billing_address?.trim() || '',
+        country?.trim() || '',
+        terms_conditions?.trim() || '',
         signatureData,
         signatureFilename,
         signatureMimetype,
         logoData,
         logoFilename,
         logoMimetype,
-        signature_path,
-        logo_path,
         subtotal,
         tax_total,
         total_amount,
@@ -371,44 +427,122 @@ router.post("/invoices", authenticateSession, async (req, res) => {
     );
 
     const invoice = invoiceResult.rows[0];
+    console.log('Invoice created successfully with ID:', invoice.id);
 
-    // Insert invoice items
-    if (items && items.length > 0) {
-      for (const item of items) {
-        const amount = parseFloat(item.amount) || 0;
-        const tax_percentage = parseFloat(item.tax_percentage) || 0;
-        const tax_amount = (amount * tax_percentage) / 100;
-        const line_total = amount + tax_amount;
+    // Insert invoice items with better error handling
+    let insertedItems = [];
+    if (Array.isArray(items) && items.length > 0) {
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        try {
+          const amount = parseFloat(item.amount) || 0;
+          const tax_percentage = parseFloat(item.tax_percentage) || 0;
+          const tax_amount = (amount * tax_percentage) / 100;
+          const line_total = amount + tax_amount;
 
-        await pool.query(
-          `INSERT INTO invoice_items 
-           (invoice_id, description, amount, tax_percentage, tax_amount, line_total) 
-           VALUES ($1, $2, $3, $4, $5, $6)`,
-          [
-            invoice.id,
-            item.description,
-            amount,
+          console.log(`Inserting item ${i + 1}:`, { 
+            description: item.description, 
+            amount, 
             tax_percentage,
             tax_amount,
-            line_total,
-          ]
-        );
+            line_total 
+          });
+
+          const itemResult = await client.query(
+            `INSERT INTO invoice_items 
+             (invoice_id, description, amount, tax_percentage, tax_amount, line_total, created_at) 
+             VALUES ($1, $2, $3, $4, $5, $6, NOW())
+             RETURNING *`,
+            [
+              invoice.id,
+              item.description?.trim() || `Item ${i + 1}`,
+              amount,
+              tax_percentage,
+              tax_amount,
+              line_total
+            ]
+          );
+          
+          insertedItems.push(itemResult.rows[0]);
+        } catch (itemError) {
+          console.error(`Error inserting item ${i}:`, itemError);
+        }
       }
     }
 
+    await client.query('COMMIT');
+
+    console.log(`Invoice saved successfully with ${insertedItems.length} items`);
+
+    // Return success with complete invoice data
     res.status(201).json({
       success: true,
       message: "Invoice created successfully",
-      invoice: invoice,
+      invoice: {
+        ...invoice,
+        items: insertedItems
+      }
     });
+
   } catch (error) {
+    await client.query('ROLLBACK');
     console.error("Create invoice error:", error);
+    console.error("Error stack:", error.stack);
+    
     res.status(500).json({
       success: false,
-      error: "Failed to create invoice",
+      error: "Failed to create invoice: " + error.message,
+      details: process.env.NODE_ENV === 'development' ? error.stack : undefined
+    });
+  } finally {
+    client.release();
+  }
+});
+
+// Debugging route to test invoice data before saving
+router.post("/invoices/debug", authenticateSession, async (req, res) => {
+  try {
+    console.log('Debug - User ID:', req.user.userId);
+    console.log('Debug - Request body:', JSON.stringify(req.body, null, 2));
+    console.log('Debug - Request headers:', req.headers['content-type']);
+    
+    res.json({
+      success: true,
+      debug: {
+        userId: req.user.userId,
+        bodyKeys: Object.keys(req.body),
+        bodySize: JSON.stringify(req.body).length,
+        hasItems: Array.isArray(req.body.items),
+        itemsCount: Array.isArray(req.body.items) ? req.body.items.length : 0
+      }
+    });
+  } catch (error) {
+    console.error("Debug error:", error);
+    res.status(500).json({
+      success: false,
+      error: error.message
     });
   }
 });
+
+// Debugging route to check database connection
+router.get("/debug/db-test", authenticateSession, async (req, res) => {
+  try {
+    const result = await pool.query('SELECT NOW() as current_time, $1 as user_id', [req.user.userId]);
+    res.json({
+      success: true,
+      message: "Database connection working",
+      data: result.rows[0]
+    });
+  } catch (error) {
+    console.error("Database test error:", error);
+    res.status(500).json({
+      success: false,
+      error: "Database connection failed: " + error.message
+    });
+  }
+});
+
 
 // Invoice count for user
 router.get("/invoices/count", authenticateSession, async (req, res) => {
@@ -426,7 +560,7 @@ router.get("/invoices/count", authenticateSession, async (req, res) => {
     console.error("Get invoice count error:", error);
     res.status(500).json({
       success: false,
-      error: "Failed to get invoice count",
+      error: "Failed to get invoice count: " + error.message,
     });
   }
 });
@@ -435,24 +569,37 @@ router.get("/invoices/count", authenticateSession, async (req, res) => {
 // Get user's invoices
 router.get("/invoices", authenticateSession, async (req, res) => {
   try {
+    console.log('Fetching invoices for user:', req.user.userId);
+
     const result = await pool.query(
-      `SELECT i.*, 
-       (SELECT json_agg(
-          json_build_object(
-            'id', ii.id,
-            'description', ii.description,
-            'amount', ii.amount,
-            'tax_percentage', ii.tax_percentage,
-            'tax_amount', ii.tax_amount,
-            'line_total', ii.line_total
-          )
-        ) FROM invoice_items ii WHERE ii.invoice_id = i.id
-       ) as items
+      `SELECT 
+        i.*,
+        COALESCE(
+          json_agg(
+            CASE 
+              WHEN ii.id IS NOT NULL THEN
+                json_build_object(
+                  'id', ii.id,
+                  'description', ii.description,
+                  'amount', ii.amount,
+                  'tax_percentage', ii.tax_percentage,
+                  'tax_amount', ii.tax_amount,
+                  'line_total', ii.line_total
+                )
+              ELSE NULL
+            END
+          ) FILTER (WHERE ii.id IS NOT NULL),
+          '[]'::json
+        ) as items
        FROM invoices i 
+       LEFT JOIN invoice_items ii ON ii.invoice_id = i.id
        WHERE i.user_id = $1 
+       GROUP BY i.id
        ORDER BY i.created_at DESC`,
       [req.user.userId]
     );
+
+    console.log(`Found ${result.rows.length} invoices for user ${req.user.userId}`);
 
     res.json({
       success: true,
@@ -462,16 +609,19 @@ router.get("/invoices", authenticateSession, async (req, res) => {
     console.error("Get invoices error:", error);
     res.status(500).json({
       success: false,
-      error: "Failed to retrieve invoices",
+      error: "Failed to retrieve invoices: " + error.message,
     });
   }
 });
 
-// Get a specific invoice
+
+// Get a specific invoice 
 router.get("/invoices/:id", authenticateSession, async (req, res) => {
   try {
     const invoiceId = req.params.id;
+    console.log(`Fetching invoice ${invoiceId} for user ${req.user.userId}`);
 
+    // Get invoice data
     const invoiceResult = await pool.query(
       "SELECT * FROM invoices WHERE id = $1 AND user_id = $2",
       [invoiceId, req.user.userId]
@@ -484,6 +634,7 @@ router.get("/invoices/:id", authenticateSession, async (req, res) => {
       });
     }
 
+    // Get invoice items
     const itemsResult = await pool.query(
       "SELECT * FROM invoice_items WHERE invoice_id = $1 ORDER BY id",
       [invoiceId]
@@ -500,6 +651,8 @@ router.get("/invoices/:id", authenticateSession, async (req, res) => {
       invoice.logo_image_url = `data:${invoice.logo_mimetype};base64,${invoice.logo_image_data}`;
     }
 
+    console.log(`Successfully fetched invoice ${invoiceId} with ${invoice.items.length} items`);
+
     res.json({
       success: true,
       invoice: invoice,
@@ -508,10 +661,11 @@ router.get("/invoices/:id", authenticateSession, async (req, res) => {
     console.error("Get invoice error:", error);
     res.status(500).json({
       success: false,
-      error: "Failed to retrieve invoice",
+      error: "Failed to retrieve invoice: " + error.message,
     });
   }
 });
+
 
 // Update an invoice
 router.put("/invoices/:id", authenticateSession, async (req, res) => {
@@ -801,6 +955,8 @@ router.get("/gallery/:type", authenticateSession, async (req, res) => {
 // Get next invoice number for user
 router.get("/invoices/next-number", authenticateSession, async (req, res) => {
   try {
+    console.log('Getting next invoice number for user:', req.user.userId);
+
     const result = await pool.query(
       `SELECT COALESCE(MAX(CAST(invoice_number AS INTEGER)), 0) as max_number 
        FROM invoices 
@@ -811,6 +967,8 @@ router.get("/invoices/next-number", authenticateSession, async (req, res) => {
 
     const nextNumber = (result.rows[0].max_number || 0) + 1;
 
+    console.log(`Next invoice number for user ${req.user.userId}: ${nextNumber}`);
+
     res.json({
       success: true,
       next_invoice_number: nextNumber.toString(),
@@ -819,10 +977,11 @@ router.get("/invoices/next-number", authenticateSession, async (req, res) => {
     console.error("Get next invoice number error:", error);
     res.status(500).json({
       success: false,
-      error: "Failed to get next invoice number",
+      error: "Failed to get next invoice number: " + error.message,
     });
   }
 });
+
 
 // SIgn up api call
 router.post("/auth/signup", async (req, res) => {
