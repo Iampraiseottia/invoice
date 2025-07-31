@@ -1071,44 +1071,105 @@ window.loadInvoiceToEdit = async function(invoiceId, source = 'local') {
 
 
 window.deleteInvoice = async function(invoiceId, source = 'local') {
-  if (confirm('Are you sure you want to delete this invoice? This action cannot be undone.')) {
-    let deleteSuccess = false;
-    
-    // Delete from server if it's a server invoice
-    if (source === 'server') {
+  if (!confirm('Are you sure you want to delete this invoice? This action cannot be undone.')) {
+    return;
+  }
+
+  // Show loading state
+  const deleteButtons = document.querySelectorAll(`[onclick*="deleteInvoice('${invoiceId}', '${source}')"]`);
+  deleteButtons.forEach(btn => {
+    btn.disabled = true;
+    btn.innerHTML = 'Deleting...';
+    btn.style.opacity = '0.6';
+  });
+
+  let serverDeleteSuccess = false;
+  let localDeleteSuccess = false;
+
+  try {
+    // Delete from server/database if it's a server invoice or if user is logged in
+    if (source === 'server' || (window.userProfileManager && window.userProfileManager.isUserLoggedIn())) {
       try {
+        console.log(`Attempting to delete invoice ${invoiceId} from database...`);
+        
         const response = await fetch(`/api/invoices/${invoiceId}`, {
           method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
           credentials: 'include'
         });
+
+        console.log('Delete response status:', response.status);
         
         if (response.ok) {
           const result = await response.json();
+          console.log('Delete response:', result);
+          
           if (result.success) {
-            deleteSuccess = true;
-            showNotification('Invoice deleted from database successfully', 'success');
+            serverDeleteSuccess = true;
+            console.log('Successfully deleted from database');
+          } else {
+            throw new Error(result.error || 'Database deletion failed');
           }
+        } else {
+          const errorText = await response.text();
+          throw new Error(`Server error: ${response.status} - ${errorText}`);
         }
-      } catch (error) {
-        console.error('Error deleting from server:', error);
-        showNotification('Failed to delete from server', 'error');
+      } catch (serverError) {
+        console.error('Error deleting from server/database:', serverError);
+        showNotification(`Failed to delete from database: ${serverError.message}`, 'error');
+        
       }
     }
-    
-    // Also remove from local storage
-    const savedInvoices = JSON.parse(localStorage.getItem("savedInvoices")) || [];
-    const filteredInvoices = savedInvoices.filter(inv => inv.id != invoiceId);
-    localStorage.setItem("savedInvoices", JSON.stringify(filteredInvoices));
-    
-    if (source === 'local' || deleteSuccess) {
-      showNotification('Invoice deleted successfully', 'success');
+
+    try {
+      const savedInvoices = JSON.parse(localStorage.getItem("savedInvoices")) || [];
+      const initialLength = savedInvoices.length;
+      const filteredInvoices = savedInvoices.filter(inv => inv.id != invoiceId);
+      
+      if (filteredInvoices.length < initialLength) {
+        localStorage.setItem("savedInvoices", JSON.stringify(filteredInvoices));
+        localDeleteSuccess = true;
+        console.log('Successfully deleted from local storage');
+      }
+    } catch (localError) {
+      console.error('Error deleting from local storage:', localError);
     }
-    
+
+    // Show appropriate success message
+    if (source === 'server' && serverDeleteSuccess) {
+      showNotification('Invoice deleted from database successfully!', 'success');
+    } else if (source === 'local' && localDeleteSuccess) {
+      showNotification('Invoice deleted from local storage successfully!', 'success');
+    } else if (serverDeleteSuccess && localDeleteSuccess) {
+      showNotification('Invoice deleted successfully from both database and local storage!', 'success');
+    } else if (serverDeleteSuccess || localDeleteSuccess) {
+      showNotification('Invoice deleted successfully!', 'success');
+    } else {
+      showNotification('Failed to delete invoice completely. Please try again.', 'error');
+      return;
+    }
+
     closeInvoiceModal();
-    setTimeout(showAllInvoices, 100);
+    
+    // Refresh the invoice list after a short delay
+    setTimeout(() => {
+      showAllInvoices();
+    }, 500);
+
+  } catch (error) {
+    console.error('Unexpected error during deletion:', error);
+    showNotification(`Unexpected error: ${error.message}`, 'error');
+  } finally {
+    // Reset button states
+    deleteButtons.forEach(btn => {
+      btn.disabled = false;
+      btn.innerHTML = 'Delete';
+      btn.style.opacity = '1';
+    });
   }
 };
-
 
 
 
