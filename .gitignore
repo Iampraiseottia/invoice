@@ -69,3 +69,4 @@ lerna-debug.log*
 
 # Misc
 *.pem
+.vercel
